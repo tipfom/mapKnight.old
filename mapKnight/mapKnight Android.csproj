@@ -147,10 +147,11 @@
     <AndroidAsset Include="Assets\Content\interface\lifeempty.png" />
     <AndroidAsset Include="Assets\Content\interface\lifefull.png" />
     <AndroidAsset Include="Assets\Content\interface\bottleoutside.png" />
-    <AndroidAsset Include="Assets\Content\landscape\jumppad.png" />
     <AndroidAsset Include="Assets\Content\interface\logo.png" />
     <AndroidAsset Include="Assets\Content\menu\menu_arrow.png" />
     <AndroidAsset Include="Assets\Content\tilemaps\Erden.png" />
     <AndroidAsset Include="Assets\Content\particle\particle_ground.plist" />
+    <AndroidAsset Include="Assets\Content\landscape\image_jumppad.png" />
+    <AndroidAsset Include="Assets\Content\landscape\data_jumppad.plist" />
   </ItemGroup>
 </Project>

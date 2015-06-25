@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using CocosSharp;
 
@@ -13,10 +14,12 @@ namespace mapKnightLibrary
 	{
 		private static float SpriteScale = 5f;
 
-		public b2Body JumpPadBody;
+				public b2Body JumpPadBody;
 
 		b2Vec2 jumpImpuls;
 		public int totalJumps{ get; private set;}
+
+
 
 		public static CCSize JumpPadSize {
 			get { 
@@ -26,20 +29,29 @@ namespace mapKnightLibrary
 			}
 		}
 
-		public JumpPad (b2Vec2 JumpImpuls, CCPoint Position, b2World gameWorld)
+		static CCSpriteSheet JumpPadSprite = new CCSpriteSheet("landscape/data_jumppad.plist");
+		static List<CCSpriteFrame> JumpPadHoverFrames= JumpPadSprite.Frames.FindAll((frame) => frame.TextureFilename.StartsWith("mainframe"));
+
+		public JumpPad (b2Vec2 JumpImpuls, CCPoint Position, b2World gameWorld) : base(JumpPadHoverFrames[0])
 		{
-			this.Texture = new CCTexture2D ("jumppad");
+			//Animation Init
+			JumpPadHoverFrames.Reverse ();
+
+
+			CCAnimation JumpPadHoverAnim = new CCAnimation (JumpPadHoverFrames, 0.15f);
+			CCRepeatForever JumpPadHoverRepeat = new CCRepeatForever (new CCAnimate (JumpPadHoverAnim));
+
 			this.Scale = SpriteScale;
 			this.Position = Position;
 			this.IsAntialiased = false;
-
+			this.RepeatForever (JumpPadHoverRepeat);
 			jumpImpuls = JumpImpuls;
 			totalJumps = 0;
 
 			//box2d
 			b2BodyDef jumpPadDef = new b2BodyDef ();
 			jumpPadDef.type = b2BodyType.b2_kinematicBody;
-			jumpPadDef.position = new b2Vec2 ((Position.X + this.ScaledContentSize.Width/2)/PhysicsHandler.pixelPerMeter, (Position.Y + this.ScaledContentSize.Height/4) / PhysicsHandler.pixelPerMeter);
+			jumpPadDef.position = new b2Vec2 ((Position.X) / PhysicsHandler.pixelPerMeter, (Position.Y - this.ScaledContentSize.Height / 2) / PhysicsHandler.pixelPerMeter);
 			JumpPadBody = gameWorld.CreateBody (jumpPadDef);
 
 			b2PolygonShape jumpPadShape = new b2PolygonShape ();
@@ -53,6 +65,7 @@ namespace mapKnightLibrary
 			jumpPadFixture.userData = WorldFixtureData.jumppad;
 			JumpPadBody.CreateFixture (jumpPadFixture);
 			//
+
 		}
 
 		public void ApplyImpulsTo(b2Body target)
