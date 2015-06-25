@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{F98F4827-AD76-4E97-8088-911127F28F52}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>mapKnightLibrary</RootNamespace>
+    <AssemblyName>mapKnightLibrary</AssemblyName>
+    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Code\CocosSharp\TextureManager.cs" />
+    <Compile Include="Code\CocosSharp\GameScene.cs" />
+    <Compile Include="Code\CocosSharp\MergedLayer.cs" />
+    <Compile Include="Code\CocosSharp\StartScene.cs" />
+    <Compile Include="Code\Physics\Main.cs" />
+    <Compile Include="Code\Game\Character.cs" />
+    <Compile Include="Code\Game\RoboBob.cs" />
+    <Compile Include="Code\Game\Container.cs" />
+    <Compile Include="Code\CocosSharp\TextureLoader.cs" />
+    <Compile Include="Code\Physics\DebugDraw.cs" />
+    <Compile Include="Code\Game\Platform.cs" />
+    <Compile Include="Code\Physics\CollusionSensor.cs" />
+    <Compile Include="Code\Physics\WorldFixtureData.cs" />
+    <Compile Include="Code\Game\JumpPad.cs" />
+    <Compile Include="Code\Physics\WallJumpManager.cs" />
+    <Compile Include="Code\CocosSharp\OptionScene.cs" />
+    <Compile Include="Code\Main\GlobalEnumeration.cs" />
+    <Compile Include="Code\Main\DataManager.cs" />
+    <Compile Include="Code\Main\TMXLayerDataLoader.cs" />
+    <Compile Include="Code\Main\Triangle.cs" />
+    <Compile Include="Code\CocosSharp\Particle\GroundParticle.cs" />
+    <Compile Include="EmptyClass.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Code\" />
+    <Folder Include="Code\CocosSharp\" />
+    <Folder Include="Code\Physics\" />
+    <Folder Include="Code\Game\" />
+    <Folder Include="Code\Main\" />
+    <Folder Include="Code\CocosSharp\Particle\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CocosSharp">
+      <HintPath>..\packages\CocosSharp.PCL.Shared.1.4.0.0\lib\portable-net40+sl50+wp8+win8+MonoAndroid10+MonoTouch10+MonoMac10\CocosSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\packages\CocosSharp.PCL.Shared.1.4.0.0\lib\portable-net40+sl50+wp8+win8+MonoAndroid10+MonoTouch10+MonoMac10\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="box2d">
+      <HintPath>bin\Debug\box2d.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{8F24F11B-E35E-4030-ACDF-703B981B4AC4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>mapKnight</RootNamespace>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <AssemblyName>mapKnight</AssemblyName>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\packages\Xamarin.Android.Support.v4.22.2.0.0\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.CardView">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.CardView.22.2.0.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.CardView.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.AppCompat">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.22.2.0.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.RecyclerView">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.RecyclerView.22.2.0.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.RecyclerView.dll</HintPath>
+    </Reference>
+    <Reference Include="box2d">
+      <HintPath>..\packages\CocosSharp.PCL.Shared.1.4.0.0\lib\MonoAndroid10\box2d.dll</HintPath>
+    </Reference>
+    <Reference Include="CocosSharp">
+      <HintPath>..\packages\CocosSharp.PCL.Shared.1.4.0.0\lib\MonoAndroid10\CocosSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\CocosSharp.PCL.Shared.1.4.0.0\lib\MonoAndroid10\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Lidgren.Network">
+      <HintPath>..\packages\CocosSharp.PCL.Shared.1.4.0.0\lib\MonoAndroid10\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\packages\CocosSharp.PCL.Shared.1.4.0.0\lib\MonoAndroid10\MonoGame.Framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Code\GameAppDelegate.cs" />
+    <Compile Include="Code\MainWorker.cs" />
+    <Compile Include="Code\Visual\InventoryPopUp.cs" />
+    <Compile Include="Code\Visual\InventorySlideIn.cs" />
+    <Compile Include="Code\Visual\MainWindow.cs" />
+    <Compile Include="Code\Visual\StatsPopUp.cs" />
+    <Compile Include="Code\Visual\VersionManager.cs" />
+    <Compile Include="Code\Visual\Statistic.cs" />
+    <Compile Include="Code\Game.cs" />
+    <Compile Include="Code\Visual\OptionPopUp.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Strings.xml" />
+    <AndroidResource Include="Resources\drawable\heart.png" />
+    <AndroidResource Include="Resources\values\values.xml" />
+    <AndroidResource Include="Resources\layout\ContainerWindow.axml" />
+    <AndroidResource Include="Resources\layout\InventoryPopUp.axml" />
+    <AndroidResource Include="Resources\layout\InventorySlideIn.axml" />
+    <AndroidResource Include="Resources\layout\MainWindow.axml" />
+    <AndroidResource Include="Resources\layout\StatsListElement.axml" />
+    <AndroidResource Include="Resources\layout\StatsPopUp.axml" />
+    <AndroidResource Include="Resources\drawable\button_stats.xml" />
+    <AndroidResource Include="Resources\drawable\progressbar_level.xml" />
+    <AndroidResource Include="Resources\values\styles.xml" />
+    <AndroidResource Include="Resources\anim\inventory_slide_in.xml" />
+    <AndroidResource Include="Resources\anim\inventory_slide_out.xml" />
+    <AndroidResource Include="Resources\drawable\error.png" />
+    <AndroidResource Include="Resources\layout\Loading.axml" />
+    <AndroidResource Include="Resources\drawable\options.png" />
+    <AndroidResource Include="Resources\layout\OptionWindow.axml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Assets\Content\" />
+    <Folder Include="Code\" />
+    <Folder Include="Resources\drawable\" />
+    <Folder Include="Assets\Content\tilemaps\" />
+    <Folder Include="Assets\Content\fonts\" />
+    <Folder Include="Assets\Config\" />
+    <Folder Include="Resources\layout\" />
+    <Folder Include="Assets\Content\landscape\" />
+    <Folder Include="Assets\Content\menu\" />
+    <Folder Include="Assets\Content\interface\" />
+    <Folder Include="Code\Visual\" />
+    <Folder Include="Resources\anim\" />
+    <Folder Include="Assets\Content\particle\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\mapKnightLibrary\mapKnight Library.csproj">
+      <Project>{F98F4827-AD76-4E97-8088-911127F28F52}</Project>
+      <Name>mapKnight Library</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\fonts\arial-22.xnb" />
+    <AndroidAsset Include="Assets\Content\char.png" />
+    <AndroidAsset Include="Assets\Content\landscape\platform.png" />
+    <AndroidAsset Include="Assets\Content\menu\mana.png" />
+    <AndroidAsset Include="Assets\Content\menu\poison.png" />
+    <AndroidAsset Include="Assets\Content\landscape\background.png" />
+    <AndroidAsset Include="Assets\Content\tilemaps\plants.png" />
+    <AndroidAsset Include="Assets\Content\tilemaps\bitte.tmx" />
+    <AndroidAsset Include="Assets\Content\tilemaps\bigplants.png" />
+    <AndroidAsset Include="Assets\Content\interface\bottleinside.png" />
+    <AndroidAsset Include="Assets\Content\interface\lifeempty.png" />
+    <AndroidAsset Include="Assets\Content\interface\lifefull.png" />
+    <AndroidAsset Include="Assets\Content\interface\bottleoutside.png" />
+    <AndroidAsset Include="Assets\Content\landscape\jumppad.png" />
+    <AndroidAsset Include="Assets\Content\interface\logo.png" />
+    <AndroidAsset Include="Assets\Content\menu\menu_arrow.png" />
+    <AndroidAsset Include="Assets\Content\tilemaps\Erden.png" />
+    <AndroidAsset Include="Assets\Content\particle\particle_ground.plist" />
+  </ItemGroup>
+</Project>

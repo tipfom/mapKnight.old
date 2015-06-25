@@ -1,0 +1,15 @@
+﻿<resources>
+	<style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    	<item name="colorPrimary">#2E9AFE</item>
+    	<item name="drawerArrowStyle">@style/MyDrawerArrowStyle</item>
+    	<item name="colorPrimaryDark">#2E9AFE</item>
+	</style>
+	<style name="MyDrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+		<item name="color">#58FAAC</item>
+    	<item name="spinBars">true</item>
+	</style>
+	<style name="InventoryAnimation">
+		<item name="android:windowEnterAnimation">@anim/inventory_slide_in</item>
+		<item name="android:windowExitAnimation">@anim/inventory_slide_out</item>
+	</style>
+</resources>

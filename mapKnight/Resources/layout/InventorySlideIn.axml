@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#2E9AFE">
+    <TextView
+        android:text="Inventory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="19dp"
+        android:gravity="center" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="40">
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView_Helmet" />
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView_Chestplate" />
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView_Pants" />
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView_Boots" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="40">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="33"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView_Primary" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="33"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView_Secondary" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="33"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView_Shield" />
+    </LinearLayout>
+    <Button
+        android:text="Inventory"
+        android:background="@drawable/button_stats"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20"
+        android:id="@+id/button_inventory" />
+</LinearLayout>
