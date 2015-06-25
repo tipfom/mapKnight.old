@@ -56,3 +56,7 @@ Changelog (german) :
 
 !!! 24.06.2015 !!!
 - Einführen eines Partikelsystems
+
+!!! 25.06.2015 !!!
+- Verändern der Textur des Jumppads
+- Grafische Arbeiten am Character
