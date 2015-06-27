@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_version">0.0.5.4</string>
-	<string name="app_build">23</string>
+	<string name="app_version">0.0.5.5</string>
+	<string name="app_build">26</string>
 	<string name="app_name">mapKnight</string>
 </resources>
