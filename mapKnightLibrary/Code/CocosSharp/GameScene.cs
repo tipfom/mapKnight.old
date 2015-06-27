@@ -121,8 +121,8 @@ namespace mapKnightLibrary
 			LifeSprite [0].Scale = 6f;
 			LifeSprite [1].Scale = 6f;
 
-			ManaSprite [1].Position = new CCPoint (screenSize.Width - ManaSprite [1].ScaledContentSize.Width, screenSize.Height - ManaSprite [1].ScaledContentSize.Height);
-			LifeSprite [1].Position = new CCPoint (screenSize.Width - LifeSprite [1].ScaledContentSize.Width, ManaSprite [1].Position.Y - LifeSprite [1].ScaledContentSize.Height);
+			LifeSprite [1].Position = new CCPoint (screenSize.Width - LifeSprite [1].ScaledContentSize.Width, screenSize.Height- LifeSprite [1].ScaledContentSize.Height);
+			ManaSprite [1].Position = new CCPoint (screenSize.Width - ManaSprite [1].ScaledContentSize.Width, LifeSprite[1].Position.Y - ManaSprite [1].ScaledContentSize.Height - 10f);
 
 			this.AddChild (ManaSprite [1]);
 			this.AddChild (ManaSprite [0]);
