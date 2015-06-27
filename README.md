@@ -68,3 +68,5 @@ Changelog (german) :
 - Änderungen an der Sprungmechanik
 - Änderung einiger Texturen
 - Änderungen an der Map
+- Einführen eines "Ladebildschirms"
+- Änderungen am Interface
