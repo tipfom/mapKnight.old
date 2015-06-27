@@ -34,7 +34,7 @@ namespace mapKnightLibrary
 		public void Initialize(float mapSizeWidth, Character Character, CCTileMapLayer physicsLayer, CCTileMap physicsMap, Container gameContainer)
 		{
 			mapSizeWidth /= pixelPerMeter;
-			gameWorld = new b2World (new b2Vec2 (0, -9.8f));
+			gameWorld = new b2World (new b2Vec2 (0, -15f));
 			gameWorld.AllowSleep = false;
 
 			//definiert den MainCharacter

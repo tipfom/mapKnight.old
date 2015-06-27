@@ -93,7 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
-    <AndroidResource Include="Resources\drawable\heart.png" />
     <AndroidResource Include="Resources\values\values.xml" />
     <AndroidResource Include="Resources\layout\ContainerWindow.axml" />
     <AndroidResource Include="Resources\layout\InventoryPopUp.axml" />
@@ -110,6 +109,8 @@
     <AndroidResource Include="Resources\layout\Loading.axml" />
     <AndroidResource Include="Resources\drawable\options.png" />
     <AndroidResource Include="Resources\layout\OptionWindow.axml" />
+    <AndroidResource Include="Resources\drawable\logo.png" />
+    <AndroidResource Include="Resources\drawable\heart.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
@@ -137,21 +138,19 @@
     <AndroidAsset Include="Assets\Content\fonts\arial-22.xnb" />
     <AndroidAsset Include="Assets\Content\char.png" />
     <AndroidAsset Include="Assets\Content\landscape\platform.png" />
-    <AndroidAsset Include="Assets\Content\menu\mana.png" />
-    <AndroidAsset Include="Assets\Content\menu\poison.png" />
     <AndroidAsset Include="Assets\Content\landscape\background.png" />
     <AndroidAsset Include="Assets\Content\tilemaps\plants.png" />
     <AndroidAsset Include="Assets\Content\tilemaps\bitte.tmx" />
     <AndroidAsset Include="Assets\Content\tilemaps\bigplants.png" />
-    <AndroidAsset Include="Assets\Content\interface\bottleinside.png" />
-    <AndroidAsset Include="Assets\Content\interface\lifeempty.png" />
-    <AndroidAsset Include="Assets\Content\interface\lifefull.png" />
-    <AndroidAsset Include="Assets\Content\interface\bottleoutside.png" />
     <AndroidAsset Include="Assets\Content\interface\logo.png" />
     <AndroidAsset Include="Assets\Content\menu\menu_arrow.png" />
     <AndroidAsset Include="Assets\Content\tilemaps\Erden.png" />
     <AndroidAsset Include="Assets\Content\particle\particle_ground.plist" />
     <AndroidAsset Include="Assets\Content\landscape\image_jumppad.png" />
     <AndroidAsset Include="Assets\Content\landscape\data_jumppad.plist" />
+    <AndroidAsset Include="Assets\Content\interface\batterie_empty.png" />
+    <AndroidAsset Include="Assets\Content\interface\batterie_full.png" />
+    <AndroidAsset Include="Assets\Content\interface\heart_empty.png" />
+    <AndroidAsset Include="Assets\Content\interface\heart_full.png" />
   </ItemGroup>
 </Project>

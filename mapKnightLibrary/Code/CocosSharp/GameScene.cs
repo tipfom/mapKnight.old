@@ -111,15 +111,15 @@ namespace mapKnightLibrary
 			ManaSprite = new CCSprite[2];
 			LifeSprite = new CCSprite[2];
 
-			ManaSprite [0] = new CCSprite ("bottleinside"){ IsAntialiased = false };
-			ManaSprite [1] = new CCSprite ("bottleoutside"){ IsAntialiased = false };
-			LifeSprite [0] = new CCSprite ("lifefull"){ IsAntialiased = false };
-			LifeSprite [1] = new CCSprite ("lifeempty"){ IsAntialiased = false };
+			ManaSprite [0] = new CCSprite ("batterie_full"){ IsAntialiased = false };
+			ManaSprite [1] = new CCSprite ("batterie_empty"){ IsAntialiased = false };
+			LifeSprite [0] = new CCSprite ("heart_full"){ IsAntialiased = false };
+			LifeSprite [1] = new CCSprite ("heart_empty"){ IsAntialiased = false };
 
-			ManaSprite [0].Scale = 12f;
-			ManaSprite [1].Scale = 12f;
-			LifeSprite [0].Scale = 12f;
-			LifeSprite [1].Scale = 12f;
+			ManaSprite [0].Scale = 6f;
+			ManaSprite [1].Scale = 6f;
+			LifeSprite [0].Scale = 6f;
+			LifeSprite [1].Scale = 6f;
 
 			ManaSprite [1].Position = new CCPoint (screenSize.Width - ManaSprite [1].ScaledContentSize.Width, screenSize.Height - ManaSprite [1].ScaledContentSize.Height);
 			LifeSprite [1].Position = new CCPoint (screenSize.Width - LifeSprite [1].ScaledContentSize.Width, ManaSprite [1].Position.Y - LifeSprite [1].ScaledContentSize.Height);
@@ -159,7 +159,7 @@ namespace mapKnightLibrary
 					ManaSprite [0].Texture.ContentSizeInPixels.Width,
 					ManaSprite [0].Texture.ContentSizeInPixels.Height * gameContainer.mainCharacter.CurrentLife / gameContainer.mainCharacter.MaxLife);
 
-				ManaSprite [0].ContentSize = LifeSprite [0].TextureRectInPixels.Size;
+				ManaSprite [0].ContentSize = ManaSprite [0].TextureRectInPixels.Size;
 				ManaSprite [0].Position = new CCPoint (screenSize.Width - ManaSprite [0].ScaledContentSize.Width, ManaSprite [1].Position.Y - ManaSprite [1].ScaledContentSize.Height / 2 + ManaSprite [0].ScaledContentSize.Height / 2);
 
 				break;

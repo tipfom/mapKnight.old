@@ -23,8 +23,8 @@ namespace mapKnightLibrary
 
 		int Life, Mana;
 
-		WallJumpManager JumpManager;
-		bool Jumping;
+		JumpManager JumpManager;
+		bool Jumping, ClimbJump;
 		bool DoubleJump;
 		bool AvoidPlatformGlitch;
 
@@ -60,7 +60,7 @@ namespace mapKnightLibrary
 
 		public RoboBob ()
 		{
-			CharacterSprite = new CCSprite("char");
+			CharacterSprite = new CCSprite ("char");
 			CharacterSprite.Scale = 3f;
 			CharacterSize = CharacterSprite.ScaledContentSize;
 
@@ -68,7 +68,9 @@ namespace mapKnightLibrary
 
 			MoveDirection = Direction.None;
 
-			JumpManager = new WallJumpManager (this.characterBody, 0.65f, 6f, 17f);
+			JumpManager = new JumpManager (this.characterBody, 
+				new ClimbJumpConfig () { jumpSize = new CCSize (6f, 17f), timeNeeded = 0.3f }, 
+				new WallJumpConfig () { jumpImpuls = new b2Vec2 (6f, 15f), jumpTickCount = 60f, jumpOnXDecrease = 0.3f });
 		}
 	
 		CCPoint Character.Position {
@@ -132,31 +134,44 @@ namespace mapKnightLibrary
 					characterBody.LinearVelocity = Velocity;
 
 					DoubleJump = true;
+					ClimbJump = true;
 
 					JumpManager.EndJump ();
 
 					break;
 				case WorldFixtureData.air:
-					if (physicsHandler.collusionSensor.WallContact == MoveDirection && MoveDirection != Direction.None) {
+					if (physicsHandler.collusionSensor.WallContact == MoveDirection && MoveDirection != Direction.None && JumpManager.OnJump == false) {
 						Velocity.y = -WallSlideSpeed;
 					}
 
 					switch (MoveDirection) {
 					case Direction.Left:
-						if (MoveDirection != JumpManager.CurrentJumpingDirection)
-							JumpManager.AbortAccelerationOn (Axis.x);
-						Velocity.x = -MoveSpeed;
+						if (physicsHandler.collusionSensor.WallContact == MoveDirection && MoveDirection != Direction.None && ClimbJump == true && JumpManager.OnJump == false) {
+							JumpManager.StartJump (this.MoveDirection, JumpType.ClimbJump);
+							ClimbJump = false;
+						} else if (JumpManager.OnJump == false) {
+							if (MoveDirection != JumpManager.CurrentJumpingDirection)
+								JumpManager.AbortAccelerationOn (Axis.x);
+							Velocity.x = -MoveSpeed;
+						}
 						break;
 					case Direction.Right:
-						if (MoveDirection != JumpManager.CurrentJumpingDirection)
-							JumpManager.AbortAccelerationOn (Axis.x);
-						Velocity.x = MoveSpeed;
+						if (physicsHandler.collusionSensor.WallContact == MoveDirection && MoveDirection != Direction.None && ClimbJump == true && JumpManager.OnJump == false) {
+							JumpManager.StartJump (this.MoveDirection, JumpType.ClimbJump);
+							ClimbJump = false;
+						} else if (JumpManager.OnJump == false) {
+							if (MoveDirection != JumpManager.CurrentJumpingDirection)
+								JumpManager.AbortAccelerationOn (Axis.x);
+							Velocity.x = MoveSpeed;
+						}
 						break;
 					case Direction.None:
-						Velocity.x = 0;
+						if (JumpManager.OnJump == false)
+							Velocity.x = 0;
 						break;
 					default:
-						Velocity.x = 0;
+						if (JumpManager.OnJump == false)
+							Velocity.x = 0;
 						break;
 					}
 
@@ -164,8 +179,9 @@ namespace mapKnightLibrary
 						if (physicsHandler.collusionSensor.WallContact == Direction.None && Jumping == true && DoubleJump == true) {
 							DoubleJump = false;
 							Velocity.y = JumpSpeed;
-						} else if (physicsHandler.collusionSensor.WallContact != Direction.None && Jumping == true) {
-							JumpManager.StartJump (this.MoveDirection, physicsHandler.collusionSensor.WallContact);
+						} else if (physicsHandler.collusionSensor.WallContact != Direction.None && physicsHandler.collusionSensor.WallContact == MoveDirection && Jumping == true) {
+							JumpManager.StartJump (this.MoveDirection, JumpType.WallJump);
+							break;
 						}
 					}
 
@@ -196,6 +212,7 @@ namespace mapKnightLibrary
 
 
 					DoubleJump = true;
+					ClimbJump = true;
 
 					JumpManager.EndJump ();
 					break;
@@ -223,7 +240,8 @@ namespace mapKnightLibrary
 					characterBody.LinearVelocity = Velocity;
 
 					DoubleJump = true;
-
+					ClimbJump = true;
+				
 					JumpManager.EndJump ();
 					break;
 				}
