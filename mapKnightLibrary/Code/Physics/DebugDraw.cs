@@ -33,7 +33,7 @@ namespace mapKnightLibrary
 				verticesToPoint [i] = new CCPoint (vertices [i].x * 50f, vertices [i].y * 50f);
 			}
 
-			DrawNode.DrawPolygon (verticesToPoint, vertexCount, new CCColor4B (0, 0, 0, 0), 3f, Color);
+			DrawNode.DrawPolygon (verticesToPoint, vertexCount, new CCColor4B (0, 0, 0, 0), 0f, Color);
 		}
 
 		public override void DrawSolidPolygon (Box2D.Common.b2Vec2[] vertices, int vertexCount, Box2D.Common.b2Color color)
@@ -44,7 +44,7 @@ namespace mapKnightLibrary
 				verticesToPoint [i] = new CCPoint (vertices [i].x * 50f, vertices [i].y * 50f);
 			}
 
-			DrawNode.DrawPolygon (verticesToPoint, vertexCount, Color, 3f, Color);
+			DrawNode.DrawPolygon (verticesToPoint, vertexCount, Color, 0f, Color);
 		}
 
 		public override void DrawCircle (Box2D.Common.b2Vec2 center, float radius, Box2D.Common.b2Color color)

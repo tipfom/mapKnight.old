@@ -1404,14 +1404,17 @@ namespace mapKnight
 			// aapt resource value: 0x7f02003d
 			public const int heart = 2130837565;
 			
-			// aapt resource value: 0x7f020040
-			public const int notification_template_icon_bg = 2130837568;
-			
 			// aapt resource value: 0x7f02003e
-			public const int options = 2130837566;
+			public const int logo = 2130837566;
+			
+			// aapt resource value: 0x7f020041
+			public const int notification_template_icon_bg = 2130837569;
 			
 			// aapt resource value: 0x7f02003f
-			public const int progressbar_level = 2130837567;
+			public const int options = 2130837567;
+			
+			// aapt resource value: 0x7f020040
+			public const int progressbar_level = 2130837568;
 			
 			static Drawable()
 			{
@@ -2468,6 +2471,9 @@ namespace mapKnight
 			// aapt resource value: 0x7f080002
 			public const int CardView_Light = 2131230722;
 			
+			// aapt resource value: 0x7f08012a
+			public const int GameTheme = 2131231018;
+			
 			// aapt resource value: 0x7f080129
 			public const int InventoryAnimation = 2131231017;
 			
@@ -2735,8 +2741,8 @@ namespace mapKnight
 			// aapt resource value: 0x7f0800e0
 			public const int Theme_AppCompat_NoActionBar = 2131230944;
 			
-			// aapt resource value: 0x7f08012a
-			public const int Theme_Main = 2131231018;
+			// aapt resource value: 0x7f08012b
+			public const int Theme_Main = 2131231019;
 			
 			// aapt resource value: 0x7f0800e1
 			public const int ThemeOverlay_AppCompat = 2131230945;

@@ -45,13 +45,14 @@
     <Compile Include="Code\Physics\CollusionSensor.cs" />
     <Compile Include="Code\Physics\WorldFixtureData.cs" />
     <Compile Include="Code\Game\JumpPad.cs" />
-    <Compile Include="Code\Physics\WallJumpManager.cs" />
     <Compile Include="Code\CocosSharp\OptionScene.cs" />
     <Compile Include="Code\Main\GlobalEnumeration.cs" />
     <Compile Include="Code\Main\DataManager.cs" />
     <Compile Include="Code\Main\TMXLayerDataLoader.cs" />
     <Compile Include="Code\Main\Triangle.cs" />
     <Compile Include="Code\CocosSharp\Particle\GroundParticle.cs" />
+    <Compile Include="Code\Physics\JumpManager.cs" />
+    <Compile Include="Code\Physics\JumpManagerHelp.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

@@ -25,7 +25,7 @@ namespace mapKnight
 		Label = "mapKnight",
 		AlwaysRetainTaskState = true,
 		Icon = "@drawable/heart",
-		Theme = "@android:style/Theme.NoTitleBar",
+		Theme = "@style/GameTheme",
 		LaunchMode = LaunchMode.SingleInstance,
 		NoHistory = true,
 		ScreenOrientation = ScreenOrientation.SensorLandscape,

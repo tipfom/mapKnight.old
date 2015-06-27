@@ -11315,7 +11315,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="3"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -30170,20 +30170,20 @@
   </object>
   <object id="9" x="2610" y="1190">
    <properties>
-    <property name="boostvec" value="0,15"/>
+    <property name="boostvec" value="0,20"/>
     <property name="type" value="jumppad"/>
    </properties>
   </object>
-  <object id="10" x="1630" y="1050">
+  <object id="10" x="1630" y="1070">
    <properties>
     <property name="speed" value="200"/>
     <property name="type" value="platform"/>
     <property name="waypoints" value="-7,1"/>
    </properties>
   </object>
-  <object id="11" x="950" y="1470">
+  <object id="11" x="940" y="1470">
    <properties>
-    <property name="boostvec" value="0,20"/>
+    <property name="boostvec" value="0,25"/>
     <property name="type" value="jumppad"/>
    </properties>
   </object>
