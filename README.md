@@ -60,3 +60,11 @@ Changelog (german) :
 !!! 25.06.2015 !!!
 - Verändern der Textur des Jumppads
 - Grafische Arbeiten am Character
+
+!!! 27.06.2015 !!!
+- Grafische Verbesserungen am Jumppad
+- Änderung an der Gameplaymechanik(Walljump => Wallclimb)
+- Einführen eines Walljumps
+- Änderungen an der Sprungmechanik
+- Änderung einiger Texturen
+- Änderungen an der Map
