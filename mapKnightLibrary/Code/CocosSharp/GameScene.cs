@@ -190,7 +190,9 @@ namespace mapKnightLibrary
 				gameContainer.mainCharacter.Jump = false;
 
 			//debugmenu update	
-		
+			gameContainer.physicsHandler.debugDrawer.ClearBuffer ();
+			gameContainer.physicsHandler.gameWorld.DrawDebugData ();
+
 		}
 
 		#region SlideTouchHandler
@@ -296,6 +298,9 @@ namespace mapKnightLibrary
 						gameContainer.mainCharacter.MoveDirection = Direction.None;
 					}
 				}
+
+				//Chestcheck
+
 			}
 		}
 

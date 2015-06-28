@@ -122,11 +122,12 @@ namespace mapKnightLibrary
 			if (gameContainer.mainCharacter.MoveDirection != PlayerMovingParticle.ParticleAppearDirection)
 				this.PlayerMovingParticle.ParticleAppearDirection = gameContainer.mainCharacter.MoveDirection;
 			this.PlayerMovingParticle.Position = new CCPoint (gameContainer.mainCharacter.Position.X, gameContainer.mainCharacter.Position.Y - gameContainer.mainCharacter.Size.Height / 2);
-
-			gameContainer.physicsHandler.debugDrawer.ClearBuffer ();
-			gameContainer.physicsHandler.gameWorld.DrawDebugData ();
 		}
 			
 		public CCPoint MapPosition{get{ return Map.Position;}}
+
+		public void UpdateTile(CCTileMapCoordinates tile, CCTileGidAndFlags updatedTileGID, MapLayer layer){
+			Map.LayerNamed ("mainlayer").SetTileGID (updatedTileGID, tile);
+		}
 	}
 }

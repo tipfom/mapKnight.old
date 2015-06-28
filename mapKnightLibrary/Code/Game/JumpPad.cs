@@ -37,7 +37,6 @@ namespace mapKnightLibrary
 			//Animation Init
 			JumpPadHoverFrames.Reverse ();
 
-
 			CCAnimation JumpPadHoverAnim = new CCAnimation (JumpPadHoverFrames, 0.15f);
 			CCRepeatForever JumpPadHoverRepeat = new CCRepeatForever (new CCAnimate (JumpPadHoverAnim));
 

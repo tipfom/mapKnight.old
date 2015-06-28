@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using CocosSharp;
 
@@ -14,7 +15,15 @@ namespace mapKnightLibrary
 		static int MoveSpeed = 9;
 		static int JumpSpeed = 10;
 		static int WallSlideSpeed = 2;
+		//statische grafische variablen
+		static CCSpriteSheet CharacterSprites = new CCSpriteSheet("character/character.plist");
+		static List<CCSpriteFrame> CharacterWalkSprites = CharacterSprites.Frames.FindAll ((frame) => frame.TextureFilename.StartsWith ("walk"));
+		static CCAnimation CharacterWalkAnimation = new CCAnimation (CharacterWalkSprites, 0.1f);
+		static CCRepeatForever CharacterWalkRepeat = new CCRepeatForever (new CCAnimate (CharacterWalkAnimation));
 
+		static CCRect CharacterStandingTextureRect = CharacterSprites.Frames.Find ((frame) => frame.TextureFilename.StartsWith ("walk_1")).TextureRectInPixels;
+
+		//variablen
 		CCSize CharacterSize;
 		CCSprite CharacterSprite;
 		CCPoint CharacterPosition;
@@ -60,8 +69,8 @@ namespace mapKnightLibrary
 
 		public RoboBob ()
 		{
-			CharacterSprite = new CCSprite ("char");
-			CharacterSprite.Scale = 3f;
+			CharacterSprite = new CCSprite (CharacterWalkSprites[0]);
+			CharacterSprite.Scale = 0.25f;
 			CharacterSize = CharacterSprite.ScaledContentSize;
 
 			DoubleJump = true;
@@ -70,7 +79,7 @@ namespace mapKnightLibrary
 
 			JumpManager = new JumpManager (this.characterBody, 
 				new ClimbJumpConfig () { jumpSize = new CCSize (6f, 17f), timeNeeded = 0.3f }, 
-				new WallJumpConfig () { jumpImpuls = new b2Vec2 (6f, 15f), jumpTickCount = 60f, jumpOnXDecrease = 0.3f });
+				new WallJumpConfig () { jumpImpuls = new b2Vec2 (6f, 15f), jumpTickCount = 60f, jumpOnXDecrease = 0.1f });
 		}
 	
 		CCPoint Character.Position {
@@ -273,7 +282,7 @@ namespace mapKnightLibrary
 				characterBody.CreateFixture (characterFixture);
 
 				b2PolygonShape characterGroundSensorShape = new b2PolygonShape ();
-				b2Vec2 GroundSensorPosition = new b2Vec2 (0f, -0.29f * CharacterSprite.ScaleY);
+				b2Vec2 GroundSensorPosition = new b2Vec2 (0f, -0.8f);
 				characterGroundSensorShape.SetAsBox (((float)CharacterSize.Width - 1f) / PhysicsHandler.pixelPerMeter / 2, 5f / PhysicsHandler.pixelPerMeter, GroundSensorPosition, 0f);
 
 				//untergrundsensor
@@ -287,7 +296,7 @@ namespace mapKnightLibrary
 				characterBody.CreateFixture (groundSensor);
 
 				b2PolygonShape characterLeftSensorShape = new b2PolygonShape ();
-				b2Vec2 LeftSensorPosition = new b2Vec2 (-0.15f * CharacterSprite.ScaleX, -0.5f);
+				b2Vec2 LeftSensorPosition = new b2Vec2 (-0.6f, -0.5f);
 				characterLeftSensorShape.SetAsBox ((float)5f / PhysicsHandler.pixelPerMeter, CharacterSize.Height / PhysicsHandler.pixelPerMeter / 4, LeftSensorPosition, 0f);
 
 				//leftsensor
@@ -301,7 +310,7 @@ namespace mapKnightLibrary
 				characterBody.CreateFixture (leftSensor);
 
 				b2PolygonShape characterRightSensorShape = new b2PolygonShape ();
-				b2Vec2 RightSensorPosition = new b2Vec2 (0.15f * CharacterSprite.ScaleX, -0.5f);
+				b2Vec2 RightSensorPosition = new b2Vec2 (0.6f, -0.5f);
 				characterRightSensorShape.SetAsBox ((float)5f / PhysicsHandler.pixelPerMeter, CharacterSize.Height / PhysicsHandler.pixelPerMeter / 4, RightSensorPosition, 0f);
 
 				//rightsensor
@@ -318,6 +327,35 @@ namespace mapKnightLibrary
 			return characterBody;
 		}
 
-		public Direction MoveDirection { get; set;}
+		Direction internMoveDirection;
+
+		public Direction MoveDirection {
+			get{ return internMoveDirection; }
+			set {
+				if (internMoveDirection != value) {
+					switch (value) {
+					case Direction.Left:
+						if (CharacterSprite.ScaleX > 0)
+							CharacterSprite.ScaleX *= -1;
+						else
+							CharacterSprite.ScaleX *= 1;
+						CharacterSprite.RepeatForever (CharacterWalkRepeat);
+						break;
+					case Direction.Right:
+						if (CharacterSprite.ScaleX > 0)
+							CharacterSprite.ScaleX *= 1;
+						else
+							CharacterSprite.ScaleX *= -1;
+						CharacterSprite.RepeatForever (CharacterWalkRepeat);
+						break;
+					case Direction.None:
+						CharacterSprite.StopAllActions ();
+						CharacterSprite.TextureRectInPixels = CharacterStandingTextureRect;
+						break;
+					}
+					internMoveDirection = value;
+				}
+			}
+		}
 	}
 }
