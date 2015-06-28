@@ -73,8 +73,10 @@ Changelog (german) :
 
 !!! 28.06.2015 !!!
 - Umsteigen von Cocossharp V#1.4.0.0 auf V#1.5.0.1
-  - Render Improvements
-  - bessere Performance
+  - Bessere Render Performance
+  - Hinzufügen der Möglichkeit größere Tiles in der Map zu laden
+  - http://forums.xamarin.com/discussion/44195/cocossharp-v1-5-0-0-release#latest
+  - http://forums.xamarin.com/discussion/44192/cocossharp-v1-5-0-0-the-new-renderer-pipeline
 - Änderungen am Interface
 - Hinzufügen eines neuen Characters mit spezifischen Bewegungsanimationen
 - Änderungen an der Map
