@@ -28,6 +28,8 @@ namespace mapKnightLibrary
 
 		ControlType CurrentControlType;
 
+		CCLayer InterfaceLayer;
+
 		public GameScene (CCWindow mainWindow, Container mainContainer, ControlType RunningControlType) : base(mainWindow)
 		{
 			CurrentControlType = RunningControlType;
@@ -35,8 +37,10 @@ namespace mapKnightLibrary
 			gameContainer = mainContainer;
 			GameLayer = new MergedLayer (mainWindow, gameContainer);
 
-			this.AddChild (GameLayer);
+			InterfaceLayer = new CCLayer ();
 
+			this.AddChild (GameLayer);
+		
 			screenSize = mainWindow.WindowSizeInPixels;
 
 			//Touchlistener Initialisierung
@@ -69,9 +73,9 @@ namespace mapKnightLibrary
 				CCRotateTo RightRotate = new CCRotateTo (0, 90f);
 				MoveRightButton.RunAction (RightRotate);
 
-				this.AddChild (JumpButton);
-				this.AddChild (MoveLeftButton);
-				this.AddChild (MoveRightButton);
+				InterfaceLayer.AddChild (JumpButton);
+				InterfaceLayer.AddChild (MoveLeftButton);
+				InterfaceLayer.AddChild (MoveRightButton);
 
 				touchListener.OnTouchesMoved = Button_HandleTouchesMoved; 
 				touchListener.OnTouchesBegan = Button_HandleTouchesBegan;
@@ -82,12 +86,6 @@ namespace mapKnightLibrary
 			}
 
 			AddEventListener (touchListener, this);
-
-			//FPS Label
-			FPSLabel = new CCLabel ("Score: 0", "arial", 22);
-			FPSLabel.Position = new CCPoint (100, 100);
-			FPSLabel.Color = new CCColor3B (255, 255, 0);
-			AddChild (FPSLabel);
 
 			//Map Label
 			MapNameLabel = new CCLabel ("Map Name : " + GameLayer.mapName, "arial", 22) {
@@ -103,9 +101,9 @@ namespace mapKnightLibrary
 			};
 			MapVersionLabel.Position = new CCPoint (MapVersionLabel.ContentSize.Width / 2, MapCreatorLabel.Position.Y - 10 - MapVersionLabel.ContentSize.Height);
 
-			this.AddChild (MapNameLabel);
-			this.AddChild (MapCreatorLabel);
-			this.AddChild (MapVersionLabel);
+			InterfaceLayer.AddChild (MapNameLabel);
+			InterfaceLayer.AddChild (MapCreatorLabel);
+			InterfaceLayer.AddChild (MapVersionLabel);
 
 			//Interface
 			ManaSprite = new CCSprite[2];
@@ -124,11 +122,18 @@ namespace mapKnightLibrary
 			LifeSprite [1].Position = new CCPoint (screenSize.Width - LifeSprite [1].ScaledContentSize.Width, screenSize.Height- LifeSprite [1].ScaledContentSize.Height);
 			ManaSprite [1].Position = new CCPoint (screenSize.Width - ManaSprite [1].ScaledContentSize.Width, LifeSprite[1].Position.Y - ManaSprite [1].ScaledContentSize.Height - 10f);
 
-			this.AddChild (ManaSprite [1]);
-			this.AddChild (ManaSprite [0]);
-			this.AddChild (LifeSprite [1]);
-			this.AddChild (LifeSprite [0]);
+			InterfaceLayer.AddChild (ManaSprite [1]);
+			InterfaceLayer.AddChild (ManaSprite [0]);
+			InterfaceLayer.AddChild (LifeSprite [1]);
+			InterfaceLayer.AddChild (LifeSprite [0]);
 
+			//FPS Label
+			FPSLabel = new CCLabel ("Score: 0", "arial", 22);
+			FPSLabel.Position = new CCPoint (FPSLabel.ContentSize.Width / 2, MapVersionLabel.Position.Y - 10f - FPSLabel.ContentSize.Height / 2);
+			FPSLabel.Color = new CCColor3B (255, 255, 255);
+			InterfaceLayer.AddChild (FPSLabel);
+
+			//Interface Update und Punktbindung
 			this.InterfaceUpdate (null, new StatisticChangeEventArgHandler (Statistic.Life));
 			this.InterfaceUpdate (null, new StatisticChangeEventArgHandler (Statistic.Mana));
 
@@ -136,6 +141,8 @@ namespace mapKnightLibrary
 
 			gameContainer.mainCharacter.CurrentLife = 23;
 			gameContainer.mainCharacter.CurrentMana = 4;
+
+			this.AddChild (InterfaceLayer);
 
 			Schedule (GameLoop);
 		}
@@ -169,7 +176,8 @@ namespace mapKnightLibrary
 		void GameLoop(float frameTime)
 		{
 			GameLayer.CenterCamera ();
-			FPSLabel.Text = (1 / frameTime).ToString () + " fps";
+			FPSLabel.Text = Math.Round ((1 / frameTime), 1).ToString () + " fps";
+			FPSLabel.PositionX = FPSLabel.ContentSize.Width / 2;
 
 			gameContainer.physicsHandler.step (frameTime);
 			gameContainer.mainCharacter.Update (frameTime);

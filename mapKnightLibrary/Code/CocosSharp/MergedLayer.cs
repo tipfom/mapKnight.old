@@ -80,9 +80,9 @@ namespace mapKnightLibrary
 
 			this.AddChild (Background, -1);
 
-			this.AddChild (Map, 0);
+			this.AddChild (Map, 1);
 			this.AddChild (gameContainer.mainCharacter.Sprite, 2);
-			this.AddChild (gameContainer.physicsHandler.debugDrawer.DrawNode, 1);
+			this.AddChild (gameContainer.physicsHandler.debugDrawer.DrawNode, 0);
 
 			foreach (Platform knownPlatform in gameContainer.platformContainer) {
 				this.AddChild (knownPlatform);
@@ -96,6 +96,8 @@ namespace mapKnightLibrary
 			PlayerMovingParticle = new GroundParticle ();
 			this.AddChild (PlayerMovingParticle);
 			PlayerMovingParticle.Position = gameContainer.mainCharacter.Position;
+
+			Schedule (Update);
 		}
 
 		public void CenterCamera(){
@@ -115,16 +117,16 @@ namespace mapKnightLibrary
 			Background.Position = new CCPoint (x,y);
 		}
 
-		protected override void Draw ()
+		public override void Update (float dt)
 		{
 			if (gameContainer.mainCharacter.MoveDirection != PlayerMovingParticle.ParticleAppearDirection)
 				this.PlayerMovingParticle.ParticleAppearDirection = gameContainer.mainCharacter.MoveDirection;
 			this.PlayerMovingParticle.Position = new CCPoint (gameContainer.mainCharacter.Position.X, gameContainer.mainCharacter.Position.Y - gameContainer.mainCharacter.Size.Height / 2);
-		
-			gameContainer.physicsHandler.gameWorld.DrawDebugData ();
-			gameContainer.physicsHandler.debugDrawer.Render ();
-		}
 
+			gameContainer.physicsHandler.debugDrawer.ClearBuffer ();
+			gameContainer.physicsHandler.gameWorld.DrawDebugData ();
+		}
+			
 		public CCPoint MapPosition{get{ return Map.Position;}}
 	}
 }
