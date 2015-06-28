@@ -19,9 +19,8 @@ namespace mapKnightLibrary
 			CollusionColor = new CCColor4B (255, 0, 0, 255);
 		}
 
-		public void Render()
+		public void ClearBuffer()
 		{
-			DrawNode.Render ();
 			DrawNode.Clear ();
 		}
 
@@ -33,7 +32,7 @@ namespace mapKnightLibrary
 				verticesToPoint [i] = new CCPoint (vertices [i].x * 50f, vertices [i].y * 50f);
 			}
 
-			DrawNode.DrawPolygon (verticesToPoint, vertexCount, new CCColor4B (0, 0, 0, 0), 0f, Color);
+			DrawNode.DrawPolygon (verticesToPoint, vertexCount, new CCColor4B (0, 0, 0, 0), 1f, Color);
 		}
 
 		public override void DrawSolidPolygon (Box2D.Common.b2Vec2[] vertices, int vertexCount, Box2D.Common.b2Color color)
@@ -44,7 +43,7 @@ namespace mapKnightLibrary
 				verticesToPoint [i] = new CCPoint (vertices [i].x * 50f, vertices [i].y * 50f);
 			}
 
-			DrawNode.DrawPolygon (verticesToPoint, vertexCount, Color, 0f, Color);
+			DrawNode.DrawPolygon (verticesToPoint, vertexCount, Color, 1f, Color);
 		}
 
 		public override void DrawCircle (Box2D.Common.b2Vec2 center, float radius, Box2D.Common.b2Color color)
