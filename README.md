@@ -76,3 +76,9 @@ Changelog (german) :
   - Render Improvements
   - bessere Performance
 - Änderungen am Interface
+- Hinzufügen eines neuen Characters mit spezifischen Bewegungsanimationen
+- Änderungen an der Map
+- Ausgleichen einiger Gameplay-Werte
+- Hinzufügen einer (in der jetzigen Version) nutzlosen Kiste
+- Hinzufügen einer Funktion, die es der App erlaubt Tiles zur Laufzeit zu ändern
+- Verbesserungen am Walljump
