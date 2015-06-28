@@ -63,10 +63,16 @@ Changelog (german) :
 
 !!! 27.06.2015 !!!
 - Grafische Verbesserungen am Jumppad
-- Änderung an der Gameplaymechanik(Walljump => Wallclimb)
+- Änderung an der Gameplaymechanik (Walljump => Wallclimb)
 - Einführen eines Walljumps
 - Änderungen an der Sprungmechanik
 - Änderung einiger Texturen
 - Änderungen an der Map
 - Einführen eines "Ladebildschirms"
+- Änderungen am Interface
+
+!!! 28.06.2015 !!!
+- Umsteigen von Cocossharp V#1.4.0.0 auf V#1.5.0.1
+  - Render Improvements
+  - bessere Performance
 - Änderungen am Interface
