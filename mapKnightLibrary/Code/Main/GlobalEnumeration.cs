@@ -18,5 +18,11 @@ namespace mapKnightLibrary
 		WallJump = 0,
 		ClimbJump = 1
 	}
-}
 
+	public enum MapLayer
+	{
+		MainLayer,
+		Decorations,
+		Chests
+	}
+}

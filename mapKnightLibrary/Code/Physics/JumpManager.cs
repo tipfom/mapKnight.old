@@ -123,12 +123,18 @@ namespace mapKnightLibrary
 				case JumpType.WallJump:
 					tick++;
 
-					if (Velocity.x >= WallJumpConfig.jumpImpuls.x / 3) {
-						if (CurrentJumpingDirection == Direction.Left)
+					switch (CurrentJumpingDirection) {
+					case Direction.Left:
+						if (Velocity.x >= WallJumpConfig.jumpImpuls.x / 3)
 							Velocity.x -= WallJumpConfig.jumpOnXDecrease;
-						else if (CurrentJumpingDirection == Direction.Right)
+						break;
+					case Direction.Right:
+
+						if (Velocity.x <= -WallJumpConfig.jumpImpuls.x / 3)
 							Velocity.x += WallJumpConfig.jumpOnXDecrease;
+						break;
 					}
+
 					jumpBody.LinearVelocity = Velocity;
 
 					if (tick == WallJumpConfig.jumpTickCount) {

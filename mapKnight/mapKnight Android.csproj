@@ -124,6 +124,7 @@
     <Folder Include="Code\Visual\" />
     <Folder Include="Resources\anim\" />
     <Folder Include="Assets\Content\particle\" />
+    <Folder Include="Assets\Content\character\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\mapKnightLibrary\mapKnight Library.csproj">
@@ -133,7 +134,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Content\fonts\arial-22.xnb" />
-    <AndroidAsset Include="Assets\Content\char.png" />
     <AndroidAsset Include="Assets\Content\landscape\platform.png" />
     <AndroidAsset Include="Assets\Content\landscape\background.png" />
     <AndroidAsset Include="Assets\Content\tilemaps\plants.png" />
@@ -149,5 +149,8 @@
     <AndroidAsset Include="Assets\Content\interface\batterie_full.png" />
     <AndroidAsset Include="Assets\Content\interface\heart_empty.png" />
     <AndroidAsset Include="Assets\Content\interface\heart_full.png" />
+    <AndroidAsset Include="Assets\Content\tilemaps\chest.png" />
+    <AndroidAsset Include="Assets\Content\character\character.plist" />
+    <AndroidAsset Include="Assets\Content\character\character.png" />
   </ItemGroup>
 </Project>
