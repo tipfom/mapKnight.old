@@ -47,12 +47,13 @@
     <Compile Include="Code\Game\JumpPad.cs" />
     <Compile Include="Code\CocosSharp\OptionScene.cs" />
     <Compile Include="Code\Main\GlobalEnumeration.cs" />
-    <Compile Include="Code\Main\DataManager.cs" />
     <Compile Include="Code\Main\TMXLayerDataLoader.cs" />
     <Compile Include="Code\Main\Triangle.cs" />
     <Compile Include="Code\CocosSharp\Particle\GroundParticle.cs" />
     <Compile Include="Code\Physics\JumpManager.cs" />
     <Compile Include="Code\Physics\JumpManagerHelp.cs" />
+    <Compile Include="Code\Data\DataManager.cs" />
+    <Compile Include="Code\Data\CodeDataManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -62,6 +63,7 @@
     <Folder Include="Code\Game\" />
     <Folder Include="Code\Main\" />
     <Folder Include="Code\CocosSharp\Particle\" />
+    <Folder Include="Code\Data\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="box2d">
