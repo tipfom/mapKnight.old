@@ -1,0 +1,8 @@
+﻿<Data>
+	<set name="Deutsch" package="de-de">
+		<chapter name="default">
+			<entry name="string:chest_open">Kiste geöffnet</entry>
+			<entry name="int:chest_value">200</entry>		
+		</chapter>
+	</set>
+</Data>

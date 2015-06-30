@@ -67,20 +67,24 @@
     <Reference Include="MonoGame.Framework">
       <HintPath>..\packages\CocosSharp.PCL.Shared.1.5.0.1\lib\MonoAndroid10\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Code\GameAppDelegate.cs" />
-    <Compile Include="Code\MainWorker.cs" />
     <Compile Include="Code\Visual\InventoryPopUp.cs" />
     <Compile Include="Code\Visual\InventorySlideIn.cs" />
     <Compile Include="Code\Visual\MainWindow.cs" />
     <Compile Include="Code\Visual\StatsPopUp.cs" />
     <Compile Include="Code\Visual\VersionManager.cs" />
     <Compile Include="Code\Visual\Statistic.cs" />
-    <Compile Include="Code\Game.cs" />
     <Compile Include="Code\Visual\OptionPopUp.cs" />
+    <Compile Include="Code\ConfigDataManager.cs" />
+    <Compile Include="Code\SQLDataManager.cs" />
+    <Compile Include="Code\CocosSharp and Worker\Game.cs" />
+    <Compile Include="Code\CocosSharp and Worker\GameAppDelegate.cs" />
+    <Compile Include="Code\CocosSharp and Worker\MainWorker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -125,6 +129,7 @@
     <Folder Include="Resources\anim\" />
     <Folder Include="Assets\Content\particle\" />
     <Folder Include="Assets\Content\character\" />
+    <Folder Include="Code\CocosSharp and Worker\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\mapKnightLibrary\mapKnight Library.csproj">
@@ -152,5 +157,6 @@
     <AndroidAsset Include="Assets\Content\tilemaps\chest.png" />
     <AndroidAsset Include="Assets\Content\character\character.plist" />
     <AndroidAsset Include="Assets\Content\character\character.png" />
+    <AndroidAsset Include="Assets\Config\values.xml" />
   </ItemGroup>
 </Project>
