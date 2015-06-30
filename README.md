@@ -1,7 +1,7 @@
 # mapKnight
 
 Project mapKnight created by two german students is a sidescroller with rpg-elements.
-It is going to use Map API's to detet the users current position and change the map theme by his current terrain.
+It is going to use Map API's to detect the users current position and change the map theme by his current terrain.
 
 
 Changelog (german) : 
@@ -84,3 +84,9 @@ Changelog (german) :
 - Hinzufügen einer (in der jetzigen Version) nutzlosen Kiste
 - Hinzufügen einer Funktion, die es der App erlaubt Tiles zur Laufzeit zu ändern
 - Verbesserungen am Walljump
+- 
+!!! 30.06.2015 !!!
+- Implementation of a System to Save Data in 
+  - a SQLDatabase
+  - a DataFile
+  - Code
