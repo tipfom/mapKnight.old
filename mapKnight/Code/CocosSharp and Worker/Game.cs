@@ -36,10 +36,7 @@ namespace mapKnight
 	{
 		CCApplication gameApplication;
 
-		CodeDataManager CodeData;
-
 		public Game(){
-			CodeData = new CodeDataManager ();
 		}
 
 		protected override void OnCreate (Bundle savedInstanceState)
@@ -47,9 +44,9 @@ namespace mapKnight
 			base.OnCreate (savedInstanceState);
 
 			//SQLTEST
-			AndroidSQLDataManager test = new AndroidSQLDataManager (Path.Combine (System.Environment.GetFolderPath (System.Environment.SpecialFolder.Personal), CodeData.GetOrCreate ("database", "errordatabase.db3")));
+			AndroidSQLDataManager test = new AndroidSQLDataManager (Path.Combine (System.Environment.GetFolderPath (System.Environment.SpecialFolder.Personal), StaticData.databasepath));
 
-			test.BeginRead ("");
+			test.BeginRead ();
 			test.GetOrCreate ("testkey", "testvalue");
 			test.GetOrCreate ("teststringkey", "testvalue");
 			test.GetOrCreate ("inttestkey", "testvalue");
@@ -62,6 +59,8 @@ namespace mapKnight
 			string z = test.GetOrCreate ("inttestkey", "default");
 			test.EndRead ();
 			//END SQLTEST
+
+			//AndroidXMLDataManager xmltest = new AndroidXMLDataManager (Assets.Open ("Config/values.xml"), "de-de");
 
 			gameApplication = new CCApplication ();
 			//Initialisiert die Game Anwedung

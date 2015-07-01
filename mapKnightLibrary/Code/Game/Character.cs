@@ -29,17 +29,6 @@ namespace mapKnightLibrary
 		event EventHandler<StatisticChangeEventArgHandler> StatChanged;
 	}
 
-	public enum Direction{
-		Left,
-		Right,
-		None
-	}
-
-	public enum Statistic
-	{
-		Mana,
-		Life
-	}
 
 	public class StatisticChangeEventArgHandler : EventArgs
 	{

@@ -33,6 +33,7 @@ namespace mapKnightLibrary
 
 		public CollusionSensor (Container GameContainer)
 		{
+			WallContact = Direction.None;
 			gameContainer = GameContainer;
 		}
 
