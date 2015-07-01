@@ -34,7 +34,6 @@
     <Compile Include="Code\CocosSharp\TextureManager.cs" />
     <Compile Include="Code\CocosSharp\GameScene.cs" />
     <Compile Include="Code\CocosSharp\MergedLayer.cs" />
-    <Compile Include="Code\CocosSharp\StartScene.cs" />
     <Compile Include="Code\Physics\Main.cs" />
     <Compile Include="Code\Game\Character.cs" />
     <Compile Include="Code\Game\RoboBob.cs" />
@@ -45,15 +44,15 @@
     <Compile Include="Code\Physics\CollusionSensor.cs" />
     <Compile Include="Code\Physics\WorldFixtureData.cs" />
     <Compile Include="Code\Game\JumpPad.cs" />
-    <Compile Include="Code\CocosSharp\OptionScene.cs" />
     <Compile Include="Code\Main\GlobalEnumeration.cs" />
     <Compile Include="Code\Main\TMXLayerDataLoader.cs" />
     <Compile Include="Code\Main\Triangle.cs" />
     <Compile Include="Code\CocosSharp\Particle\GroundParticle.cs" />
     <Compile Include="Code\Physics\JumpManager.cs" />
     <Compile Include="Code\Physics\JumpManagerHelp.cs" />
-    <Compile Include="Code\Data\DataManager.cs" />
-    <Compile Include="Code\Data\CodeDataManager.cs" />
+    <Compile Include="Code\Data\SQLDataManager.cs" />
+    <Compile Include="Code\Data\XMLDataManager.cs" />
+    <Compile Include="Code\Data\StaticData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

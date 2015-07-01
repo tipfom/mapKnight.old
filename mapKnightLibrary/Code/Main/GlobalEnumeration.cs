@@ -25,4 +25,24 @@ namespace mapKnightLibrary
 		Decorations,
 		Chests
 	}
+
+	public enum PlayerMovingType
+	{
+		Sliding = 3,
+		Falling = 1,
+		Running = 0,
+		Jumping = 4
+	}
+
+	public enum Direction{
+		Left,
+		Right,
+		None
+	}
+
+	public enum Statistic
+	{
+		Mana,
+		Life
+	}
 }

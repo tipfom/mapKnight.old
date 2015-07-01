@@ -17,11 +17,24 @@ namespace mapKnightLibrary
 		static int WallSlideSpeed = 2;
 		//statische grafische variablen
 		static CCSpriteSheet CharacterSprites = new CCSpriteSheet("character/character.plist");
+
 		static List<CCSpriteFrame> CharacterWalkSprites = CharacterSprites.Frames.FindAll ((frame) => frame.TextureFilename.StartsWith ("walk"));
-		static CCAnimation CharacterWalkAnimation = new CCAnimation (CharacterWalkSprites, 0.1f);
+		static CCAnimation CharacterWalkAnimation = new CCAnimation (CharacterWalkSprites, 0.05f);
 		static CCRepeatForever CharacterWalkRepeat = new CCRepeatForever (new CCAnimate (CharacterWalkAnimation));
 
-		static CCRect CharacterStandingTextureRect = CharacterSprites.Frames.Find ((frame) => frame.TextureFilename.StartsWith ("walk_1")).TextureRectInPixels;
+		static List<CCSpriteFrame> CharacterSlideSprites = CharacterSprites.Frames.FindAll((frame) => frame.TextureFilename.StartsWith("slide"));
+		static CCAnimation CharacterSlideAnimation = new CCAnimation (CharacterSlideSprites, 0.05f);
+		static CCRepeatForever CharacterSlideRepeat = new CCRepeatForever (new CCAnimate (CharacterSlideAnimation));
+
+		static List<CCSpriteFrame> CharacterJumpSprites = CharacterSprites.Frames.FindAll((frame) => frame.TextureFilename.StartsWith("jump"));
+		static CCAnimation CharacterJumpAnimation = new CCAnimation (CharacterJumpSprites, 0.05f);
+		static CCAnimate CharacterJumpAnimate = new CCAnimate (CharacterJumpAnimation);
+
+		static List<CCSpriteFrame> CharacterFallSprites = CharacterSprites.Frames.FindAll((frame) => frame.TextureFilename.StartsWith("fall"));
+		static CCAnimation CharacterFallAnimation = new CCAnimation (CharacterFallSprites, 0.05f);
+		static CCRepeatForever CharacterFallkRepeat = new CCRepeatForever (new CCAnimate (CharacterFallAnimation));
+
+		static CCRect CharacterStandingTextureRect = CharacterSprites.Frames.Find ((frame) => frame.TextureFilename.StartsWith ("walk0")).TextureRectInPixels;
 
 		//variablen
 		CCSize CharacterSize;
@@ -31,6 +44,25 @@ namespace mapKnightLibrary
 		b2Body characterBody;
 
 		int Life, Mana;
+
+		float JumpTimeCount;
+		PlayerMovingType MoveType;
+		public PlayerMovingType CurrentMovingType { 
+			get { return MoveType; }
+			private set {
+				if (value != MoveType && JumpTimeCount <= 0) {
+					MoveType = value;
+					if (value == PlayerMovingType.Jumping) {
+						JumpTimeCount = CharacterJumpAnimation.Duration;
+					}
+					if (MovingTypeChanged != null)
+						MovingTypeChanged (this, value);
+				}
+			}
+		}
+
+		private	event EventHandler<PlayerMovingType> MovingTypeChanged;
+		private event EventHandler<Direction> DirectionChanged;
 
 		JumpManager JumpManager;
 		bool Jumping, ClimbJump;
@@ -70,11 +102,15 @@ namespace mapKnightLibrary
 		public RoboBob ()
 		{
 			CharacterSprite = new CCSprite (CharacterWalkSprites[0]);
-			CharacterSprite.Scale = 0.25f;
+			CharacterSprite.Scale = 0.5f;
 			CharacterSize = CharacterSprite.ScaledContentSize;
 
 			DoubleJump = true;
 
+			DirectionChanged += UpdateSprite;
+			MovingTypeChanged += UpdateSprite;
+
+			CurrentMovingType = PlayerMovingType.Running;
 			MoveDirection = Direction.None;
 
 			JumpManager = new JumpManager (this.characterBody, 
@@ -106,6 +142,9 @@ namespace mapKnightLibrary
 		void Character.Update(float frameTime)
 		{
 			if (physicsHandler != null) {
+				if (CurrentMovingType == PlayerMovingType.Jumping)
+					JumpTimeCount -= frameTime;
+				//Immer wenn die Jump Animation läuft wird der TickCoun
 
 				CharacterPosition = new CCPoint (characterBody.Position.x * PhysicsHandler.pixelPerMeter, characterBody.Position.y * PhysicsHandler.pixelPerMeter);
 				CharacterSprite.Position = CharacterPosition;
@@ -136,6 +175,7 @@ namespace mapKnightLibrary
 						if (Jumping == true && physicsHandler.collusionSensor.playerCanJump == true) {
 							Velocity.y += JumpSpeed;
 							AvoidPlatformGlitch = true;
+							CurrentMovingType = PlayerMovingType.Jumping;
 						}
 					} else
 						AvoidPlatformGlitch = false;
@@ -147,16 +187,23 @@ namespace mapKnightLibrary
 
 					JumpManager.EndJump ();
 
+					CurrentMovingType = PlayerMovingType.Running;
+
 					break;
 				case WorldFixtureData.air:
+					
 					if (physicsHandler.collusionSensor.WallContact == MoveDirection && MoveDirection != Direction.None && JumpManager.OnJump == false) {
 						Velocity.y = -WallSlideSpeed;
+						CurrentMovingType = PlayerMovingType.Sliding;
+					} else if (physicsHandler.collusionSensor.WallContact == MoveDirection && MoveDirection == Direction.None && JumpManager.OnJump == false) {
+						CurrentMovingType = PlayerMovingType.Falling;
 					}
 
 					switch (MoveDirection) {
 					case Direction.Left:
 						if (physicsHandler.collusionSensor.WallContact == MoveDirection && MoveDirection != Direction.None && ClimbJump == true && JumpManager.OnJump == false) {
 							JumpManager.StartJump (this.MoveDirection, JumpType.ClimbJump);
+							CurrentMovingType = PlayerMovingType.Jumping;
 							ClimbJump = false;
 						} else if (JumpManager.OnJump == false) {
 							if (MoveDirection != JumpManager.CurrentJumpingDirection)
@@ -167,6 +214,7 @@ namespace mapKnightLibrary
 					case Direction.Right:
 						if (physicsHandler.collusionSensor.WallContact == MoveDirection && MoveDirection != Direction.None && ClimbJump == true && JumpManager.OnJump == false) {
 							JumpManager.StartJump (this.MoveDirection, JumpType.ClimbJump);
+							CurrentMovingType = PlayerMovingType.Jumping;
 							ClimbJump = false;
 						} else if (JumpManager.OnJump == false) {
 							if (MoveDirection != JumpManager.CurrentJumpingDirection)
@@ -188,16 +236,19 @@ namespace mapKnightLibrary
 						if (physicsHandler.collusionSensor.WallContact == Direction.None && Jumping == true && DoubleJump == true) {
 							DoubleJump = false;
 							Velocity.y = JumpSpeed;
+							CurrentMovingType = PlayerMovingType.Jumping;
 						} else if (physicsHandler.collusionSensor.WallContact != Direction.None && physicsHandler.collusionSensor.WallContact == MoveDirection && Jumping == true) {
 							JumpManager.StartJump (this.MoveDirection, JumpType.WallJump);
+							CurrentMovingType = PlayerMovingType.Jumping;
 							break;
 						}
 					}
 
-
 					characterBody.LinearVelocity = Velocity;
+
 					break;
 				case WorldFixtureData.jumppad:
+					
 					switch (MoveDirection) {
 					case Direction.Left:
 						Velocity.x = -MoveSpeed;
@@ -217,6 +268,7 @@ namespace mapKnightLibrary
 
 					if (Jumping == true && physicsHandler.collusionSensor.playerCanJump == true) {
 						physicsHandler.collusionSensor.playerGroundJumpPad.ApplyImpulsTo (this.characterBody);
+						CurrentMovingType = PlayerMovingType.Jumping;
 					}
 
 
@@ -224,9 +276,11 @@ namespace mapKnightLibrary
 					ClimbJump = true;
 
 					JumpManager.EndJump ();
+
+					CurrentMovingType = PlayerMovingType.Running;
+
 					break;
 				default:
-					
 					switch (MoveDirection) {
 					case Direction.Left:
 						Velocity.x = -MoveSpeed;
@@ -244,6 +298,7 @@ namespace mapKnightLibrary
 
 					if (Jumping == true && physicsHandler.collusionSensor.playerCanJump == true) {
 						Velocity.y = JumpSpeed;
+						CurrentMovingType = PlayerMovingType.Jumping;
 					}
 
 					characterBody.LinearVelocity = Velocity;
@@ -252,13 +307,11 @@ namespace mapKnightLibrary
 					ClimbJump = true;
 				
 					JumpManager.EndJump ();
+
+					CurrentMovingType = PlayerMovingType.Running;
 					break;
 				}
-
 				JumpManager.Tick (frameTime);
-			}
-			if (characterBody.LinearVelocity.y == 0f && physicsHandler.collusionSensor.playerGround != (WorldFixtureData.ground | WorldFixtureData.jumppad)) {
-				this.AvoidPlatformGlitch = true;
 			}
 		}
 
@@ -282,7 +335,7 @@ namespace mapKnightLibrary
 				characterBody.CreateFixture (characterFixture);
 
 				b2PolygonShape characterGroundSensorShape = new b2PolygonShape ();
-				b2Vec2 GroundSensorPosition = new b2Vec2 (0f, -0.8f);
+				b2Vec2 GroundSensorPosition = new b2Vec2 (0f, -0.51f * CharacterSize.Height / PhysicsHandler.pixelPerMeter);
 				characterGroundSensorShape.SetAsBox (((float)CharacterSize.Width - 1f) / PhysicsHandler.pixelPerMeter / 2, 5f / PhysicsHandler.pixelPerMeter, GroundSensorPosition, 0f);
 
 				//untergrundsensor
@@ -296,7 +349,7 @@ namespace mapKnightLibrary
 				characterBody.CreateFixture (groundSensor);
 
 				b2PolygonShape characterLeftSensorShape = new b2PolygonShape ();
-				b2Vec2 LeftSensorPosition = new b2Vec2 (-0.6f, -0.5f);
+				b2Vec2 LeftSensorPosition = new b2Vec2 (-0.45f * CharacterSize.Width/ PhysicsHandler.pixelPerMeter, -0.14f * CharacterSize.Height/ PhysicsHandler.pixelPerMeter);
 				characterLeftSensorShape.SetAsBox ((float)5f / PhysicsHandler.pixelPerMeter, CharacterSize.Height / PhysicsHandler.pixelPerMeter / 4, LeftSensorPosition, 0f);
 
 				//leftsensor
@@ -310,7 +363,7 @@ namespace mapKnightLibrary
 				characterBody.CreateFixture (leftSensor);
 
 				b2PolygonShape characterRightSensorShape = new b2PolygonShape ();
-				b2Vec2 RightSensorPosition = new b2Vec2 (0.6f, -0.5f);
+				b2Vec2 RightSensorPosition = new b2Vec2 (0.45f * CharacterSize.Width/ PhysicsHandler.pixelPerMeter, -0.14f * CharacterSize.Height/ PhysicsHandler.pixelPerMeter);
 				characterRightSensorShape.SetAsBox ((float)5f / PhysicsHandler.pixelPerMeter, CharacterSize.Height / PhysicsHandler.pixelPerMeter / 4, RightSensorPosition, 0f);
 
 				//rightsensor
@@ -323,38 +376,76 @@ namespace mapKnightLibrary
 				rightSensor.restitution = 0f; //Rückprall
 				characterBody.CreateFixture (rightSensor);
 			}
-
 			return characterBody;
 		}
 
 		Direction internMoveDirection;
-
 		public Direction MoveDirection {
 			get{ return internMoveDirection; }
 			set {
 				if (internMoveDirection != value) {
-					switch (value) {
-					case Direction.Left:
-						if (CharacterSprite.ScaleX > 0)
-							CharacterSprite.ScaleX *= -1;
-						else
-							CharacterSprite.ScaleX *= 1;
-						CharacterSprite.RepeatForever (CharacterWalkRepeat);
-						break;
-					case Direction.Right:
-						if (CharacterSprite.ScaleX > 0)
-							CharacterSprite.ScaleX *= 1;
-						else
-							CharacterSprite.ScaleX *= -1;
-						CharacterSprite.RepeatForever (CharacterWalkRepeat);
-						break;
-					case Direction.None:
-						CharacterSprite.StopAllActions ();
-						CharacterSprite.TextureRectInPixels = CharacterStandingTextureRect;
-						break;
-					}
 					internMoveDirection = value;
+					if (DirectionChanged != null)
+						DirectionChanged (this, value);
 				}
+			}
+		}
+
+		private void UpdateSprite(object sender, Direction e)
+		{
+			switch (e) {
+			case Direction.Left:
+				if (CharacterSprite.ScaleX > 0)
+					CharacterSprite.ScaleX *= -1;
+				else
+					CharacterSprite.ScaleX *= 1;
+				UpdateSprite (this, CurrentMovingType);
+				break;
+			case Direction.Right:
+				if (CharacterSprite.ScaleX > 0)
+					CharacterSprite.ScaleX *= 1;
+				else
+					CharacterSprite.ScaleX *= -1;
+				UpdateSprite (this, CurrentMovingType);
+				break;
+			case Direction.None:
+				switch (CurrentMovingType) {
+				case PlayerMovingType.Running:
+					CharacterSprite.StopAllActions ();
+					if (!CharacterSprite.IsTextureRectRotated)
+						CharacterSprite.IsTextureRectRotated = true;
+					CharacterSprite.TextureRectInPixels = CharacterStandingTextureRect;
+					break;
+				default:
+					UpdateSprite (this, CurrentMovingType);
+					break;}
+				break;
+			}
+		}
+
+		private void UpdateSprite(object sender, PlayerMovingType e)
+		{
+			CharacterSprite.StopAllActions ();
+			switch (e) {
+			case PlayerMovingType.Falling:
+				CharacterSprite.RepeatForever (CharacterFallkRepeat);
+				break;
+			case PlayerMovingType.Running:
+				if (MoveDirection != Direction.None) {
+					CharacterSprite.RepeatForever (CharacterWalkRepeat);
+				} else {
+					CharacterSprite.StopAllActions ();
+					if (!CharacterSprite.IsTextureRectRotated)
+						CharacterSprite.IsTextureRectRotated = true;
+					CharacterSprite.TextureRectInPixels = CharacterStandingTextureRect;
+				}
+				break;
+			case PlayerMovingType.Jumping:
+				CharacterSprite.RunAction (CharacterJumpAnimate);
+				break;
+			case PlayerMovingType.Sliding:
+				CharacterSprite.RepeatForever (CharacterSlideRepeat);
+				break;
 			}
 		}
 	}

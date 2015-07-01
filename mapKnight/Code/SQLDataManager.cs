@@ -7,7 +7,7 @@ using Mono.Data.Sqlite;
 
 namespace mapKnightLibrary
 {
-	public class AndroidSQLDataManager : DataManager
+	public class AndroidSQLDataManager : DataBaseManager
 	{
 		//http://developer.xamarin.com/guides/cross-platform/application_fundamentals/data/part_4_using_adonet/
 
@@ -115,10 +115,9 @@ namespace mapKnightLibrary
 			}
 		}
 
-		public override bool BeginRead (string dataset)
+		public override bool BeginRead ()
 		{
 			DataBase.Open ();
-			//bei der SQL Datenbank nicht notwendig
 			return true;
 		}
 
