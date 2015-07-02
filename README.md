@@ -84,9 +84,15 @@ Changelog (german) :
 - Hinzufügen einer (in der jetzigen Version) nutzlosen Kiste
 - Hinzufügen einer Funktion, die es der App erlaubt Tiles zur Laufzeit zu ändern
 - Verbesserungen am Walljump
-- 
+
 !!! 30.06.2015 !!!
 - Implementation of a System to Save Data in 
   - a SQLDatabase
   - a DataFile
   - Code
+
+!!! 01.07.2015 !!!
+- Changed the Character Animations
+
+!!! 02.07.2015 !!!
+- Changed the Camera Follow
