@@ -51,7 +51,6 @@ namespace mapKnight
 			// Get the resolution of the main window...
 			var bounds = mainWindow.WindowSizeInPixels;
 
-			////definieren der Windowgröße auf 1280x576 p (16:9)
 			CCScene.SetDefaultDesignResolution (bounds.Width, bounds.Height, CCSceneResolutionPolicy.ShowAll);
 
 			//startScene = new StartScene (mainWindow);

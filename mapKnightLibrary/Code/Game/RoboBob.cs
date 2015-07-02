@@ -35,7 +35,7 @@ namespace mapKnightLibrary
 		static CCRepeatForever CharacterFallkRepeat = new CCRepeatForever (new CCAnimate (CharacterFallAnimation));
 
 		static CCRect CharacterStandingTextureRect = CharacterSprites.Frames.Find ((frame) => frame.TextureFilename.StartsWith ("walk0")).TextureRectInPixels;
-
+		static bool CharacterStandingTextureRotated = CharacterSprites.Frames.Find ((frame) => frame.TextureFilename.StartsWith ("walk0")).IsRotated;
 		//variablen
 		CCSize CharacterSize;
 		CCSprite CharacterSprite;
@@ -412,8 +412,8 @@ namespace mapKnightLibrary
 				switch (CurrentMovingType) {
 				case PlayerMovingType.Running:
 					CharacterSprite.StopAllActions ();
-					if (!CharacterSprite.IsTextureRectRotated)
-						CharacterSprite.IsTextureRectRotated = true;
+					if (CharacterSprite.IsTextureRectRotated != CharacterStandingTextureRotated)
+						CharacterSprite.IsTextureRectRotated = CharacterStandingTextureRotated;
 					CharacterSprite.TextureRectInPixels = CharacterStandingTextureRect;
 					break;
 				default:
