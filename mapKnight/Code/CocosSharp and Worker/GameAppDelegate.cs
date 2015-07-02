@@ -18,7 +18,6 @@ namespace mapKnight
 		ControlType RunningControlType;
 
 		GameScene gameScene ;
-		OptionScene optionScene;
 		CCWindow runningWindow;
 
 		mapKnightLibrary.Container gameContainer;
@@ -33,6 +32,9 @@ namespace mapKnight
 		public override void ApplicationDidFinishLaunching (CCApplication application, CCWindow mainWindow)
 		{
 			application.PreferMultiSampling = false;
+			// This tells the application to not use antialiasing which can 
+			// improve the performance of your game.
+
 			application.ContentRootDirectory = "Content";
 			application.ContentSearchPaths.Add ("fonts");
 			application.ContentSearchPaths.Add ("landscape");
@@ -45,8 +47,6 @@ namespace mapKnight
 			gameContainer.physicsHandler = new PhysicsHandler ();	
 
 			runningWindow = mainWindow;
-			// This tells the application to not use antialiasing which can 
-			// improve the performance of your game.
 
 			// Get the resolution of the main window...
 			var bounds = mainWindow.WindowSizeInPixels;
@@ -56,7 +56,6 @@ namespace mapKnight
 
 			//startScene = new StartScene (mainWindow);
 			gameScene = new GameScene (mainWindow, gameContainer, RunningControlType);
-			optionScene = new OptionScene (mainWindow);
 
 			// startet das erste Fenster
 			mainWindow.RunWithScene (gameScene);
