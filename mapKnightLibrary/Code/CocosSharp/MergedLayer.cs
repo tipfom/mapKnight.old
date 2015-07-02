@@ -31,6 +31,8 @@ namespace mapKnightLibrary
 		//particles
 		GroundParticle PlayerMovingParticle;
 
+		CameraMover cameraMover;
+
 		public MergedLayer (CCWindow mainWindow, Container mainContainer)
 		{
 			screenSize = mainWindow.WindowSizeInPixels;
@@ -40,6 +42,7 @@ namespace mapKnightLibrary
 			mapCreator = "unspecified";
 			mapName = "unspecified";
 
+			cameraMover = new CameraMover (mainContainer.mainCharacter.Position, new CCSize (150, 200));
 		}
 
 
@@ -102,19 +105,21 @@ namespace mapKnightLibrary
 
 		public void CenterCamera(){
 
-			int x = (int)Math.Max (gameContainer.mainCharacter.Position.X, screenSize.Width / 2);
-			int y = (int)Math.Max (gameContainer.mainCharacter.Position.Y, screenSize.Height / 2);
+			//int x = (int)Math.Max (gameContainer.mainCharacter.Position.X, screenSize.Width / 2);
+			//int y = (int)Math.Max (gameContainer.mainCharacter.Position.Y, screenSize.Height / 2);
 
-			x = (int)Math.Min (x, Map.MapDimensions.Size.Width * Map.TileTexelSize.Width * Map.ScaleX - screenSize.Width / 2);
-			y = (int)Math.Min (y, Map.MapDimensions.Size.Height * Map.TileTexelSize.Height * Map.ScaleY - screenSize.Height / 2);
+			//x = (int)Math.Min (x, Map.MapDimensions.Size.Width * Map.TileTexelSize.Width * Map.ScaleX - screenSize.Width / 2);
+			//y = (int)Math.Min (y, Map.MapDimensions.Size.Height * Map.TileTexelSize.Height * Map.ScaleY - screenSize.Height / 2);
 			//bestimmt, ob die x bzw y koordinate außerhalbe der map wäre
 
-			//Zeit um folgendes herauszufinden : 2 Tage
-			this.Position = new CCPoint (screenSize.Width / 2 - x, screenSize.Height / 2 - y);
-			Map.TileLayersContainer.Position = new CCPoint (screenSize.Width / 2 - x / Map.ScaleX, screenSize.Height / 2 - y / Map.ScaleY);
-			Map.Position = new CCPoint (x - screenSize.Width / 2 * Map.ScaleX, y - screenSize.Height / 2 * Map.ScaleY);
+			cameraMover.Update (gameContainer.mainCharacter.Position, gameContainer.mainCharacter.Size);
 
-			Background.Position = new CCPoint (x,y);
+			//Zeit um folgendes herauszufinden : 2 Tage
+			this.Position = new CCPoint (screenSize.Width / 2 - cameraMover.CameraCenter.X, screenSize.Height / 2 - cameraMover.CameraCenter.Y);
+			Map.TileLayersContainer.Position = new CCPoint (screenSize.Width / 2 - cameraMover.CameraCenter.X / Map.ScaleX, screenSize.Height / 2 - cameraMover.CameraCenter.Y / Map.ScaleY);
+			Map.Position = new CCPoint (cameraMover.CameraCenter.X - screenSize.Width / 2 * Map.ScaleX, cameraMover.CameraCenter.Y - screenSize.Height / 2 * Map.ScaleY);
+
+			Background.Position = new CCPoint (cameraMover.CameraCenter.X, cameraMover.CameraCenter.Y);
 		}
 
 		public override void Update (float dt)
@@ -122,6 +127,7 @@ namespace mapKnightLibrary
 			if (gameContainer.mainCharacter.MoveDirection != PlayerMovingParticle.ParticleAppearDirection)
 				this.PlayerMovingParticle.ParticleAppearDirection = gameContainer.mainCharacter.MoveDirection;
 			this.PlayerMovingParticle.Position = new CCPoint (gameContainer.mainCharacter.Position.X, gameContainer.mainCharacter.Position.Y - gameContainer.mainCharacter.Size.Height / 2);
+			cameraMover.Update (gameContainer.mainCharacter.Position, gameContainer.mainCharacter.Size);
 		}
 			
 		public CCPoint MapPosition{get{ return Map.Position;}}

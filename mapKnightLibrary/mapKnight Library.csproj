@@ -53,6 +53,7 @@
     <Compile Include="Code\Data\SQLDataManager.cs" />
     <Compile Include="Code\Data\XMLDataManager.cs" />
     <Compile Include="Code\Data\StaticData.cs" />
+    <Compile Include="Code\CameraMover.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
