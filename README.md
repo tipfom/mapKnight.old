@@ -97,3 +97,4 @@ Changelog (german) :
 !!! 02.07.2015 !!!
 - Changed the Camera Follow
 - Improved the characters animations
+- Changed the Interface
