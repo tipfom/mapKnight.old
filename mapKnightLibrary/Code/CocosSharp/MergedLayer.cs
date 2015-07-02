@@ -42,9 +42,7 @@ namespace mapKnightLibrary
 			mapCreator = "unspecified";
 			mapName = "unspecified";
 
-			cameraMover = new CameraMover (mainContainer.mainCharacter.Position, new CCSize (150, 200));
 		}
-
 
 		protected override void AddedToScene ()
 		{
@@ -52,7 +50,8 @@ namespace mapKnightLibrary
 			base.AddedToScene ();
 
 			Background = new CCSprite ("background");
-			Background.Scale = screenSize.Width / Background.ContentSize.Width;
+			Background.ScaleX = screenSize.Width / Background.ContentSize.Width;
+			Background.ScaleY = screenSize.Height / Background.ContentSize.Height;
 
 			Map = new CCTileMap (new CCTileMapInfo ("tilemaps/bitte.tmx")); 
 			//bei einer Invocation Exception einfach ne neue Map machen
@@ -100,18 +99,13 @@ namespace mapKnightLibrary
 			this.AddChild (PlayerMovingParticle);
 			PlayerMovingParticle.Position = gameContainer.mainCharacter.Position;
 
+			//camera move init
+			cameraMover = new CameraMover (gameContainer.mainCharacter.Position, new CCSize (150, 200), new CCSize (Map.TileTexelSize.Width * Map.MapDimensions.Size.Width * Map.ScaleX, Map.TileTexelSize.Height * Map.MapDimensions.Size.Height * Map.ScaleY), screenSize);
+
 			Schedule (Update);
 		}
 
 		public void CenterCamera(){
-
-			//int x = (int)Math.Max (gameContainer.mainCharacter.Position.X, screenSize.Width / 2);
-			//int y = (int)Math.Max (gameContainer.mainCharacter.Position.Y, screenSize.Height / 2);
-
-			//x = (int)Math.Min (x, Map.MapDimensions.Size.Width * Map.TileTexelSize.Width * Map.ScaleX - screenSize.Width / 2);
-			//y = (int)Math.Min (y, Map.MapDimensions.Size.Height * Map.TileTexelSize.Height * Map.ScaleY - screenSize.Height / 2);
-			//bestimmt, ob die x bzw y koordinate außerhalbe der map wäre
-
 			cameraMover.Update (gameContainer.mainCharacter.Position, gameContainer.mainCharacter.Size);
 
 			//Zeit um folgendes herauszufinden : 2 Tage
