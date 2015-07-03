@@ -98,3 +98,7 @@ Changelog (german) :
 - Changed the Camera Follow
 - Improved the characters animations
 - Changed the Interface
+
+!!! 03.07.2015 !!!
+- Changed the way touches are recognized
+- Added a clickable Chest to the Game
