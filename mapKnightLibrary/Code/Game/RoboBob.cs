@@ -115,7 +115,7 @@ namespace mapKnightLibrary
 
 			JumpManager = new JumpManager (this.characterBody, 
 				new ClimbJumpConfig () { jumpSize = new CCSize (6f, 17f), timeNeeded = 0.3f }, 
-				new WallJumpConfig () { jumpImpuls = new b2Vec2 (6f, 15f), jumpTickCount = 60f, jumpOnXDecrease = 0.1f });
+				new WallJumpConfig () { jumpImpuls = new b2Vec2 (6f, 15f), jumpTickCount = 20f, jumpOnXDecrease = 0.1f });
 		}
 	
 		CCPoint Character.Position {

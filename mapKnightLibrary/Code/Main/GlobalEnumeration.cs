@@ -45,4 +45,12 @@ namespace mapKnightLibrary
 		Mana,
 		Life
 	}
+
+	public enum TouchInfo
+	{
+		Canceled,
+		Began,
+		Ended,
+		Moved
+	}
 }

@@ -54,6 +54,10 @@
     <Compile Include="Code\Data\XMLDataManager.cs" />
     <Compile Include="Code\Data\StaticData.cs" />
     <Compile Include="Code\CameraMover.cs" />
+    <Compile Include="Code\ClickManager.cs" />
+    <Compile Include="Code\Main\GlobalInterace.cs" />
+    <Compile Include="Code\Main\Clickable.cs" />
+    <Compile Include="Code\Game\Chest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -78,5 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="EmptyTextFile.txt" />
   </ItemGroup>
 </Project>

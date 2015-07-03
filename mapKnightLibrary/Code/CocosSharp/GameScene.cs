@@ -9,26 +9,17 @@ namespace mapKnightLibrary
 	public class GameScene : CCScene
 	{
 		MergedLayer GameLayer;
-
 		CCSprite[] ManaSprite, LifeSprite;
-
 		CCSprite JumpButton, MoveRightButton, MoveLeftButton;
-
 		CCLabel FPSLabel;
-
 		CCLabel MapNameLabel, MapVersionLabel, MapCreatorLabel;
-
-		CCEventListenerTouchAllAtOnce touchListener;
-
+		CCLayer InterfaceLayer;
 		CCSize screenSize;
 
 		Container gameContainer;
-
-		CCTouch LastCanceledTouch;
-
 		ControlType CurrentControlType;
 
-		CCLayer InterfaceLayer;
+		ClickManager clickManager;
 
 		public GameScene (CCWindow mainWindow, Container mainContainer, ControlType RunningControlType) : base(mainWindow)
 		{
@@ -44,18 +35,14 @@ namespace mapKnightLibrary
 			screenSize = mainWindow.WindowSizeInPixels;
 
 			//Touchlistener Initialisierung
-			touchListener = new CCEventListenerTouchAllAtOnce ();
+			clickManager = new ClickManager (screenSize, gameContainer);
+			this.AddEventListener (clickManager, this);
 
 			switch (RunningControlType) {
 			case ControlType.Slide:
-				touchListener.OnTouchesMoved = Slide_HandleTouchesMoved; 
-				touchListener.OnTouchesBegan = Slide_HandleTouchesBegan;
-				touchListener.OnTouchesEnded = Slide_HandleTouchesEnded;
-				touchListener.OnTouchesCancelled = Slide_HandleTouchesCanceled;
-
 				break;
 			case ControlType.Button:
-				JumpButton = new CCSprite ("menu_arrow");
+				JumpButton = new CCSprite ("menu_arrow_jump");
 				MoveLeftButton = new CCSprite ("menu_arrow");
 				MoveRightButton = new CCSprite ("menu_arrow");
 
@@ -77,15 +64,19 @@ namespace mapKnightLibrary
 				InterfaceLayer.AddChild (MoveLeftButton);
 				InterfaceLayer.AddChild (MoveRightButton);
 
-				touchListener.OnTouchesMoved = Button_HandleTouchesMoved; 
-				touchListener.OnTouchesBegan = Button_HandleTouchesBegan;
-				touchListener.OnTouchesEnded = Button_HandleTouchesEnded;
-				touchListener.OnTouchesCancelled = Button_HandleTouchesCanceled;
+				Clickable JumpButtonClickable = new Clickable (JumpButton.ScaledContentSize, JumpButton.Position, new CCSize (1000, 1000)){ };
+				Clickable MoveLeftButtonClickable = new Clickable (MoveLeftButton.ScaledContentSize, MoveLeftButton.Position, new CCSize (1000, 1000)){ };
+				Clickable MoveRightButtonClickable = new Clickable (MoveRightButton.ScaledContentSize, MoveRightButton.Position, new CCSize (1000, 1000)){ };
 
+				JumpButtonClickable.ClickedEvent += JumpB_HandleButtonClicked;
+				MoveLeftButtonClickable.ClickedEvent += LeftB_HandleButtonClicked;
+				MoveRightButtonClickable.ClickedEvent += RightB_HandleButtonClicked;
+
+				clickManager.AddObject (JumpButtonClickable);
+				clickManager.AddObject (MoveLeftButtonClickable);
+				clickManager.AddObject (MoveRightButtonClickable);
 				break;
 			}
-
-			AddEventListener (touchListener, this);
 
 			//Map Label
 			MapNameLabel = new CCLabel ("Map Name : " + GameLayer.mapName, "arial", 22) {
@@ -116,11 +107,11 @@ namespace mapKnightLibrary
 
 			ManaSprite [0].Scale = 6f;
 			ManaSprite [1].Scale = 6f;
-			LifeSprite [0].Scale = 6f;
-			LifeSprite [1].Scale = 6f;
+			LifeSprite [0].Scale = 2f;
+			LifeSprite [1].Scale = 2f;
 
-			LifeSprite [1].Position = new CCPoint (screenSize.Width - LifeSprite [1].ScaledContentSize.Width, screenSize.Height- LifeSprite [1].ScaledContentSize.Height);
-			ManaSprite [1].Position = new CCPoint (screenSize.Width - ManaSprite [1].ScaledContentSize.Width, LifeSprite[1].Position.Y - ManaSprite [1].ScaledContentSize.Height - 10f);
+			LifeSprite [1].Position = new CCPoint (screenSize.Width - LifeSprite [1].ScaledContentSize.Width, screenSize.Height - LifeSprite [1].ScaledContentSize.Height);
+			ManaSprite [1].Position = new CCPoint (screenSize.Width - ManaSprite [1].ScaledContentSize.Width, LifeSprite [1].Position.Y - ManaSprite [1].ScaledContentSize.Height - 10f);
 
 			InterfaceLayer.AddChild (ManaSprite [1]);
 			InterfaceLayer.AddChild (ManaSprite [0]);
@@ -129,7 +120,7 @@ namespace mapKnightLibrary
 
 			//FPS Label
 			FPSLabel = new CCLabel ("Score: 0", "arial", 22);
-			FPSLabel.Position = new CCPoint (FPSLabel.ContentSize.Width / 2, MapVersionLabel.Position.Y - 10f - FPSLabel.ContentSize.Height / 2);
+			FPSLabel.Position = new CCPoint (FPSLabel.ContentSize.Width / 2, MapVersionLabel.Position.Y - 10 - FPSLabel.ContentSize.Height);
 			FPSLabel.Color = new CCColor3B (255, 255, 255);
 			InterfaceLayer.AddChild (FPSLabel);
 
@@ -143,6 +134,10 @@ namespace mapKnightLibrary
 			gameContainer.mainCharacter.CurrentMana = 4;
 
 			this.AddChild (InterfaceLayer);
+
+			foreach (Chest knownChest in gameContainer.chestContainer) {
+				clickManager.AddObject (knownChest);
+			}
 
 			Schedule (GameLoop);
 		}
@@ -185,141 +180,65 @@ namespace mapKnightLibrary
 			foreach (Platform knownPlatform in gameContainer.platformContainer) {
 				knownPlatform.Move ();
 			}
+			foreach (Chest knownChest in gameContainer.chestContainer) {
+				knownChest.UpdateClickPosition (GameLayer.cameraMover.CameraCenter, screenSize);
+			}
 
 			if (CurrentControlType == ControlType.Button)
 				gameContainer.mainCharacter.Jump = false;
 
+
+			#if DEBUG
 			//debugmenu update	
 			gameContainer.physicsHandler.debugDrawer.ClearBuffer ();
 			gameContainer.physicsHandler.gameWorld.DrawDebugData ();
-
+			#endif
 		}
 
-		#region SlideTouchHandler
-		private void Slide_HandleTouchesMoved(System.Collections.Generic.List<CCTouch> touches, CCEvent touchEvent)
-		{
-			foreach (CCTouch Touch in touches) {
-				if (Touch.LocationOnScreen.X < screenSize.Width / 3) {
-					//keine Aktionen in diesem bereich bei bewegung
-				} else {
-					if (Touch.StartLocationOnScreen.Y - Touch.LocationOnScreen.Y > screenSize.Height / 3 && LastCanceledTouch != Touch) {
-						gameContainer.mainCharacter.Jump = true;
-						LastCanceledTouch = Touch;
-					}
+		#region HandleButtonClick
+
+		CCTouch LastCanceledTouch;
+
+		void JumpB_HandleButtonClicked(object sender, TouchInfo e){
+			switch (e) {
+			case TouchInfo.Began:
+				//wenn der RightButton geklickt wurde 
+				if (sender != LastCanceledTouch) {
+					gameContainer.mainCharacter.Jump = true;
+					LastCanceledTouch = (CCTouch)sender;
 				}
+				break;
 			}
 		}
 
-		private void Slide_HandleTouchesBegan(System.Collections.Generic.List<CCTouch> touches, CCEvent touchEvent)
-		{
-			foreach (CCTouch Touch in touches) {
-				if (Touch.LocationOnScreen.X < screenSize.Width / 3) {
-					if (Touch.LocationOnScreen.X < screenSize.Width / 6) {
-						gameContainer.mainCharacter.MoveDirection = Direction.Left;
-					} else {
-						gameContainer.mainCharacter.MoveDirection = Direction.Right;
-					}
-				} else { }
+		void LeftB_HandleButtonClicked(object sender, TouchInfo e){
+			switch (e) {
+			case TouchInfo.Began:
+				gameContainer.mainCharacter.MoveDirection = Direction.Left;
+				break;
+			case TouchInfo.Ended:
+				gameContainer.mainCharacter.MoveDirection = Direction.None;
+				break;
+			case TouchInfo.Canceled:
+				gameContainer.mainCharacter.MoveDirection = Direction.None;
+				break;
 			}
 		}
 
-		private void Slide_HandleTouchesEnded(System.Collections.Generic.List<CCTouch> touches, CCEvent touchEvent)
-		{
-			foreach (CCTouch Touch in touches) {
-				if (Touch.LocationOnScreen.X < screenSize.Width / 3) {
-					if (Touch.LocationOnScreen.X < screenSize.Width / 6) {
-						gameContainer.mainCharacter.MoveDirection = Direction.None;
-					} else {
-						gameContainer.mainCharacter.MoveDirection = Direction.None;
-					}
-				} else {
-					gameContainer.mainCharacter.Jump = false;
-				}
+		void RightB_HandleButtonClicked(object sender, TouchInfo e){
+			switch (e) {
+			case TouchInfo.Began:
+				gameContainer.mainCharacter.MoveDirection = Direction.Right;
+				break;
+			case TouchInfo.Ended:
+				gameContainer.mainCharacter.MoveDirection = Direction.None;
+				break;
+			case TouchInfo.Canceled:
+				gameContainer.mainCharacter.MoveDirection = Direction.None;
+				break;
 			}
 		}
 
-		private void Slide_HandleTouchesCanceled(System.Collections.Generic.List<CCTouch> touches, CCEvent touchEvent)
-		{
-			foreach (CCTouch Touch in touches) {
-				if (Touch.LocationOnScreen.X < screenSize.Width / 3) {
-					if (Touch.LocationOnScreen.X < screenSize.Width / 6) {
-						gameContainer.mainCharacter.MoveDirection = Direction.None;
-					} else {
-						gameContainer.mainCharacter.MoveDirection = Direction.None;
-					}
-				} else {
-					gameContainer.mainCharacter.Jump = false;
-				}
-			}
-		}
-		#endregion
-
-		#region ButtonTouchListener
-		private void Button_HandleTouchesMoved(System.Collections.Generic.List<CCTouch> touches, CCEvent touchEvent)
-		{
-			//zur Zeit noch unnötig
-		}
-
-		private void Button_HandleTouchesBegan(System.Collections.Generic.List<CCTouch> touches, CCEvent touchEvent)
-		{
-			foreach (CCTouch Touch in touches) {
-				//bei den Y Koordinaten muss von der screenHeight subtrahiert werden, weil TouchPoint(0,0) = links oben; ButtonPoint(0,0) = linksunten
-				if (Math.Abs ((Touch.LocationOnScreen.X - MoveLeftButton.Position.X) + (screenSize.Height - Touch.LocationOnScreen.Y - MoveLeftButton.Position.Y)) <= MoveLeftButton.ScaledContentSize.Width / 2) {
-					if (Math.Abs (-(Touch.LocationOnScreen.X - MoveLeftButton.Position.X) + (screenSize.Height - Touch.LocationOnScreen.Y - MoveLeftButton.Position.Y)) <= MoveLeftButton.ScaledContentSize.Height / 2) {
-						//wenn der LeftButton geklickt wurde 
-						gameContainer.mainCharacter.MoveDirection = Direction.Left;
-					}
-				} else if (Math.Abs ((Touch.LocationOnScreen.X - MoveRightButton.Position.X) + (screenSize.Height - Touch.LocationOnScreen.Y - MoveRightButton.Position.Y)) <= MoveRightButton.ScaledContentSize.Width / 2) {
-					if (Math.Abs (-(Touch.LocationOnScreen.X - MoveRightButton.Position.X) + (screenSize.Height - Touch.LocationOnScreen.Y - MoveRightButton.Position.Y)) <= MoveRightButton.ScaledContentSize.Height / 2) {
-						//wenn der RightButton geklickt wurde 
-						gameContainer.mainCharacter.MoveDirection = Direction.Right;
-					}
-				} else if (Math.Abs ((Touch.LocationOnScreen.X - JumpButton.Position.X) + (screenSize.Height - Touch.LocationOnScreen.Y - JumpButton.Position.Y)) <= JumpButton.ScaledContentSize.Width / 2) {
-					if (Math.Abs (-(Touch.LocationOnScreen.X - JumpButton.Position.X) + (screenSize.Height - Touch.LocationOnScreen.Y - JumpButton.Position.Y)) <= JumpButton.ScaledContentSize.Height / 2 && Touch != LastCanceledTouch) {
-						//wenn der RightButton geklickt wurde 
-						gameContainer.mainCharacter.Jump = true;
-						LastCanceledTouch = Touch;
-					}
-				}
-			}
-		}
-
-		private void Button_HandleTouchesEnded(System.Collections.Generic.List<CCTouch> touches, CCEvent touchEvent)
-		{
-			foreach (CCTouch Touch in touches) {
-				if (Math.Abs ((Touch.PreviousLocationOnScreen.X - MoveLeftButton.Position.X) + (screenSize.Height - Touch.PreviousLocationOnScreen.Y - MoveLeftButton.Position.Y)) <= MoveLeftButton.ScaledContentSize.Width / 2) {
-					if (Math.Abs (-(Touch.PreviousLocationOnScreen.X - MoveLeftButton.Position.X) + (screenSize.Height - Touch.PreviousLocationOnScreen.Y - MoveLeftButton.Position.Y)) <= MoveLeftButton.ScaledContentSize.Height / 2) {
-						//wenn der LeftButton gecanceled wurde 
-						gameContainer.mainCharacter.MoveDirection = Direction.None;
-					}
-				} else if (Math.Abs ((Touch.PreviousLocationOnScreen.X - MoveRightButton.Position.X) + (screenSize.Height - Touch.PreviousLocationOnScreen.Y - MoveRightButton.Position.Y)) <= MoveRightButton.ScaledContentSize.Width / 2) {
-					if (Math.Abs (-(Touch.PreviousLocationOnScreen.X - MoveRightButton.Position.X) + (screenSize.Height - Touch.PreviousLocationOnScreen.Y - MoveRightButton.Position.Y)) <= MoveRightButton.ScaledContentSize.Height / 2) {
-						//wenn der RightButton gecanceled wurde 
-						gameContainer.mainCharacter.MoveDirection = Direction.None;
-					}
-				}
-
-				//Chestcheck
-
-			}
-		}
-
-		private void Button_HandleTouchesCanceled(System.Collections.Generic.List<CCTouch> touches, CCEvent touchEvent)
-		{
-			foreach (CCTouch Touch in touches) {
-				if (Math.Abs ((Touch.PreviousLocationOnScreen.X - MoveLeftButton.Position.X) + (screenSize.Height - Touch.PreviousLocationOnScreen.Y - MoveLeftButton.Position.Y)) <= MoveLeftButton.ScaledContentSize.Width / 2) {
-					if (Math.Abs (-(Touch.PreviousLocationOnScreen.X - MoveLeftButton.Position.X) + (screenSize.Height - Touch.PreviousLocationOnScreen.Y - MoveLeftButton.Position.Y)) <= MoveLeftButton.ScaledContentSize.Height / 2) {
-						//wenn der LeftButton gecanceled wurde 
-						gameContainer.mainCharacter.MoveDirection = Direction.None;
-					}
-				} else if (Math.Abs ((Touch.PreviousLocationOnScreen.X - MoveRightButton.Position.X) + (screenSize.Height - Touch.PreviousLocationOnScreen.Y - MoveRightButton.Position.Y)) <= MoveRightButton.ScaledContentSize.Width / 2) {
-					if (Math.Abs (-(Touch.PreviousLocationOnScreen.X - MoveRightButton.Position.X) + (screenSize.Height - Touch.PreviousLocationOnScreen.Y - MoveRightButton.Position.Y)) <= MoveRightButton.ScaledContentSize.Height / 2) {
-						//wenn der RightButton gecanceled wurde 
-						gameContainer.mainCharacter.MoveDirection = Direction.None;
-					}
-				}
-			}
-		}
 		#endregion
 	}
 }
