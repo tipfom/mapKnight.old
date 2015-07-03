@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,11 +53,11 @@
     <Compile Include="Code\Data\SQLDataManager.cs" />
     <Compile Include="Code\Data\XMLDataManager.cs" />
     <Compile Include="Code\Data\StaticData.cs" />
-    <Compile Include="Code\CameraMover.cs" />
-    <Compile Include="Code\ClickManager.cs" />
     <Compile Include="Code\Main\GlobalInterace.cs" />
     <Compile Include="Code\Main\Clickable.cs" />
     <Compile Include="Code\Game\Chest.cs" />
+    <Compile Include="Code\Tools\CameraMover.cs" />
+    <Compile Include="Code\Tools\ClickManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -68,6 +68,7 @@
     <Folder Include="Code\Main\" />
     <Folder Include="Code\CocosSharp\Particle\" />
     <Folder Include="Code\Data\" />
+    <Folder Include="Code\Tools\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="box2d">
