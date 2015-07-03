@@ -31,7 +31,7 @@ namespace mapKnightLibrary
 		//particles
 		GroundParticle PlayerMovingParticle;
 
-		CameraMover cameraMover;
+		public CameraMover cameraMover;
 
 		public MergedLayer (CCWindow mainWindow, Container mainContainer)
 		{
@@ -101,6 +101,11 @@ namespace mapKnightLibrary
 
 			//camera move init
 			cameraMover = new CameraMover (gameContainer.mainCharacter.Position, new CCSize (150, 200), new CCSize (Map.TileTexelSize.Width * Map.MapDimensions.Size.Width * Map.ScaleX, Map.TileTexelSize.Height * Map.MapDimensions.Size.Height * Map.ScaleY), screenSize);
+
+			gameContainer.chestContainer.Add (new Chest (new CCTileMapCoordinates (132, 74), Map.LayerNamed ("chestlayer"), Map.ScaleX, Map.MapDimensions.Size));
+			foreach (Chest knownChest in gameContainer.chestContainer) {
+				this.AddChild (knownChest, 1);
+			}
 
 			Schedule (Update);
 		}
