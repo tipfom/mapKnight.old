@@ -32,6 +32,11 @@ namespace mapKnightLibrary
 		public float MovedXChangeMin { get { return ChangeX; } }
 
 		public float MovedYChangeMin { get { return ChangeY; } }
+
+		public static Clickable BySprite(CCSprite Sprite, CCSize ClickableMovedSize)
+		{
+			return new Clickable (Sprite.ScaledContentSize, new CCPoint (Sprite.Position.X, Sprite.Position.Y), ClickableMovedSize);
+		}
 	}
 }
 

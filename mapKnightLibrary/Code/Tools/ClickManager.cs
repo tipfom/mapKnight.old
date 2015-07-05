@@ -11,11 +11,15 @@ namespace mapKnightLibrary
 		CCSize screenSize;
 		CCTouch LastCanceledTouch;
 
+		List<IClickable> RemoveList;
+		List<IClickable> AddList;
 		List<IClickable> ObjectList;
 
 		public ClickManager (CCSize ScreenSize, Container mainContainer) : base()
 		{
 			ObjectList = new List<IClickable> ();
+			RemoveList = new List<IClickable> ();
+			AddList = new List<IClickable> ();
 
 			gameContainer = mainContainer;
 			screenSize = ScreenSize;
@@ -27,12 +31,32 @@ namespace mapKnightLibrary
 		}
 
 		public void AddObject(IClickable Object){
-			ObjectList.Add (Object);
+			AddList.Add (Object);
 		}
 
 		public void RemoveObject(IClickable Object){
 			if (ObjectList.Contains (Object))
+				RemoveList.Add (Object);
+		}
+
+		public void AddManyObjects(IClickable[] Objects){
+			AddList.AddRange (Objects);
+		}
+
+		public void RemoveManyObjects(IClickable[] Objects){
+			foreach (IClickable Object in Objects) {
+				if (ObjectList.Contains (Object))
+					RemoveList.Add (Object);		
+			}
+		}
+
+		void Flush(){
+			foreach (IClickable Object in AddList) {
+				ObjectList.Add (Object);
+			}
+			foreach (IClickable Object in RemoveList) {
 				ObjectList.Remove (Object);
+			}
 		}
 
 		//Slide Region ist in einer Textdatei, da es zZ mit dem neuen Konzept nicht funktioniert
@@ -51,6 +75,7 @@ namespace mapKnightLibrary
 					}
 				}
 			}
+			Flush ();
 		}
 
 		private void HandleTouchesBegan(System.Collections.Generic.List<CCTouch> touches, CCEvent touchEvent)
@@ -64,6 +89,7 @@ namespace mapKnightLibrary
 					}
 				}
 			}
+			Flush ();
 		}
 
 		private void HandleTouchesEnded(System.Collections.Generic.List<CCTouch> touches, CCEvent touchEvent)
@@ -77,6 +103,7 @@ namespace mapKnightLibrary
 					}
 				}
 			}
+			Flush ();
 		}
 
 		private void HandleTouchesCanceled(System.Collections.Generic.List<CCTouch> touches, CCEvent touchEvent)
@@ -90,6 +117,7 @@ namespace mapKnightLibrary
 					}
 				}
 			}
+			Flush ();
 		}
 		#endregion
 	}

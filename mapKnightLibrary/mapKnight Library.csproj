@@ -54,10 +54,18 @@
     <Compile Include="Code\Data\XMLDataManager.cs" />
     <Compile Include="Code\Data\StaticData.cs" />
     <Compile Include="Code\Main\GlobalInterace.cs" />
-    <Compile Include="Code\Main\Clickable.cs" />
     <Compile Include="Code\Game\Chest.cs" />
     <Compile Include="Code\Tools\CameraMover.cs" />
     <Compile Include="Code\Tools\ClickManager.cs" />
+    <Compile Include="Code\Game\Inventory\Interfaces.cs" />
+    <Compile Include="Code\Game\Inventory\Enumerations.cs" />
+    <Compile Include="Code\Game\Inventory\Inventory.cs" />
+    <Compile Include="Code\Game\Inventory\GlobalInventory.cs" />
+    <Compile Include="Code\Tools\Clickable.cs" />
+    <Compile Include="Code\Game\Inventory\TestItems\Potion1.cs" />
+    <Compile Include="Code\Game\Inventory\TestItems\Potion2.cs" />
+    <Compile Include="Code\Game\Inventory\TestItems\Potion3.cs" />
+    <Compile Include="Code\Game\Inventory\Items\NonePotion.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -69,6 +77,9 @@
     <Folder Include="Code\CocosSharp\Particle\" />
     <Folder Include="Code\Data\" />
     <Folder Include="Code\Tools\" />
+    <Folder Include="Code\Game\Inventory\" />
+    <Folder Include="Code\Game\Inventory\TestItems\" />
+    <Folder Include="Code\Game\Inventory\Items\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="box2d">

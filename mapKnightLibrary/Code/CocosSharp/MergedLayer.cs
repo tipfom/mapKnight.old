@@ -83,7 +83,7 @@ namespace mapKnightLibrary
 			this.AddChild (Background, -1);
 
 			this.AddChild (Map, 1);
-			this.AddChild (gameContainer.mainCharacter.Sprite, 2);
+			this.AddChild ((CCLayer)gameContainer.mainCharacter, 2);
 			this.AddChild (gameContainer.physicsHandler.debugDrawer.DrawNode, 0);
 
 			foreach (Platform knownPlatform in gameContainer.platformContainer) {

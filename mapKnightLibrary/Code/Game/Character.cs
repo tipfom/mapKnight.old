@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using CocosSharp;
 using Box2D.Dynamics;
@@ -11,6 +12,7 @@ namespace mapKnightLibrary
 		bool bindToPhysicsHandler(PhysicsHandler parentPhysicsHandler);
 		b2Body createPhysicsBody(b2World bodyWorld);
 		void Update(float frameTime);
+		void UpdateAttributes (Dictionary<Inventory.Attribute,short>[] Attributes = null);
 
 		//Variable Eigenschaften
 		int CurrentLife{ get; set;}
@@ -18,11 +20,9 @@ namespace mapKnightLibrary
 		Direction MoveDirection{ get; set;}
 		CCPoint Position{ get; set;}
 		bool Jump{ get; set;}
+		Dictionary <Inventory.Attribute, short> Attributes{ get; }
 
 		//statische Eigenschaften
-		int MaxLife{ get;}
-		int MaxMana{ get;}
-		CCSprite Sprite{ get;}
 		CCSize Size{ get; }
 
 		//Events

@@ -159,5 +159,7 @@
     <AndroidAsset Include="Assets\Content\interface\batterie_full.png" />
     <AndroidAsset Include="Assets\Content\interface\heart_empty.png" />
     <AndroidAsset Include="Assets\Content\interface\heart_full.png" />
+    <AndroidAsset Include="Assets\Content\interface\interface_sack.png" />
+    <AndroidAsset Include="Assets\Content\interface\interface_dropdownmenu.png" />
   </ItemGroup>
 </Project>
