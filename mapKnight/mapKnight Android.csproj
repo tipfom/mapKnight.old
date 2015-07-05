@@ -149,7 +149,6 @@
     <AndroidAsset Include="Assets\Content\particle\particle_ground.plist" />
     <AndroidAsset Include="Assets\Content\landscape\image_jumppad.png" />
     <AndroidAsset Include="Assets\Content\landscape\data_jumppad.plist" />
-    <AndroidAsset Include="Assets\Content\tilemaps\chest.png" />
     <AndroidAsset Include="Assets\Config\values.xml" />
     <AndroidAsset Include="Assets\Content\character\character.plist" />
     <AndroidAsset Include="Assets\Content\character\character.png" />
@@ -161,5 +160,6 @@
     <AndroidAsset Include="Assets\Content\interface\heart_full.png" />
     <AndroidAsset Include="Assets\Content\interface\interface_sack.png" />
     <AndroidAsset Include="Assets\Content\interface\interface_dropdownmenu.png" />
+    <AndroidAsset Include="Assets\Content\tilemaps\chest.png" />
   </ItemGroup>
 </Project>

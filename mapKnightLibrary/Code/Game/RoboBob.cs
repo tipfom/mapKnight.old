@@ -226,7 +226,7 @@ namespace mapKnightLibrary
 					if (physicsHandler.collusionSensor.WallContact == MoveDirection && MoveDirection != Direction.None && JumpManager.OnJump == false) {
 						Velocity.y = -WallSlideSpeed;
 						CurrentMovingType = PlayerMovingType.Sliding;
-					} else if (physicsHandler.collusionSensor.WallContact == MoveDirection && MoveDirection == Direction.None && JumpManager.OnJump == false) {
+					} else if (JumpManager.OnJump == false) {
 						CurrentMovingType = PlayerMovingType.Falling;
 					}
 
