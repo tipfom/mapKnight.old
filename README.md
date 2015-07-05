@@ -102,3 +102,12 @@ Changelog (german) :
 !!! 03.07.2015 !!!
 - Changed the way touches are recognized
 - Added a clickable Chest to the Game
+
+!!! 05.07.2015 !!!
+Running into the HotAndHotter Alpha Version! :D
+What will it bring to the game? 
+The Answer is an Inventory with many items such like potions, armors (which also effect the players look), weapons and a crafting-system and probably some network stuff(bluetooth for example).
+- Implemented an Inventory Container
+- Implemented a Icon to the interface which acts like a drop down menu to use your selected potions
+- Implementes some interfaces and enumerations
+- Implemented characterattributes
