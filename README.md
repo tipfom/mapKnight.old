@@ -111,3 +111,4 @@ The Answer is an Inventory with many items such like potions, armors (which also
 - Implemented a Icon to the interface which acts like a drop down menu to use your selected potions
 - Implementes some interfaces and enumerations
 - Implemented characterattributes
+- Fixed a bug which causes the character not to change the animation while faling
