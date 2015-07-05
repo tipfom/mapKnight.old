@@ -7,9 +7,11 @@ using Box2D.Collision.Shapes;
 using Box2D.Common;
 using Box2D.Dynamics;
 
+using mapKnightLibrary.Inventory;
+
 namespace mapKnightLibrary
 {
-	public class RoboBob : Character
+	public class RoboBob : CCLayer, Character
 	{
 		//statische eigenschaften
 		static int MoveSpeed = 9;
@@ -73,20 +75,12 @@ namespace mapKnightLibrary
 
 		PhysicsHandler physicsHandler;
 
-		public int MaxLife {
-			get { return 60; }
-		}
-
 		public int CurrentLife {
 			get { return Life; }
 			set {
 				Life = value;
 				StatChanged (this, new StatisticChangeEventArgHandler (Statistic.Life));
 			}
-		}
-
-		public int MaxMana {
-			get { return 9; }
 		}
 
 		public int CurrentMana {
@@ -97,11 +91,32 @@ namespace mapKnightLibrary
 			}
 		}
 
+		Dictionary<Inventory.Attribute,short> staticAttributes = new Dictionary<mapKnightLibrary.Inventory.Attribute, short> ();
+		Dictionary<Inventory.Attribute,short> internAttributes = new Dictionary<mapKnightLibrary.Inventory.Attribute, short>();
+		public Dictionary<Inventory.Attribute, short> Attributes {
+			get {
+				return internAttributes;
+			}
+		}
+
 		public event EventHandler<StatisticChangeEventArgHandler> StatChanged;
 
 		public RoboBob ()
 		{
-			CharacterSprite = new CCSprite (CharacterWalkSprites[0]);
+			//static CharacterAttributes
+			staticAttributes.Add (Inventory.Attribute.Health, 35);
+			staticAttributes.Add (Inventory.Attribute.Intelligence, 10);
+			staticAttributes.Add (Inventory.Attribute.Jump, 30);
+			staticAttributes.Add (Inventory.Attribute.LifeRegeneration, 1);
+			staticAttributes.Add (Inventory.Attribute.MagicArmor, 6);
+			staticAttributes.Add (Inventory.Attribute.Mana, 15);
+			staticAttributes.Add (Inventory.Attribute.ManaRegeneration, 1);
+			staticAttributes.Add (Inventory.Attribute.PhysicalArmor, 30);
+			staticAttributes.Add (Inventory.Attribute.Speed, 6);
+			staticAttributes.Add (Inventory.Attribute.Strenght, 17);
+			UpdateAttributes ();
+
+			CharacterSprite = new CCSprite (CharacterWalkSprites [0]);
 			CharacterSprite.Scale = 0.5f;
 			CharacterSize = CharacterSprite.ScaledContentSize;
 
@@ -118,12 +133,16 @@ namespace mapKnightLibrary
 				new WallJumpConfig () { jumpImpuls = new b2Vec2 (6f, 15f), jumpTickCount = 20f, jumpOnXDecrease = 0.1f });
 		}
 	
+		protected override void AddedToScene ()
+		{
+			base.AddedToScene ();
+			this.AddChild (CharacterSprite);
+		}
+
 		CCPoint Character.Position {
 			get { return CharacterPosition; } 
 			set { CharacterPosition = value; }
 		}
-
-		CCSprite Character.Sprite {get {return CharacterSprite;}}
 
 		CCSize Character.Size {
 			get {
@@ -137,6 +156,18 @@ namespace mapKnightLibrary
 			//erstellt den Body und bindet ihn an den Jumpmanager
 			JumpManager.jumpBody = this.createPhysicsBody (physicsHandler.gameWorld);
 			return true;
+		}
+
+		public void UpdateAttributes (Dictionary<Inventory.Attribute, short>[] Attributes = null)
+		{
+			this.internAttributes = staticAttributes;
+			if (Attributes != null) {
+				foreach (Dictionary<Inventory.Attribute,short> AttributeDictionary in Attributes) {
+					foreach (var Attribute in AttributeDictionary.Keys) {
+						this.internAttributes [Attribute] += AttributeDictionary [Attribute];
+					}
+				}
+			}
 		}
 
 		void Character.Update(float frameTime)

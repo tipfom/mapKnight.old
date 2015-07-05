@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using CocosSharp;
 
+using mapKnightLibrary.Inventory;
 
 namespace mapKnightLibrary
 {
@@ -20,6 +21,8 @@ namespace mapKnightLibrary
 		ControlType CurrentControlType;
 
 		ClickManager clickManager;
+
+		GameInventory Inventory;
 
 		public GameScene (CCWindow mainWindow, Container mainContainer, ControlType RunningControlType) : base(mainWindow)
 		{
@@ -139,6 +142,9 @@ namespace mapKnightLibrary
 				clickManager.AddObject (knownChest);
 			}
 
+			Inventory = new GameInventory (clickManager, new List<IPotion> (){ new Potion1 (), new Potion3 (), new Potion2 () }, new List<IEquipable> (), screenSize);
+			this.AddChild (Inventory);
+
 			Schedule (GameLoop);
 		}
 
@@ -147,9 +153,9 @@ namespace mapKnightLibrary
 			switch (e.Statistic) {
 			case Statistic.Life:
 				LifeSprite [0].TextureRectInPixels = new CCRect (0,
-					LifeSprite [0].Texture.ContentSizeInPixels.Height - LifeSprite [0].Texture.ContentSizeInPixels.Height * gameContainer.mainCharacter.CurrentLife / gameContainer.mainCharacter.MaxLife,
+					LifeSprite [0].Texture.ContentSizeInPixels.Height - LifeSprite [0].Texture.ContentSizeInPixels.Height * gameContainer.mainCharacter.CurrentLife / gameContainer.mainCharacter.Attributes[mapKnightLibrary.Inventory.Attribute.Health],
 					LifeSprite [0].Texture.ContentSizeInPixels.Width,
-					LifeSprite [0].Texture.ContentSizeInPixels.Height * gameContainer.mainCharacter.CurrentLife / gameContainer.mainCharacter.MaxLife);
+					LifeSprite [0].Texture.ContentSizeInPixels.Height * gameContainer.mainCharacter.CurrentLife / gameContainer.mainCharacter.Attributes[mapKnightLibrary.Inventory.Attribute.Health]);
 
 				LifeSprite [0].ContentSize = LifeSprite [0].TextureRectInPixels.Size;
 				LifeSprite [0].Position = new CCPoint (screenSize.Width - LifeSprite [0].ScaledContentSize.Width, LifeSprite [1].Position.Y - LifeSprite [1].ScaledContentSize.Height / 2 + LifeSprite [0].ScaledContentSize.Height / 2);
@@ -157,9 +163,9 @@ namespace mapKnightLibrary
 				break;
 			case Statistic.Mana:
 				ManaSprite [0].TextureRectInPixels = new CCRect (0,
-					ManaSprite [0].Texture.ContentSizeInPixels.Height - ManaSprite [0].Texture.ContentSizeInPixels.Height * gameContainer.mainCharacter.CurrentLife / gameContainer.mainCharacter.MaxLife,
+					ManaSprite [0].Texture.ContentSizeInPixels.Height - ManaSprite [0].Texture.ContentSizeInPixels.Height * gameContainer.mainCharacter.CurrentMana /  gameContainer.mainCharacter.Attributes[mapKnightLibrary.Inventory.Attribute.Mana],
 					ManaSprite [0].Texture.ContentSizeInPixels.Width,
-					ManaSprite [0].Texture.ContentSizeInPixels.Height * gameContainer.mainCharacter.CurrentLife / gameContainer.mainCharacter.MaxLife);
+					ManaSprite [0].Texture.ContentSizeInPixels.Height * gameContainer.mainCharacter.CurrentMana / gameContainer.mainCharacter.Attributes[mapKnightLibrary.Inventory.Attribute.Mana]);
 
 				ManaSprite [0].ContentSize = ManaSprite [0].TextureRectInPixels.Size;
 				ManaSprite [0].Position = new CCPoint (screenSize.Width - ManaSprite [0].ScaledContentSize.Width, ManaSprite [1].Position.Y - ManaSprite [1].ScaledContentSize.Height / 2 + ManaSprite [0].ScaledContentSize.Height / 2);
