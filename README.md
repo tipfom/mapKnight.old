@@ -112,3 +112,7 @@ The Answer is an Inventory with many items such like potions, armors (which also
 - Implementes some interfaces and enumerations
 - Implemented characterattributes
 - Fixed a bug which causes the character not to change the animation while faling
+
+!!! 09.07.2015 !!!
+- Added custom Armors with different look and attributes to the game
+- Changed the gamefont (http://www.schriftarten-fonts.de/fonts/9761/04b30.html)
