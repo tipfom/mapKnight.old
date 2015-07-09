@@ -74,7 +74,6 @@ namespace mapKnightLibrary
 
 			gameContainer.mainCharacter.Position = new CCPoint ((float)Convert.ToInt32 (spawnPoint ["x"]) * Map.ScaleX, (float)Convert.ToInt32 (spawnPoint ["y"]) * Map.ScaleY);
 			gameContainer.physicsHandler.Initialize (Map.MapDimensions.Size.Width * Map.TileTexelSize.Width * Map.ScaleX, gameContainer.mainCharacter, Map.LayerNamed ("mainlayer"), Map, gameContainer);
-			gameContainer.mainCharacter.bindToPhysicsHandler (gameContainer.physicsHandler);
 
 			//Platform hinzufügen
 			gameContainer.platformContainer.AddRange (TMXLayerDataLoader.LoadPlatformFromLayer (Map, Map.ObjectGroupNamed ("aditionallayer"), gameContainer));
@@ -83,7 +82,10 @@ namespace mapKnightLibrary
 			this.AddChild (Background, -1);
 
 			this.AddChild (Map, 1);
-			this.AddChild ((CCLayer)gameContainer.mainCharacter, 2);
+			this.AddChild (gameContainer.mainCharacter.CharacterLayer, 2);
+			//this.AddChild (gameContainer.mainCharacter.ShoesSprite, 2);
+			//this.AddChild (gameContainer.mainCharacter.GloveSprite, 2);
+			//this.AddChild (gameContainer.mainCharacter.HelmetSprite, 2);
 			this.AddChild (gameContainer.physicsHandler.debugDrawer.DrawNode, 0);
 
 			foreach (Platform knownPlatform in gameContainer.platformContainer) {

@@ -16,8 +16,8 @@ namespace mapKnightLibrary
 		{
 			Helmet,
 			Chestplate,
-			Pants,
-			Boots,
+			Gloves,
+			Shoes,
 			Weapon,
 			PotionOne,
 			PotionTwo,

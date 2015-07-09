@@ -22,6 +22,8 @@ namespace mapKnightLibrary
 		bool Jump{ get; set;}
 		Dictionary <Inventory.Attribute, short> Attributes{ get; }
 
+		CCLayer CharacterLayer{ get; }
+
 		//statische Eigenschaften
 		CCSize Size{ get; }
 

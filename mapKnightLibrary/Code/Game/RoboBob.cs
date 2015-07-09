@@ -11,12 +11,11 @@ using mapKnightLibrary.Inventory;
 
 namespace mapKnightLibrary
 {
-	public class RoboBob : CCLayer, Character
+	public class RoboBob : Character
 	{
 		//statische eigenschaften
-		static int MoveSpeed = 9;
-		static int JumpSpeed = 10;
 		static int WallSlideSpeed = 2;
+		static float Scale = 0.4f;
 		//statische grafische variablen
 		static CCSpriteSheet CharacterSprites = new CCSpriteSheet("character/character.plist");
 
@@ -40,8 +39,15 @@ namespace mapKnightLibrary
 		static bool CharacterStandingTextureRotated = CharacterSprites.Frames.Find ((frame) => frame.TextureFilename.StartsWith ("walk0")).IsRotated;
 		//variablen
 		CCSize CharacterSize;
-		CCSprite CharacterSprite;
+		float CharSizeHeight;
+		float CharSizeWidth;
+
+		CCSpriteBatchNode CharacterBatch;
+		CCSprite internHelmetSprite, internChestplateSprite, internGloveSprite, internShoesSprite;
+		CCLayer internCharacterLayer;
 		CCPoint CharacterPosition;
+
+		IArmor Helmet, Chestplate, Gloves, Shoes;
 
 		b2Body characterBody;
 
@@ -60,6 +66,36 @@ namespace mapKnightLibrary
 					if (MovingTypeChanged != null)
 						MovingTypeChanged (this, value);
 				}
+			}
+		}
+
+		public CCSprite HelmetSprite {
+			get {
+				return internHelmetSprite;
+			}
+		}
+
+		public CCSprite ChestplateSprite {
+			get {
+				return internChestplateSprite;
+			}
+		}
+
+		public CCSprite GloveSprite {
+			get {
+				return internGloveSprite;
+			}
+		}
+
+		public CCSprite ShoesSprite {
+			get {
+				return internShoesSprite;
+			}
+		}
+
+		public CCLayer CharacterLayer {
+			get {
+				return internCharacterLayer;
 			}
 		}
 
@@ -101,24 +137,57 @@ namespace mapKnightLibrary
 
 		public event EventHandler<StatisticChangeEventArgHandler> StatChanged;
 
-		public RoboBob ()
+		public RoboBob (GameInventory gameInventory)
 		{
+			CharacterBatch = new CCSpriteBatchNode ();
+
+			//Übertragen der Rüstung
+			Helmet = (IArmor)gameInventory.EquipedItems [EquipSlot.Helmet];
+			Chestplate = (IArmor)gameInventory.EquipedItems [EquipSlot.Chestplate];
+			Gloves = (IArmor)gameInventory.EquipedItems [EquipSlot.Gloves];
+			Shoes = (IArmor)gameInventory.EquipedItems [EquipSlot.Shoes];
+
+			#region staticCharacterAttributes
 			//static CharacterAttributes
 			staticAttributes.Add (Inventory.Attribute.Health, 35);
 			staticAttributes.Add (Inventory.Attribute.Intelligence, 10);
-			staticAttributes.Add (Inventory.Attribute.Jump, 30);
+			staticAttributes.Add (Inventory.Attribute.Jump, 10);
 			staticAttributes.Add (Inventory.Attribute.LifeRegeneration, 1);
 			staticAttributes.Add (Inventory.Attribute.MagicArmor, 6);
 			staticAttributes.Add (Inventory.Attribute.Mana, 15);
 			staticAttributes.Add (Inventory.Attribute.ManaRegeneration, 1);
 			staticAttributes.Add (Inventory.Attribute.PhysicalArmor, 30);
-			staticAttributes.Add (Inventory.Attribute.Speed, 6);
+			staticAttributes.Add (Inventory.Attribute.Speed, 4);
 			staticAttributes.Add (Inventory.Attribute.Strenght, 17);
-			UpdateAttributes ();
+			UpdateAttributes (new Dictionary<Inventory.Attribute, short>[] {
+				Helmet.AttributeChange,
+				Chestplate.AttributeChange,
+				Gloves.AttributeChange,
+				Shoes.AttributeChange
+			});
+			#endregion
 
-			CharacterSprite = new CCSprite (CharacterWalkSprites [0]);
-			CharacterSprite.Scale = 0.5f;
-			CharacterSize = CharacterSprite.ScaledContentSize;
+
+			internHelmetSprite = new CCSprite (){ ScaleY = Scale, ScaleX = Scale };
+			internGloveSprite = new CCSprite (){ ScaleY = Scale, ScaleX = Scale };
+			internChestplateSprite = new CCSprite (){ ScaleY = Scale, ScaleX = Scale };
+			internShoesSprite = new CCSprite (){ ScaleY = Scale, ScaleX = Scale };
+			internCharacterLayer = new CCLayer () { };
+			this.CharacterSize = new CCSize (Gloves.StandingFrame.ContentSize.Width * Scale, Gloves.ArmorAnimationPosition [PlayerMovingType.Running].Y * Scale + Gloves.StandingFrame.ContentSize.Height * Scale);
+			CharSizeHeight = CharacterSize.Height / 2;
+			CharSizeWidth = CharacterSize.Width / 2;
+
+			CharacterBatch.AddChild (ChestplateSprite);
+			CharacterBatch.AddChild (GloveSprite);
+			CharacterBatch.AddChild (ShoesSprite);
+			CharacterBatch.AddChild (HelmetSprite);
+			internCharacterLayer.AddChild (CharacterBatch);
+
+			Helmet.PreScale (Scale);
+			Chestplate.PreScale (Scale);
+			Gloves.PreScale (Scale);
+			Shoes.PreScale (Scale);
+
 
 			DoubleJump = true;
 
@@ -133,12 +202,6 @@ namespace mapKnightLibrary
 				new WallJumpConfig () { jumpImpuls = new b2Vec2 (6f, 15f), jumpTickCount = 20f, jumpOnXDecrease = 0.1f });
 		}
 	
-		protected override void AddedToScene ()
-		{
-			base.AddedToScene ();
-			this.AddChild (CharacterSprite);
-		}
-
 		CCPoint Character.Position {
 			get { return CharacterPosition; } 
 			set { CharacterPosition = value; }
@@ -178,7 +241,28 @@ namespace mapKnightLibrary
 				//Immer wenn die Jump Animation läuft wird der TickCoun
 
 				CharacterPosition = new CCPoint (characterBody.Position.x * PhysicsHandler.pixelPerMeter, characterBody.Position.y * PhysicsHandler.pixelPerMeter);
-				CharacterSprite.Position = CharacterPosition;
+
+				//CharacterSize = new CCSize (Gloves.StandingFrame.ContentSize.Width, Helmet.ArmorAnimationPosition[CurrentMovingType].Y * HelmetSprite.ScaleY);
+				internCharacterLayer.Position = new CCPoint (CharacterPosition.X, CharacterPosition.Y - HelmetSprite.ScaledContentSize.Height / 4);
+				if (ChestplateSprite.ScaleX > 0) {
+					HelmetSprite.Position = new CCPoint (-CharSizeWidth + Helmet.ArmorAnimationPosition [CurrentMovingType].X,
+						CharSizeHeight - Helmet.ArmorAnimationPosition [CurrentMovingType].Y - HelmetSprite.ScaledContentSize.Height / 2);
+					ChestplateSprite.Position = new CCPoint (-CharSizeWidth + Chestplate.ArmorAnimationPosition [CurrentMovingType].X,
+						CharSizeHeight - Chestplate.ArmorAnimationPosition [CurrentMovingType].Y - ChestplateSprite.ScaledContentSize.Height / 2);
+					GloveSprite.Position = new CCPoint (-CharSizeWidth + Gloves.ArmorAnimationPosition [CurrentMovingType].X,
+						CharSizeHeight - Gloves.ArmorAnimationPosition [CurrentMovingType].Y - GloveSprite.ScaledContentSize.Height / 2);
+					ShoesSprite.Position = new CCPoint (-CharSizeWidth + Shoes.ArmorAnimationPosition [CurrentMovingType].X,
+						CharSizeHeight - Shoes.ArmorAnimationPosition [CurrentMovingType].Y - ShoesSprite.ScaledContentSize.Height / 2);
+				} else {
+					HelmetSprite.Position = new CCPoint (CharSizeWidth - Helmet.ArmorAnimationPosition [CurrentMovingType].X,
+						CharSizeHeight - Helmet.ArmorAnimationPosition [CurrentMovingType].Y - HelmetSprite.ScaledContentSize.Height / 2);
+					ChestplateSprite.Position = new CCPoint (CharSizeWidth - Chestplate.ArmorAnimationPosition [CurrentMovingType].X,
+						CharSizeHeight - Chestplate.ArmorAnimationPosition [CurrentMovingType].Y - ChestplateSprite.ScaledContentSize.Height / 2);
+					GloveSprite.Position = new CCPoint (CharSizeWidth - Gloves.ArmorAnimationPosition [CurrentMovingType].X,
+						CharSizeHeight - Gloves.ArmorAnimationPosition [CurrentMovingType].Y - GloveSprite.ScaledContentSize.Height / 2);
+					ShoesSprite.Position = new CCPoint (CharSizeWidth - Shoes.ArmorAnimationPosition [CurrentMovingType].X,
+						CharSizeHeight - Shoes.ArmorAnimationPosition [CurrentMovingType].Y - ShoesSprite.ScaledContentSize.Height / 2);
+				}
 
 				b2Vec2 Velocity = characterBody.LinearVelocity;
 
@@ -188,10 +272,10 @@ namespace mapKnightLibrary
 					
 					switch (MoveDirection) {
 					case Direction.Left:
-						Velocity.x = physicsHandler.collusionSensor.playerGroundVelocity.x - MoveSpeed;
+						Velocity.x = physicsHandler.collusionSensor.playerGroundVelocity.x - (float)this.Attributes [Inventory.Attribute.Speed];
 						break;
 					case Direction.Right:
-						Velocity.x = physicsHandler.collusionSensor.playerGroundVelocity.x + MoveSpeed;
+						Velocity.x = physicsHandler.collusionSensor.playerGroundVelocity.x + (float)this.Attributes [Inventory.Attribute.Speed];
 						break;
 					case Direction.None:
 						Velocity.x = physicsHandler.collusionSensor.playerGroundVelocity.x;
@@ -204,7 +288,7 @@ namespace mapKnightLibrary
 					if (AvoidPlatformGlitch == false) {
 						Velocity.y = physicsHandler.collusionSensor.playerGroundVelocity.y;
 						if (Jumping == true && physicsHandler.collusionSensor.playerCanJump == true) {
-							Velocity.y += JumpSpeed;
+							Velocity.y += this.Attributes [Inventory.Attribute.Jump];
 							AvoidPlatformGlitch = true;
 							CurrentMovingType = PlayerMovingType.Jumping;
 						}
@@ -239,7 +323,7 @@ namespace mapKnightLibrary
 						} else if (JumpManager.OnJump == false) {
 							if (MoveDirection != JumpManager.CurrentJumpingDirection)
 								JumpManager.AbortAccelerationOn (Axis.x);
-							Velocity.x = -MoveSpeed;
+							Velocity.x = -(float)this.Attributes [Inventory.Attribute.Speed];
 						}
 						break;
 					case Direction.Right:
@@ -250,7 +334,7 @@ namespace mapKnightLibrary
 						} else if (JumpManager.OnJump == false) {
 							if (MoveDirection != JumpManager.CurrentJumpingDirection)
 								JumpManager.AbortAccelerationOn (Axis.x);
-							Velocity.x = MoveSpeed;
+							Velocity.x = (float)this.Attributes [Inventory.Attribute.Speed];
 						}
 						break;
 					case Direction.None:
@@ -265,8 +349,9 @@ namespace mapKnightLibrary
 
 					if (JumpManager.OnJump == false) {
 						if (physicsHandler.collusionSensor.WallContact == Direction.None && Jumping == true && DoubleJump == true) {
+							//Doppelsprung
 							DoubleJump = false;
-							Velocity.y = JumpSpeed;
+							Velocity.y = (float)this.Attributes [Inventory.Attribute.Jump] * 0.8f;
 							CurrentMovingType = PlayerMovingType.Jumping;
 						} else if (physicsHandler.collusionSensor.WallContact != Direction.None && physicsHandler.collusionSensor.WallContact == MoveDirection && Jumping == true) {
 							JumpManager.StartJump (this.MoveDirection, JumpType.WallJump);
@@ -282,10 +367,10 @@ namespace mapKnightLibrary
 					
 					switch (MoveDirection) {
 					case Direction.Left:
-						Velocity.x = -MoveSpeed;
+						Velocity.x = -(float)this.Attributes [Inventory.Attribute.Speed];
 						break;
 					case Direction.Right:
-						Velocity.x = MoveSpeed;
+						Velocity.x = (float)this.Attributes [Inventory.Attribute.Speed];
 						break;
 					case Direction.None:
 						Velocity.x = 0;
@@ -302,7 +387,6 @@ namespace mapKnightLibrary
 						CurrentMovingType = PlayerMovingType.Jumping;
 					}
 
-
 					DoubleJump = true;
 					ClimbJump = true;
 
@@ -314,10 +398,10 @@ namespace mapKnightLibrary
 				default:
 					switch (MoveDirection) {
 					case Direction.Left:
-						Velocity.x = -MoveSpeed;
+						Velocity.x = -this.Attributes [Inventory.Attribute.Speed];
 						break;
 					case Direction.Right:
-						Velocity.x = MoveSpeed;
+						Velocity.x = this.Attributes [Inventory.Attribute.Speed];
 						break;
 					case Direction.None:
 						Velocity.x = 0;
@@ -328,7 +412,7 @@ namespace mapKnightLibrary
 					}
 
 					if (Jumping == true && physicsHandler.collusionSensor.playerCanJump == true) {
-						Velocity.y = JumpSpeed;
+						Velocity.y = (float)this.Attributes [Inventory.Attribute.Jump];
 						CurrentMovingType = PlayerMovingType.Jumping;
 					}
 
@@ -380,7 +464,7 @@ namespace mapKnightLibrary
 				characterBody.CreateFixture (groundSensor);
 
 				b2PolygonShape characterLeftSensorShape = new b2PolygonShape ();
-				b2Vec2 LeftSensorPosition = new b2Vec2 (-0.45f * CharacterSize.Width/ PhysicsHandler.pixelPerMeter, -0.14f * CharacterSize.Height/ PhysicsHandler.pixelPerMeter);
+				b2Vec2 LeftSensorPosition = new b2Vec2 (-0.45f * CharacterSize.Width / PhysicsHandler.pixelPerMeter, -0.14f * CharacterSize.Height / PhysicsHandler.pixelPerMeter);
 				characterLeftSensorShape.SetAsBox ((float)5f / PhysicsHandler.pixelPerMeter, CharacterSize.Height / PhysicsHandler.pixelPerMeter / 4, LeftSensorPosition, 0f);
 
 				//leftsensor
@@ -394,7 +478,7 @@ namespace mapKnightLibrary
 				characterBody.CreateFixture (leftSensor);
 
 				b2PolygonShape characterRightSensorShape = new b2PolygonShape ();
-				b2Vec2 RightSensorPosition = new b2Vec2 (0.45f * CharacterSize.Width/ PhysicsHandler.pixelPerMeter, -0.14f * CharacterSize.Height/ PhysicsHandler.pixelPerMeter);
+				b2Vec2 RightSensorPosition = new b2Vec2 (0.45f * CharacterSize.Width / PhysicsHandler.pixelPerMeter, -0.14f * CharacterSize.Height / PhysicsHandler.pixelPerMeter);
 				characterRightSensorShape.SetAsBox ((float)5f / PhysicsHandler.pixelPerMeter, CharacterSize.Height / PhysicsHandler.pixelPerMeter / 4, RightSensorPosition, 0f);
 
 				//rightsensor
@@ -426,57 +510,61 @@ namespace mapKnightLibrary
 		{
 			switch (e) {
 			case Direction.Left:
-				if (CharacterSprite.ScaleX > 0)
-					CharacterSprite.ScaleX *= -1;
-				else
-					CharacterSprite.ScaleX *= 1;
-				UpdateSprite (this, CurrentMovingType);
+				if (ChestplateSprite.ScaleX > 0) {
+					ChestplateSprite.ScaleX *= -1;
+					HelmetSprite.ScaleX *= -1;
+					GloveSprite.ScaleX *= -1;
+					ShoesSprite.ScaleX *= -1;
+				} else {
+					ChestplateSprite.ScaleX *= 1;
+					HelmetSprite.ScaleX *= 1;
+					GloveSprite.ScaleX *= 1;
+					ShoesSprite.ScaleX *= 1;
+				}
 				break;
 			case Direction.Right:
-				if (CharacterSprite.ScaleX > 0)
-					CharacterSprite.ScaleX *= 1;
-				else
-					CharacterSprite.ScaleX *= -1;
-				UpdateSprite (this, CurrentMovingType);
-				break;
-			case Direction.None:
-				switch (CurrentMovingType) {
-				case PlayerMovingType.Running:
-					CharacterSprite.StopAllActions ();
-					if (CharacterSprite.IsTextureRectRotated != CharacterStandingTextureRotated)
-						CharacterSprite.IsTextureRectRotated = CharacterStandingTextureRotated;
-					CharacterSprite.TextureRectInPixels = CharacterStandingTextureRect;
-					break;
-				default:
-					UpdateSprite (this, CurrentMovingType);
-					break;}
+				if (ChestplateSprite.ScaleX > 0) {
+					ChestplateSprite.ScaleX *= 1;
+					HelmetSprite.ScaleX *= 1;
+					GloveSprite.ScaleX *= 1;
+					ShoesSprite.ScaleX *= 1;
+				} else {
+					ChestplateSprite.ScaleX *= -1;
+					HelmetSprite.ScaleX *= -1;
+					GloveSprite.ScaleX *= -1;
+					ShoesSprite.ScaleX *= -1;
+				}
 				break;
 			}
+			UpdateSprite (this, CurrentMovingType);
 		}
 
 		private void UpdateSprite(object sender, PlayerMovingType e)
 		{
-			CharacterSprite.StopAllActions ();
-			switch (e) {
-			case PlayerMovingType.Falling:
-				CharacterSprite.RepeatForever (CharacterFallkRepeat);
-				break;
-			case PlayerMovingType.Running:
-				if (MoveDirection != Direction.None) {
-					CharacterSprite.RepeatForever (CharacterWalkRepeat);
-				} else {
-					CharacterSprite.StopAllActions ();
-					if (!CharacterSprite.IsTextureRectRotated)
-						CharacterSprite.IsTextureRectRotated = true;
-					CharacterSprite.TextureRectInPixels = CharacterStandingTextureRect;
-				}
-				break;
-			case PlayerMovingType.Jumping:
-				CharacterSprite.RunAction (CharacterJumpAnimate);
-				break;
-			case PlayerMovingType.Sliding:
-				CharacterSprite.RepeatForever (CharacterSlideRepeat);
-				break;
+			HelmetSprite.StopAllActions ();
+			ChestplateSprite.StopAllActions ();
+			GloveSprite.StopAllActions ();
+			ShoesSprite.StopAllActions ();
+			if (CurrentMovingType == PlayerMovingType.Running && MoveDirection == Direction.None) {
+				HelmetSprite.IsTextureRectRotated = Helmet.StandingFrame.IsRotated;
+				ChestplateSprite.IsTextureRectRotated = Chestplate.StandingFrame.IsRotated;
+				GloveSprite.IsTextureRectRotated = Gloves.StandingFrame.IsRotated;
+				ShoesSprite.IsTextureRectRotated = Shoes.StandingFrame.IsRotated;
+
+				HelmetSprite.TextureRectInPixels = Helmet.StandingFrame.TextureRectInPixels;
+				ChestplateSprite.TextureRectInPixels = Chestplate.StandingFrame.TextureRectInPixels;
+				GloveSprite.TextureRectInPixels = Gloves.StandingFrame.TextureRectInPixels;
+				ShoesSprite.TextureRectInPixels = Shoes.StandingFrame.TextureRectInPixels;
+
+				//HelmetSprite.IsAntialiased = false;
+				//ChestplateSprite.IsAntialiased = false;
+				//GloveSprite.IsAntialiased = false;
+				//ShoesSprite.IsAntialiased = false;
+			} else {
+				HelmetSprite.RepeatForever (new CCRepeatForever (Helmet.ArmorAnimations [CurrentMovingType]));
+				ChestplateSprite.RepeatForever (new CCRepeatForever (Chestplate.ArmorAnimations [CurrentMovingType]));
+				GloveSprite.RepeatForever (new CCRepeatForever (Gloves.ArmorAnimations [CurrentMovingType]));
+				ShoesSprite.RepeatForever (new CCRepeatForever (Shoes.ArmorAnimations [CurrentMovingType]));
 			}
 		}
 	}

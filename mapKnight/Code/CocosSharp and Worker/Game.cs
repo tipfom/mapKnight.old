@@ -28,6 +28,7 @@ namespace mapKnight
 		Theme = "@style/GameTheme",
 		LaunchMode = LaunchMode.SingleInstance,
 		NoHistory = true,
+		MainLauncher = true,
 		ScreenOrientation = ScreenOrientation.SensorLandscape,
 		ConfigurationChanges =  ConfigChanges.Keyboard | 
 		ConfigChanges.KeyboardHidden)]
@@ -65,7 +66,7 @@ namespace mapKnight
 			gameApplication = new CCApplication ();
 			//Initialisiert die Game Anwedung
 			GameAppDelegate GameAppDelegate = new GameAppDelegate (GetString (Resource.String.app_version) + " Build = " + GetString (Resource.String.app_build),
-				                                  (ControlType)Enum.Parse (typeof(ControlType), Intent.GetStringExtra ("string:CurrentControlType")));
+				ControlType.Button);//(ControlType)Enum.Parse (typeof(ControlType), Intent.GetStringExtra ("string:CurrentControlType")));
 
 			gameApplication.ApplicationDelegate = GameAppDelegate;
 

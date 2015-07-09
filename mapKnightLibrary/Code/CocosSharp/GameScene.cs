@@ -24,22 +24,37 @@ namespace mapKnightLibrary
 
 		GameInventory Inventory;
 
-		public GameScene (CCWindow mainWindow, Container mainContainer, ControlType RunningControlType) : base(mainWindow)
+		public GameScene (CCWindow mainWindow, ControlType RunningControlType) : base(mainWindow)
 		{
+			screenSize = mainWindow.WindowSizeInPixels;
+			gameContainer = new mapKnightLibrary.Container ();
+
+			//Touchlistener Initialisierung
+			clickManager = new ClickManager (screenSize, gameContainer);
+			this.AddEventListener (clickManager, this);
+
+			GameInventory test = new GameInventory (clickManager, new List<IPotion> () {
+				new Potion1 (),
+				new Potion2 (),
+				new Potion3 ()
+			}, new List<IEquipable> () {
+				new Items.Set_Standart_Glove (),
+				new Items.Set_Standart_Chestplate (),
+				new Items.Set_Standart_Helmet (),
+				new Items.Set_Standart_Shoes ()
+			}, screenSize);
+			gameContainer.mainCharacter= new RoboBob(test);
+			gameContainer.physicsHandler = new PhysicsHandler ();
+
 			CurrentControlType = RunningControlType;
 
-			gameContainer = mainContainer;
 			GameLayer = new MergedLayer (mainWindow, gameContainer);
 
 			InterfaceLayer = new CCLayer ();
 
 			this.AddChild (GameLayer);
+			gameContainer.mainCharacter.bindToPhysicsHandler (gameContainer.physicsHandler);
 		
-			screenSize = mainWindow.WindowSizeInPixels;
-
-			//Touchlistener Initialisierung
-			clickManager = new ClickManager (screenSize, gameContainer);
-			this.AddEventListener (clickManager, this);
 
 			switch (RunningControlType) {
 			case ControlType.Slide:
