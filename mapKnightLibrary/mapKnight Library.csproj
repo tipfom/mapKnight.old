@@ -97,6 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="EmptyTextFile.txt" />
+    <None Include="SlideMethods.txt" />
   </ItemGroup>
 </Project>
