@@ -69,7 +69,6 @@
     <Compile Include="Code\Game\Inventory\Items\Set_Standart_Chestplate.cs" />
     <Compile Include="Code\Game\Inventory\Items\Set_Standart_Gloves.cs" />
     <Compile Include="Code\Game\Inventory\Items\Set_Standart_Shoes.cs" />
-    <Compile Include="Code\Game\Inventory\Items\n.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
