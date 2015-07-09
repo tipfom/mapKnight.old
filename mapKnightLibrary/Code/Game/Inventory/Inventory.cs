@@ -34,7 +34,7 @@ namespace mapKnightLibrary
 
 				//Initialisierung des linken oberen ClickDings
 				Sack = new CCSprite ("interface_sack.png") { IsAntialiased = false };
-				Sack.Scale = ScreenSize.Height / 8 / Sack.TextureRectInPixels.Size.Height;
+				Sack.Scale = ScreenSize.Height / 6 / Sack.TextureRectInPixels.Size.Height;
 				Sack.Position = new CCPoint (Sack.ScaledContentSize.Width / 2, ScreenSize.Height - Sack.ScaledContentSize.Height / 2);
 				SackClickable = Clickable.BySprite (Sack, new CCSize (100, 5000));
 				SackClickable.ClickedEvent += HandleMenuClicks;
@@ -49,7 +49,7 @@ namespace mapKnightLibrary
 					EquipedPotionSprites [0] = new CCSprite () { };
 					EquipedPotionSprites [0].Texture = EquipedItems [EquipSlot.PotionOne].PreviewImage;
 					EquipedPotionSprites [0].IsAntialiased = false;
-					EquipedPotionSprites [0].Scale = ScreenSize.Height / 10 / EquipedPotionSprites [0].TextureRectInPixels.Size.Height;
+					EquipedPotionSprites [0].Scale = ScreenSize.Height / 8 / EquipedPotionSprites [0].TextureRectInPixels.Size.Height;
 					EquipedPotionSprites [0].Position = new CCPoint (Sack.Position.X - EquipedPotionSprites [0].ScaledContentSize.Width / 2, Sack.Position.Y - Sack.ScaledContentSize.Height - EquipedPotionSprites [0].ScaledContentSize.Height / 2 - 10f);
 					EquipedPotionClickables [0] = Clickable.BySprite (EquipedPotionSprites [0], new CCSize (5000, 5000));
 					}
@@ -59,7 +59,7 @@ namespace mapKnightLibrary
 					EquipedPotionSprites [1] = new CCSprite () { };
 					EquipedPotionSprites [1].Texture = EquipedItems [EquipSlot.PotionTwo].PreviewImage;
 					EquipedPotionSprites [1].IsAntialiased = false;
-					EquipedPotionSprites [1].Scale = ScreenSize.Height / 10 / EquipedPotionSprites [1].TextureRectInPixels.Size.Height;
+					EquipedPotionSprites [1].Scale = ScreenSize.Height / 8 / EquipedPotionSprites [1].TextureRectInPixels.Size.Height;
 					EquipedPotionSprites [1].Position = new CCPoint (Sack.Position.X - EquipedPotionSprites [1].ScaledContentSize.Width / 2, EquipedPotionSprites [0].Position.Y - EquipedPotionSprites [0].ScaledContentSize.Height / 2 - EquipedPotionSprites [1].ScaledContentSize.Height / 2 - 10f);
 					EquipedPotionClickables [1] = Clickable.BySprite (EquipedPotionSprites [1], new CCSize (5000, 5000));
 				}
@@ -68,19 +68,21 @@ namespace mapKnightLibrary
 					EquipedPotionSprites [2] = new CCSprite () { };
 					EquipedPotionSprites [2].Texture = EquipedItems [EquipSlot.PotionThree].PreviewImage;
 					EquipedPotionSprites [2].IsAntialiased = false;
-					EquipedPotionSprites [2].Scale = ScreenSize.Height / 10 / EquipedPotionSprites [2].TextureRectInPixels.Size.Height;
+					EquipedPotionSprites [2].Scale = ScreenSize.Height / 8 / EquipedPotionSprites [2].TextureRectInPixels.Size.Height;
 					EquipedPotionSprites [2].Position = new CCPoint (Sack.Position.X - EquipedPotionSprites [2].ScaledContentSize.Width / 2, EquipedPotionSprites [1].Position.Y - EquipedPotionSprites [1].ScaledContentSize.Height / 2 - EquipedPotionSprites [2].ScaledContentSize.Height / 2 - 10f);
 					EquipedPotionClickables [2] = Clickable.BySprite (EquipedPotionSprites [2], new CCSize (5000, 5000));
 				}
 
-				if (SelectedEquipment.Count > 4) {
-					foreach (IEquipable ArmorPart in SelectedEquipment.FindAll((Equipment) => Equipment is IArmor)) {
-						EquipedItems.Add (ArmorPart.EquipSlot, ArmorPart);
-					}
-					EquipedItems.Add (EquipSlot.Weapon, SelectedEquipment.Find ((Equipment) => Equipment is IWeapon));
-				} else {
-					//throw new ArgumentException ("Not enough equipment selected");
+				foreach (IEquipable ArmorPart in SelectedEquipment.FindAll((Equipment) => Equipment is IArmor)) {
+					EquipedItems.Add (ArmorPart.EquipSlot, ArmorPart);
 				}
+
+
+				DropDownMenu = new CCSprite ("interface_dropdownmenu.png") { IsAntialiased = false };
+				DropDownMenu.Scale = Sack.ScaleX;
+				DropDownMenu.Position = new CCPoint (Sack.Position.X, Sack.Position.Y - DropDownMenu.ScaledContentSize.Height / 2);
+				//EquipedItems.Add (EquipSlot.Weapon, SelectedEquipment.Find ((Equipment) => Equipment is IWeapon));
+				
 			}
 
 			protected override void AddedToScene ()
@@ -88,10 +90,6 @@ namespace mapKnightLibrary
 				base.AddedToScene ();
 
 				this.AddChild (Sack);
-
-				DropDownMenu = new CCSprite ("interface_dropdownmenu.png") { IsAntialiased = false };
-				DropDownMenu.Scale = Sack.ScaleX;
-				DropDownMenu.Position = new CCPoint (Sack.Position.X, Sack.Position.Y - DropDownMenu.ScaledContentSize.Height / 2);
 			}
 
 			void HandleMenuClicks(object sender, TouchInfo e){

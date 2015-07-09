@@ -12,7 +12,6 @@ namespace mapKnightLibrary
 		MergedLayer GameLayer;
 		CCSprite[] ManaSprite, LifeSprite;
 		CCSprite JumpButton, MoveRightButton, MoveLeftButton;
-		CCLabel FPSLabel;
 		CCLabel MapNameLabel, MapVersionLabel, MapCreatorLabel;
 		CCLayer InterfaceLayer;
 		CCSize screenSize;
@@ -24,22 +23,37 @@ namespace mapKnightLibrary
 
 		GameInventory Inventory;
 
-		public GameScene (CCWindow mainWindow, Container mainContainer, ControlType RunningControlType) : base(mainWindow)
+		public GameScene (CCWindow mainWindow, ControlType RunningControlType) : base(mainWindow)
 		{
+			screenSize = mainWindow.WindowSizeInPixels;
+			gameContainer = new mapKnightLibrary.Container ();
+
+			//Touchlistener Initialisierung
+			clickManager = new ClickManager (screenSize, gameContainer);
+			this.AddEventListener (clickManager, this);
+
+			GameInventory test = new GameInventory (clickManager, new List<IPotion> () {
+				new Potion1 (),
+				new Potion2 (),
+				new Potion3 ()
+			}, new List<IEquipable> () {
+				new Items.Set_Standart_Glove (),
+				new Items.Set_Standart_Chestplate (),
+				new Items.Set_Standart_Helmet (),
+				new Items.Set_Standart_Shoes ()
+			}, screenSize);
+			gameContainer.mainCharacter= new RoboBob(test);
+			gameContainer.physicsHandler = new PhysicsHandler ();
+
 			CurrentControlType = RunningControlType;
 
-			gameContainer = mainContainer;
 			GameLayer = new MergedLayer (mainWindow, gameContainer);
 
 			InterfaceLayer = new CCLayer ();
 
 			this.AddChild (GameLayer);
+			gameContainer.mainCharacter.bindToPhysicsHandler (gameContainer.physicsHandler);
 		
-			screenSize = mainWindow.WindowSizeInPixels;
-
-			//Touchlistener Initialisierung
-			clickManager = new ClickManager (screenSize, gameContainer);
-			this.AddEventListener (clickManager, this);
 
 			switch (RunningControlType) {
 			case ControlType.Slide:
@@ -82,18 +96,21 @@ namespace mapKnightLibrary
 			}
 
 			//Map Label
-			MapNameLabel = new CCLabel ("Map Name : " + GameLayer.mapName, "arial", 22) {
-				Color = new CCColor3B (255, 255, 255)
+			MapNameLabel = new CCLabel ("Map Name : " + GameLayer.mapName, "fonts/04B_30__.TTF", 20, CCLabelFormat.SystemFont) {
+				Color = new CCColor3B (10, 20, 238),
+				IsAntialiased = false
 			};
-			MapNameLabel.Position = new CCPoint (MapNameLabel.ContentSize.Width / 2, screenSize.Height - 10 - MapNameLabel.ContentSize.Height);
-			MapCreatorLabel = new CCLabel ("Map Creator : " + GameLayer.mapCreator, "arial", 22) {
-				Color = new CCColor3B (255, 255, 255)
+			MapNameLabel.Position = new CCPoint (screenSize.Width / 2, screenSize.Height - 10 - MapNameLabel.ContentSize.Height);
+			MapCreatorLabel = new CCLabel ("Map Creator : " + GameLayer.mapCreator, "fonts/04B_30__.TTF", 20, CCLabelFormat.SystemFont) {
+				Color = new CCColor3B (10, 20, 238),
+				IsAntialiased = false
 			};
-			MapCreatorLabel.Position = new CCPoint (MapCreatorLabel.ContentSize.Width / 2, MapNameLabel.Position.Y - 10 - MapCreatorLabel.ContentSize.Height);
-			MapVersionLabel = new CCLabel ("Map Version : " + GameLayer.mapVersion, "arial", 22) {
-				Color = new CCColor3B (255, 255, 255)
+			MapCreatorLabel.Position = new CCPoint (screenSize.Width / 2, MapNameLabel.Position.Y - 10 - MapCreatorLabel.ContentSize.Height);
+			MapVersionLabel = new CCLabel ("Map Version : " + GameLayer.mapVersion, "fonts/04B_30__.TTF", 20, CCLabelFormat.SystemFont) {
+				Color = new CCColor3B (10, 20, 238),
+				IsAntialiased = false
 			};
-			MapVersionLabel.Position = new CCPoint (MapVersionLabel.ContentSize.Width / 2, MapCreatorLabel.Position.Y - 10 - MapVersionLabel.ContentSize.Height);
+			MapVersionLabel.Position = new CCPoint (screenSize.Width / 2, MapCreatorLabel.Position.Y - 10 - MapVersionLabel.ContentSize.Height);
 
 			InterfaceLayer.AddChild (MapNameLabel);
 			InterfaceLayer.AddChild (MapCreatorLabel);
@@ -120,12 +137,6 @@ namespace mapKnightLibrary
 			InterfaceLayer.AddChild (ManaSprite [0]);
 			InterfaceLayer.AddChild (LifeSprite [1]);
 			InterfaceLayer.AddChild (LifeSprite [0]);
-
-			//FPS Label
-			FPSLabel = new CCLabel ("Score: 0", "arial", 22);
-			FPSLabel.Position = new CCPoint (FPSLabel.ContentSize.Width / 2, MapVersionLabel.Position.Y - 10 - FPSLabel.ContentSize.Height);
-			FPSLabel.Color = new CCColor3B (255, 255, 255);
-			InterfaceLayer.AddChild (FPSLabel);
 
 			//Interface Update und Punktbindung
 			this.InterfaceUpdate (null, new StatisticChangeEventArgHandler (Statistic.Life));
@@ -177,8 +188,6 @@ namespace mapKnightLibrary
 		void GameLoop(float frameTime)
 		{
 			GameLayer.CenterCamera ();
-			FPSLabel.Text = Math.Round ((1 / frameTime), 1).ToString () + " fps";
-			FPSLabel.PositionX = FPSLabel.ContentSize.Width / 2;
 
 			gameContainer.physicsHandler.step (frameTime);
 			gameContainer.mainCharacter.Update (frameTime);

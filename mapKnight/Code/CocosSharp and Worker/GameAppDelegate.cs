@@ -8,6 +8,7 @@ using Android.Content.PM;
 using Android.OS;
 
 using mapKnightLibrary;
+using mapKnightLibrary.Inventory;
 using Android.Views;
 
 namespace mapKnight
@@ -42,19 +43,16 @@ namespace mapKnight
 			application.ContentSearchPaths.Add ("interface");
 			application.ContentSearchPaths.Add ("particle");
 
-			gameContainer = new mapKnightLibrary.Container ();
-			gameContainer.mainCharacter= new RoboBob();
-			gameContainer.physicsHandler = new PhysicsHandler ();	
-
 			runningWindow = mainWindow;
-
+			runningWindow.DisplayStats = true;
+			runningWindow.StatsScale = 3;
 			// Get the resolution of the main window...
 			var bounds = mainWindow.WindowSizeInPixels;
 
 			CCScene.SetDefaultDesignResolution (bounds.Width, bounds.Height, CCSceneResolutionPolicy.ShowAll);
 
 			//startScene = new StartScene (mainWindow);
-			gameScene = new GameScene (mainWindow, gameContainer, RunningControlType);
+			gameScene = new GameScene (mainWindow, RunningControlType);
 
 			// startet das erste Fenster
 			mainWindow.RunWithScene (gameScene);

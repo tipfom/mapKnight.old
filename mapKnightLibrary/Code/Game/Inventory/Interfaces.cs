@@ -13,11 +13,10 @@ namespace mapKnightLibrary
 		public interface IItem
 		{
 			string name{ get; }
-			short ID { get; } //Muss einzigartig sein
+			string ID { get; } //Muss einzigartig sein
 			CCTexture2D PreviewImage { get; }
 			short Cost { get; }
 			float StackCount { get; }
-			Dictionary<Attribute,short> StaticEffect{ get; }
 		}
 
 		public interface ICraftable
@@ -29,12 +28,12 @@ namespace mapKnightLibrary
 		public interface IEquipable : IItem
 		{
 			EquipSlot EquipSlot{ get; }
-			Dictionary<Attribute, short> AttributeChange{ get; }
+			Dictionary<Attribute, short> AttributeChange{ get; } // statisch
 		}
 
 		public interface IConsumable : IItem
 		{
-			Dictionary<Attribute, short> AttributeChange{ get; }
+			Dictionary<Attribute, short> AttributeChange{ get; } // Wenn es konsumiert wird
 			float EffectTime{ get; } //0 = Ganze Runde
 			bool AttributeChangeOverTime{ get; } //z.B. Manapotions
 		}
@@ -52,9 +51,11 @@ namespace mapKnightLibrary
 
 		public interface IArmor : IEquipable
 		{
-			float Value{ get; }
 			float Health{ get; set; }
-			Dictionary<PlayerMovingType, CCAnimation> CharacterLookChange{ get; }
+			Dictionary<PlayerMovingType, CCAnimate> ArmorAnimations{ get; }
+			Dictionary<PlayerMovingType, CCPoint> ArmorAnimationPosition{ get; }
+			CCSpriteFrame StandingFrame{ get; }
+			void PreScale (float Scale);
 		}
 
 		public interface IWeapon : IEquipable

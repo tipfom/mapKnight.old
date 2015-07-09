@@ -138,7 +138,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Content\fonts\arial-22.xnb" />
     <AndroidAsset Include="Assets\Content\landscape\platform.png" />
     <AndroidAsset Include="Assets\Content\landscape\background.png" />
     <AndroidAsset Include="Assets\Content\tilemaps\plants.png" />
@@ -161,5 +160,8 @@
     <AndroidAsset Include="Assets\Content\interface\interface_sack.png" />
     <AndroidAsset Include="Assets\Content\interface\interface_dropdownmenu.png" />
     <AndroidAsset Include="Assets\Content\tilemaps\chest.png" />
+    <AndroidAsset Include="Assets\Content\character\set_standart.plist" />
+    <AndroidAsset Include="Assets\Content\character\set_standart.png" />
+    <AndroidAsset Include="Assets\Content\fonts\04B_30__.TTF" />
   </ItemGroup>
 </Project>

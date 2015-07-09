@@ -31,7 +31,7 @@ namespace mapKnight
 		Theme = "@style/Theme.Main",
 		LaunchMode = LaunchMode.SingleInstance,
 		ScreenOrientation = ScreenOrientation.Nosensor,
-		MainLauncher = true,
+		//MainLauncher = true,
 		ConfigurationChanges =  ConfigChanges.Keyboard | 
 		ConfigChanges.KeyboardHidden)]
 

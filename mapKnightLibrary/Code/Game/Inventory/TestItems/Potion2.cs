@@ -61,9 +61,9 @@ namespace mapKnightLibrary
 				}
 			}
 
-			public short ID {
+			public string ID {
 				get {
-					return 0;
+					return "1";
 				}
 			}
 
