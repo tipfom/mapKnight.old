@@ -29,7 +29,7 @@ namespace mapKnightLibrary
 			CCPoint[] verticesToPoint = new CCPoint[vertexCount];
 			CCColor4B Color = new CCColor4B (color.r, color.g, color.b, 255);
 			for (int i = 0; i < vertexCount; i++) {
-				verticesToPoint [i] = new CCPoint (vertices [i].x * 50f, vertices [i].y * 50f);
+				verticesToPoint [i] = new CCPoint (vertices [i].x * PhysicsHandler.pixelPerMeter, vertices [i].y * PhysicsHandler.pixelPerMeter);
 			}
 
 			DrawNode.DrawPolygon (verticesToPoint, vertexCount, new CCColor4B (0, 0, 0, 0), 1f, Color);
@@ -40,7 +40,7 @@ namespace mapKnightLibrary
 			CCPoint[] verticesToPoint = new CCPoint[vertexCount];
 			CCColor4B Color = new CCColor4B (color.r, color.g, color.b, 255);
 			for (int i = 0; i < vertexCount; i++) {
-				verticesToPoint [i] = new CCPoint (vertices [i].x * 50f, vertices [i].y * 50f);
+				verticesToPoint [i] = new CCPoint (vertices [i].x * PhysicsHandler.pixelPerMeter, vertices [i].y * PhysicsHandler.pixelPerMeter);
 			}
 
 			DrawNode.DrawPolygon (verticesToPoint, vertexCount, Color, 1f, Color);
@@ -48,7 +48,7 @@ namespace mapKnightLibrary
 
 		public override void DrawCircle (Box2D.Common.b2Vec2 center, float radius, Box2D.Common.b2Color color)
 		{
-			CCPoint centerToPoint = new CCPoint (center.x * 50f, center.y * 50f);
+			CCPoint centerToPoint = new CCPoint (center.x * PhysicsHandler.pixelPerMeter, center.y * PhysicsHandler.pixelPerMeter);
 			//CCColor4B Color = new CCColor4B (color.r, color.g, color.b, 255);
 
 			DrawNode.DrawCircle (centerToPoint, radius, CollusionColor);
@@ -56,7 +56,7 @@ namespace mapKnightLibrary
 
 		public override void DrawSolidCircle (Box2D.Common.b2Vec2 center, float radius, Box2D.Common.b2Vec2 axis, Box2D.Common.b2Color color)
 		{
-			CCPoint centerToPoint = new CCPoint (center.x * 50f, center.y * 50f);
+			CCPoint centerToPoint = new CCPoint (center.x * PhysicsHandler.pixelPerMeter, center.y * PhysicsHandler.pixelPerMeter);
 			//CCColor4B Color = new CCColor4B (color.r, color.g, color.b, 255);
 
 			DrawNode.DrawCircle (centerToPoint, radius, CollusionColor);

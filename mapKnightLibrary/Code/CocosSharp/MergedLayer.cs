@@ -28,9 +28,6 @@ namespace mapKnightLibrary
 
 		Container gameContainer;
 
-		//particles
-		GroundParticle PlayerMovingParticle;
-
 		public CameraMover cameraMover;
 
 		public MergedLayer (CCWindow mainWindow, Container mainContainer)
@@ -46,7 +43,6 @@ namespace mapKnightLibrary
 
 		protected override void AddedToScene ()
 		{
-
 			base.AddedToScene ();
 
 			Background = new CCSprite ("background");
@@ -83,9 +79,6 @@ namespace mapKnightLibrary
 
 			this.AddChild (Map, 1);
 			this.AddChild (gameContainer.mainCharacter.CharacterLayer, 2);
-			//this.AddChild (gameContainer.mainCharacter.ShoesSprite, 2);
-			//this.AddChild (gameContainer.mainCharacter.GloveSprite, 2);
-			//this.AddChild (gameContainer.mainCharacter.HelmetSprite, 2);
 			this.AddChild (gameContainer.physicsHandler.debugDrawer.DrawNode, 0);
 
 			foreach (Platform knownPlatform in gameContainer.platformContainer) {
@@ -97,14 +90,10 @@ namespace mapKnightLibrary
 
 			//particle init
 
-			PlayerMovingParticle = new GroundParticle ();
-			this.AddChild (PlayerMovingParticle);
-			PlayerMovingParticle.Position = gameContainer.mainCharacter.Position;
-
 			//camera move init
 			cameraMover = new CameraMover (gameContainer.mainCharacter.Position, new CCSize (150, 200), new CCSize (Map.TileTexelSize.Width * Map.MapDimensions.Size.Width * Map.ScaleX, Map.TileTexelSize.Height * Map.MapDimensions.Size.Height * Map.ScaleY), screenSize);
 
-			gameContainer.chestContainer.Add (new Chest (new CCTileMapCoordinates (132, 74), Map.LayerNamed ("chestlayer"), Map.ScaleX, Map.MapDimensions.Size));
+			//gameContainer.chestContainer.Add (new Chest (new CCTileMapCoordinates (132, 74), Map.LayerNamed ("chestlayer"), Map.ScaleX, Map.MapDimensions.Size));
 			foreach (Chest knownChest in gameContainer.chestContainer) {
 				this.AddChild (knownChest, 1);
 			}
@@ -125,9 +114,6 @@ namespace mapKnightLibrary
 
 		public override void Update (float dt)
 		{
-			if (gameContainer.mainCharacter.MoveDirection != PlayerMovingParticle.ParticleAppearDirection)
-				this.PlayerMovingParticle.ParticleAppearDirection = gameContainer.mainCharacter.MoveDirection;
-			this.PlayerMovingParticle.Position = new CCPoint (gameContainer.mainCharacter.Position.X, gameContainer.mainCharacter.Position.Y - gameContainer.mainCharacter.Size.Height / 2);
 			cameraMover.Update (gameContainer.mainCharacter.Position, gameContainer.mainCharacter.Size);
 		}
 			

@@ -16,7 +16,7 @@
     <AssemblyName>mapKnight</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
-    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <ReleaseVersion>0.3</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -26,11 +26,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <AndroidLinkMode>Full</AndroidLinkMode>
-    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
-    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-    <AotAssemblies>true</AotAssemblies>
-    <EnableLLVM>true</EnableLLVM>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -39,24 +37,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="Xamarin.Android.Support.v4">
-      <HintPath>..\packages\Xamarin.Android.Support.v4.22.2.0.0\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v7.CardView">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.CardView.22.2.0.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.CardView.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v7.AppCompat">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.22.2.0.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v7.RecyclerView">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.RecyclerView.22.2.0.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.RecyclerView.dll</HintPath>
-    </Reference>
     <Reference Include="box2d">
       <HintPath>..\packages\CocosSharp.PCL.Shared.1.5.0.1\lib\MonoAndroid10\box2d.dll</HintPath>
     </Reference>
@@ -72,6 +59,18 @@
     <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\packages\Xamarin.Android.Support.v4.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.RecyclerView">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.RecyclerView.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.RecyclerView.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.CardView">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.CardView.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.CardView.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.AppCompat">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -80,13 +79,13 @@
     <Compile Include="Code\Visual\InventorySlideIn.cs" />
     <Compile Include="Code\Visual\MainWindow.cs" />
     <Compile Include="Code\Visual\StatsPopUp.cs" />
-    <Compile Include="Code\Visual\VersionManager.cs" />
     <Compile Include="Code\Visual\Statistic.cs" />
     <Compile Include="Code\Visual\OptionPopUp.cs" />
     <Compile Include="Code\SQLDataManager.cs" />
-    <Compile Include="Code\CocosSharp and Worker\Game.cs" />
     <Compile Include="Code\CocosSharp and Worker\GameAppDelegate.cs" />
-    <Compile Include="Code\CocosSharp and Worker\MainWorker.cs" />
+    <Compile Include="Code\AndroidLog.cs" />
+    <Compile Include="Code\CocosSharp and Worker\GameActivity.cs" />
+    <Compile Include="Code\CocosSharp and Worker\MainActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -140,7 +139,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Content\fonts\arial-22.xnb" />
     <AndroidAsset Include="Assets\Content\landscape\platform.png" />
     <AndroidAsset Include="Assets\Content\landscape\background.png" />
     <AndroidAsset Include="Assets\Content\tilemaps\plants.png" />
@@ -165,5 +163,9 @@
     <AndroidAsset Include="Assets\Content\tilemaps\chest.png" />
     <AndroidAsset Include="Assets\Content\character\set_standart.plist" />
     <AndroidAsset Include="Assets\Content\character\set_standart.png" />
+    <AndroidAsset Include="Assets\Content\fonts\04B_30__.TTF" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidEnvironment Include="EmptyTextFile.txt" />
   </ItemGroup>
 </Project>

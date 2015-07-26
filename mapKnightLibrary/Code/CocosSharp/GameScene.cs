@@ -12,8 +12,6 @@ namespace mapKnightLibrary
 		MergedLayer GameLayer;
 		CCSprite[] ManaSprite, LifeSprite;
 		CCSprite JumpButton, MoveRightButton, MoveLeftButton;
-		CCLabel FPSLabel;
-		CCLabel MapNameLabel, MapVersionLabel, MapCreatorLabel;
 		CCLayer InterfaceLayer;
 		CCSize screenSize;
 
@@ -24,7 +22,7 @@ namespace mapKnightLibrary
 
 		GameInventory Inventory;
 
-		public GameScene (CCWindow mainWindow, ControlType RunningControlType) : base(mainWindow)
+		public GameScene (CCWindow mainWindow, ControlType RunningControlType, BasicLogRegister RunningLog) : base(mainWindow)
 		{
 			screenSize = mainWindow.WindowSizeInPixels;
 			gameContainer = new mapKnightLibrary.Container ();
@@ -54,7 +52,7 @@ namespace mapKnightLibrary
 
 			this.AddChild (GameLayer);
 			gameContainer.mainCharacter.bindToPhysicsHandler (gameContainer.physicsHandler);
-		
+
 
 			switch (RunningControlType) {
 			case ControlType.Slide:
@@ -96,24 +94,6 @@ namespace mapKnightLibrary
 				break;
 			}
 
-			//Map Label
-			MapNameLabel = new CCLabel ("Map Name : " + GameLayer.mapName, "arial", 22) {
-				Color = new CCColor3B (255, 255, 255)
-			};
-			MapNameLabel.Position = new CCPoint (MapNameLabel.ContentSize.Width / 2, screenSize.Height - 10 - MapNameLabel.ContentSize.Height);
-			MapCreatorLabel = new CCLabel ("Map Creator : " + GameLayer.mapCreator, "arial", 22) {
-				Color = new CCColor3B (255, 255, 255)
-			};
-			MapCreatorLabel.Position = new CCPoint (MapCreatorLabel.ContentSize.Width / 2, MapNameLabel.Position.Y - 10 - MapCreatorLabel.ContentSize.Height);
-			MapVersionLabel = new CCLabel ("Map Version : " + GameLayer.mapVersion, "arial", 22) {
-				Color = new CCColor3B (255, 255, 255)
-			};
-			MapVersionLabel.Position = new CCPoint (MapVersionLabel.ContentSize.Width / 2, MapCreatorLabel.Position.Y - 10 - MapVersionLabel.ContentSize.Height);
-
-			InterfaceLayer.AddChild (MapNameLabel);
-			InterfaceLayer.AddChild (MapCreatorLabel);
-			InterfaceLayer.AddChild (MapVersionLabel);
-
 			//Interface
 			ManaSprite = new CCSprite[2];
 			LifeSprite = new CCSprite[2];
@@ -136,12 +116,6 @@ namespace mapKnightLibrary
 			InterfaceLayer.AddChild (LifeSprite [1]);
 			InterfaceLayer.AddChild (LifeSprite [0]);
 
-			//FPS Label
-			FPSLabel = new CCLabel ("Score: 0", "arial", 22);
-			FPSLabel.Position = new CCPoint (FPSLabel.ContentSize.Width / 2, MapVersionLabel.Position.Y - 10 - FPSLabel.ContentSize.Height);
-			FPSLabel.Color = new CCColor3B (255, 255, 255);
-			InterfaceLayer.AddChild (FPSLabel);
-
 			//Interface Update und Punktbindung
 			this.InterfaceUpdate (null, new StatisticChangeEventArgHandler (Statistic.Life));
 			this.InterfaceUpdate (null, new StatisticChangeEventArgHandler (Statistic.Mana));
@@ -158,7 +132,7 @@ namespace mapKnightLibrary
 			}
 
 			Inventory = new GameInventory (clickManager, new List<IPotion> (){ new Potion1 (), new Potion3 (), new Potion2 () }, new List<IEquipable> (), screenSize);
-			this.AddChild (Inventory);
+			//this.AddChild (Inventory);
 
 			Schedule (GameLoop);
 		}
@@ -192,9 +166,6 @@ namespace mapKnightLibrary
 		void GameLoop(float frameTime)
 		{
 			GameLayer.CenterCamera ();
-			FPSLabel.Text = Math.Round ((1 / frameTime), 1).ToString () + " fps";
-			FPSLabel.PositionX = FPSLabel.ContentSize.Width / 2;
-
 			gameContainer.physicsHandler.step (frameTime);
 			gameContainer.mainCharacter.Update (frameTime);
 
@@ -263,4 +234,3 @@ namespace mapKnightLibrary
 		#endregion
 	}
 }
-

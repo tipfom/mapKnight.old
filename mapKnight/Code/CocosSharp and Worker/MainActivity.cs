@@ -35,13 +35,13 @@ namespace mapKnight
 		ConfigurationChanges =  ConfigChanges.Keyboard | 
 		ConfigChanges.KeyboardHidden)]
 
-	public class MainWorker : ActionBarActivity
+	public class MainActivity : ActionBarActivity
 	{
 		Intent GameIntent;
 
 		ControlType CurrentControlType;
 
-		public MainWorker(){
+		public MainActivity(){
 			CurrentControlType = ControlType.Button;
 		}
 

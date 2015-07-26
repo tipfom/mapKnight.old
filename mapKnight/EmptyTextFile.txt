@@ -1,0 +1,5 @@
+﻿
+
+MONO_GC_PARAMS=soft-heap-limit=512m
+
+MONO_GC_PARAMS=bridge-implementation=new

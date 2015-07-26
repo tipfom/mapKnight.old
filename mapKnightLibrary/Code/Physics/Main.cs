@@ -22,8 +22,6 @@ namespace mapKnightLibrary
 
 		public static float pixelPerMeter = 50f;
 
-
-
 		public CollusionSensor collusionSensor;
 
 		public PhysicsHandler ()
@@ -103,6 +101,16 @@ namespace mapKnightLibrary
 				LastX = 0;
 				CurrentWidth = 0;
 			}
+
+			string[,] CustomTile = extractCustomTiles (physicsLayer, physicsMap);
+
+			for (int y = 0; y < physicsLayer.LayerSize.Size.Height; y++) {
+				for (int x = 0; x < physicsLayer.LayerSize.Size.Width; x++) {
+					if (CustomTile [x, y] != null) {
+						createCustomBodyAt (x * (int)physicsLayer.TileTexelSize.Width * (int)physicsMap.ScaleX, ((int)physicsLayer.LayerSize.Size.Height - y - 1) * (int)physicsLayer.TileTexelSize.Height * (int)physicsMap.ScaleY, physicsLayer.TileTexelSize.Width * physicsMap.ScaleX, physicsLayer.TileTexelSize.Height * physicsMap.ScaleY, CustomTile [x, y]);
+					}
+				}
+			}
 		}
 
 		private bool[,] extractHitboxTiles(CCTileMapLayer physicsLayer, CCTileMap physicsMap){
@@ -112,9 +120,10 @@ namespace mapKnightLibrary
 			Dictionary<string,string> tileProperties;
 			for (int x = 1; x < physicsLayer.LayerSize.Size.Width - 1; x++) {
 				for (int y = 1; y < physicsLayer.LayerSize.Size.Height - 1; y++) {
-					//wenn das tile allein steht, dann ist es ein Element der Hitbox
+					//wenn das tile auf einer Seite offen ist, dann ist es ein Teil der MapHitBox
+					//und das tile eine quadr. hitbox hat
 					tileProperties = physicsMap.TilePropertiesForGID (physicsLayer.TileGIDAndFlags (new CCTileMapCoordinates (x, y)).Gid);
-					if (tileProperties != null) {
+					if (tileProperties != null && tileProperties.ContainsKey("shapetype") && tileProperties["shapetype"] == "box") {
 						tileProperties = physicsMap.TilePropertiesForGID (physicsLayer.TileGIDAndFlags (new CCTileMapCoordinates (x - 1, y)).Gid);
 						if (tileProperties == null) {
 							Tile [x, y] = true;
@@ -138,10 +147,55 @@ namespace mapKnightLibrary
 					}
 				}
 			}
-
 			return Tile;
 		}
 
+		private string[,] extractCustomTiles(CCTileMapLayer physicsLayer, CCTileMap physicsMap){
+			string[,] Tile = new string[(int)physicsLayer.LayerSize.Size.Width, (int)physicsLayer.LayerSize.Size.Height];
+
+			//erstellt ein bool Abbild der Map
+			Dictionary<string,string> tileProperties;
+			for (int x = 1; x < physicsLayer.LayerSize.Size.Width - 1; x++) {
+				for (int y = 1; y < physicsLayer.LayerSize.Size.Height - 1; y++) {
+					//wenn das tile auf einer Seite offen ist, dann ist es ein Teil der MapHitBox
+					//und das tile eine spezielle hitbox hat
+					tileProperties = physicsMap.TilePropertiesForGID (physicsLayer.TileGIDAndFlags (new CCTileMapCoordinates (x, y)).Gid);
+
+					if (tileProperties != null && tileProperties.ContainsKey("shapetype") && tileProperties["shapetype"] == "custom") {
+						string shapevertexstring;
+						if (!tileProperties.ContainsKey ("shapevertex"))
+							throw new FormatException ("error in map at tile x=" + x.ToString () + " y=" + y.ToString () + " (tile's shapetype has been set to custom, but no shapevertex property was added)");
+						else
+							shapevertexstring = tileProperties ["shapevertex"];
+
+						//-----------------------------------------------------------------------------
+						tileProperties = physicsMap.TilePropertiesForGID (physicsLayer.TileGIDAndFlags (new CCTileMapCoordinates (x - 1, y)).Gid);
+						if (tileProperties == null) {
+							Tile [x, y] = shapevertexstring;
+						}
+			
+						//-----------------------------------------------------------------------------
+						tileProperties = physicsMap.TilePropertiesForGID (physicsLayer.TileGIDAndFlags (new CCTileMapCoordinates (x + 1, y)).Gid);
+						if (tileProperties == null) {
+							Tile [x, y] = shapevertexstring;
+						}
+
+						//-----------------------------------------------------------------------------
+						tileProperties = physicsMap.TilePropertiesForGID (physicsLayer.TileGIDAndFlags (new CCTileMapCoordinates (x, y - 1)).Gid);
+						if (tileProperties == null) {
+							Tile [x, y] = shapevertexstring;
+						}
+
+						//-----------------------------------------------------------------------------
+						tileProperties = physicsMap.TilePropertiesForGID (physicsLayer.TileGIDAndFlags (new CCTileMapCoordinates (x, y + 1)).Gid);
+						if (tileProperties == null) {
+							Tile [x, y] = shapevertexstring;
+						}
+					}
+				}
+			}
+			return Tile;			
+		}
 
 		private void createBoxAt(int x, int y, float pixelWidth, float pixelHeight)
 		{
@@ -163,6 +217,34 @@ namespace mapKnightLibrary
 			boxFixture.userData = WorldFixtureData.ground;
 
 			boxBody.CreateFixture (boxFixture);
+		}
+
+		private void createCustomBodyAt(int x,int y, float pixelWidth, float pixelHeight, string shape){
+
+			b2BodyDef BlockDef = new b2BodyDef ();
+			BlockDef.type = b2BodyType.b2_staticBody;
+			BlockDef.position = new b2Vec2 (x / pixelPerMeter + pixelWidth / pixelPerMeter / 2, y / pixelPerMeter + pixelHeight / pixelPerMeter / 2);
+			BlockDef.userData = WorldFixtureData.ground;
+
+			b2Body BlockBody = gameWorld.CreateBody (BlockDef);
+
+			b2PolygonShape BlockShape = new b2PolygonShape (); 
+			string[] UnformattedBlockVertices = shape.Split (';');
+			b2Vec2[] BlockVertices = new b2Vec2[UnformattedBlockVertices.Length];
+			for (int i = 0; i < UnformattedBlockVertices.Length; i++) {
+				BlockVertices [i] = new b2Vec2 ((float)Convert.ToInt32 (UnformattedBlockVertices [i].Split (',') [0]) * pixelWidth / 2 / PhysicsHandler.pixelPerMeter,
+					(float)Convert.ToInt32 (UnformattedBlockVertices [i].Split (',') [1]) * pixelHeight / 2 / PhysicsHandler.pixelPerMeter);
+			}
+			BlockShape.Set (BlockVertices, BlockVertices.Length);
+
+			b2FixtureDef BlockFixture = new b2FixtureDef ();
+			BlockFixture.shape = BlockShape;
+			BlockFixture.density = 1.0f;
+			BlockFixture.friction = 0.0f;
+			BlockFixture.restitution = 0.0f;
+			BlockFixture.userData = WorldFixtureData.ground;
+
+			BlockBody.CreateFixture (BlockFixture);
 		}
 
 		#endregion

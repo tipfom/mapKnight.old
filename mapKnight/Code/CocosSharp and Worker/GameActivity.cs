@@ -27,38 +27,38 @@ namespace mapKnight
 		Icon = "@drawable/heart",
 		Theme = "@style/GameTheme",
 		LaunchMode = LaunchMode.SingleInstance,
-		NoHistory = true,
+//		NoHistory = true,
 		MainLauncher = true,
 		ScreenOrientation = ScreenOrientation.SensorLandscape,
 		ConfigurationChanges =  ConfigChanges.Keyboard | 
 		ConfigChanges.KeyboardHidden)]
 	
-	public class Game : AndroidGameActivity
+	public class GameActivity : AndroidGameActivity
 	{
 		CCApplication gameApplication;
 
-		public Game(){
+		public GameActivity(){
 		}
 
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
+			//Sollte der ds Bundle null sein einfach bereinigen und neu erstellen
 
 			//SQLTEST
-			AndroidSQLDataManager test = new AndroidSQLDataManager (Path.Combine (System.Environment.GetFolderPath (System.Environment.SpecialFolder.Personal), StaticData.databasepath));
+//			AndroidSQLDataManager test = new AndroidSQLDataManager (Path.Combine (System.Environment.GetFolderPath (System.Environment.SpecialFolder.Personal), StaticData.databasepath));
 
-			test.BeginRead ();
-			test.GetOrCreate ("testkey", "testvalue");
-			test.GetOrCreate ("teststringkey", "testvalue");
-			test.GetOrCreate ("inttestkey", "testvalue");
-			test.GetOrCreate ("inttestkey", 123);
-			test.GetOrCreate ("inttest2key", 333);
-			test.GetOrCreate ("mlg", 1337);
-			int x = test.GetOrCreate ("mlg", 7);
-			test.Set ("testkey", "haha");
-			string y = test.GetOrCreate ("testkey", "default");
-			string z = test.GetOrCreate ("inttestkey", "default");
-			test.EndRead ();
+//			test.BeginRead ();
+//			test.GetOrCreate ("teststringkey", "testvalue");
+//			test.GetOrCreate ("inttestkey", "testvalue");
+//			test.GetOrCreate ("inttestkey", 123);
+//			test.GetOrCreate ("inttest2key", 333);
+//			test.GetOrCreate ("mlg", 1337);
+//			int x = test.GetOrCreate ("mlg", 7);
+//			test.Set ("testkey", "haha");
+//			string y = test.GetOrCreate ("testkey", "default");
+//			string z = test.GetOrCreate ("inttestkey", "default");
+//			test.EndRead ();
 			//END SQLTEST
 
 			//AndroidXMLDataManager xmltest = new AndroidXMLDataManager (Assets.Open ("Config/values.xml"), "de-de");

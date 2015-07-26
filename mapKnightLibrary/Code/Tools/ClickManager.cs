@@ -9,7 +9,6 @@ namespace mapKnightLibrary
 	{
 		Container gameContainer;
 		CCSize screenSize;
-		CCTouch LastCanceledTouch;
 
 		List<IClickable> RemoveList;
 		List<IClickable> AddList;

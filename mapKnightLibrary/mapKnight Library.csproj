@@ -10,6 +10,7 @@
     <AssemblyName>mapKnightLibrary</AssemblyName>
     <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ReleaseVersion>0.3</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,13 +47,9 @@
     <Compile Include="Code\Game\JumpPad.cs" />
     <Compile Include="Code\Main\GlobalEnumeration.cs" />
     <Compile Include="Code\Main\TMXLayerDataLoader.cs" />
-    <Compile Include="Code\Main\Triangle.cs" />
     <Compile Include="Code\CocosSharp\Particle\GroundParticle.cs" />
     <Compile Include="Code\Physics\JumpManager.cs" />
     <Compile Include="Code\Physics\JumpManagerHelp.cs" />
-    <Compile Include="Code\Data\SQLDataManager.cs" />
-    <Compile Include="Code\Data\XMLDataManager.cs" />
-    <Compile Include="Code\Data\StaticData.cs" />
     <Compile Include="Code\Main\GlobalInterace.cs" />
     <Compile Include="Code\Game\Chest.cs" />
     <Compile Include="Code\Tools\CameraMover.cs" />
@@ -60,7 +57,6 @@
     <Compile Include="Code\Game\Inventory\Interfaces.cs" />
     <Compile Include="Code\Game\Inventory\Enumerations.cs" />
     <Compile Include="Code\Game\Inventory\Inventory.cs" />
-    <Compile Include="Code\Game\Inventory\GlobalInventory.cs" />
     <Compile Include="Code\Tools\Clickable.cs" />
     <Compile Include="Code\Game\Inventory\TestItems\Potion1.cs" />
     <Compile Include="Code\Game\Inventory\TestItems\Potion2.cs" />
@@ -69,6 +65,10 @@
     <Compile Include="Code\Game\Inventory\Items\Set_Standart_Chestplate.cs" />
     <Compile Include="Code\Game\Inventory\Items\Set_Standart_Gloves.cs" />
     <Compile Include="Code\Game\Inventory\Items\Set_Standart_Shoes.cs" />
+    <Compile Include="Code\Data\SQLDataManager.cs" />
+    <Compile Include="Code\Data\XMLDataManager.cs" />
+    <Compile Include="Code\Data\StaticData.cs" />
+    <Compile Include="Code\Data\Log.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -78,11 +78,11 @@
     <Folder Include="Code\Game\" />
     <Folder Include="Code\Main\" />
     <Folder Include="Code\CocosSharp\Particle\" />
-    <Folder Include="Code\Data\" />
     <Folder Include="Code\Tools\" />
     <Folder Include="Code\Game\Inventory\" />
     <Folder Include="Code\Game\Inventory\TestItems\" />
     <Folder Include="Code\Game\Inventory\Items\" />
+    <Folder Include="Code\Data\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="box2d">
@@ -97,6 +97,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="EmptyTextFile.txt" />
   </ItemGroup>
 </Project>
