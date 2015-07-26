@@ -35,6 +35,10 @@
     <Compile Include="Code\CocosSharp\TextureManager.cs" />
     <Compile Include="Code\CocosSharp\GameScene.cs" />
     <Compile Include="Code\CocosSharp\MergedLayer.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="Code\Physics\Main.cs" />
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
     <Compile Include="Code\Game\Character.cs" />
     <Compile Include="Code\Game\RoboBob.cs" />
     <Compile Include="Code\Game\Container.cs" />
@@ -49,6 +53,12 @@
     <Compile Include="Code\CocosSharp\Particle\GroundParticle.cs" />
     <Compile Include="Code\Physics\JumpManager.cs" />
     <Compile Include="Code\Physics\JumpManagerHelp.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="Code\Data\SQLDataManager.cs" />
+    <Compile Include="Code\Data\XMLDataManager.cs" />
+    <Compile Include="Code\Data\StaticData.cs" />
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
     <Compile Include="Code\Main\GlobalInterace.cs" />
     <Compile Include="Code\Game\Chest.cs" />
     <Compile Include="Code\Tools\CameraMover.cs" />
@@ -56,6 +66,10 @@
     <Compile Include="Code\Game\Inventory\Interfaces.cs" />
     <Compile Include="Code\Game\Inventory\Enumerations.cs" />
     <Compile Include="Code\Game\Inventory\Inventory.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="Code\Game\Inventory\GlobalInventory.cs" />
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
     <Compile Include="Code\Tools\Clickable.cs" />
     <Compile Include="Code\Game\Inventory\TestItems\Potion1.cs" />
     <Compile Include="Code\Game\Inventory\TestItems\Potion2.cs" />
@@ -64,11 +78,14 @@
     <Compile Include="Code\Game\Inventory\Items\Set_Standart_Chestplate.cs" />
     <Compile Include="Code\Game\Inventory\Items\Set_Standart_Gloves.cs" />
     <Compile Include="Code\Game\Inventory\Items\Set_Standart_Shoes.cs" />
+<<<<<<< HEAD
     <Compile Include="Code\Data\SQLDataManager.cs" />
     <Compile Include="Code\Data\XMLDataManager.cs" />
     <Compile Include="Code\Data\StaticData.cs" />
     <Compile Include="Code\Data\Log.cs" />
     <Compile Include="Code\Physics\PhysicsHandler.cs" />
+=======
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -78,11 +95,18 @@
     <Folder Include="Code\Game\" />
     <Folder Include="Code\Main\" />
     <Folder Include="Code\CocosSharp\Particle\" />
+<<<<<<< HEAD
+=======
+    <Folder Include="Code\Data\" />
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
     <Folder Include="Code\Tools\" />
     <Folder Include="Code\Game\Inventory\" />
     <Folder Include="Code\Game\Inventory\TestItems\" />
     <Folder Include="Code\Game\Inventory\Items\" />
+<<<<<<< HEAD
     <Folder Include="Code\Data\" />
+=======
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
   </ItemGroup>
   <ItemGroup>
     <Reference Include="box2d">
@@ -97,5 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="SlideMethods.txt" />
   </ItemGroup>
 </Project>

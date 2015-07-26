@@ -9,6 +9,10 @@ namespace mapKnightLibrary
 	{
 		Container gameContainer;
 		CCSize screenSize;
+<<<<<<< HEAD
+=======
+		CCTouch LastCanceledTouch;
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 
 		List<IClickable> RemoveList;
 		List<IClickable> AddList;
@@ -49,6 +53,7 @@ namespace mapKnightLibrary
 			}
 		}
 
+<<<<<<< HEAD
 		bool CurrentlyFlushing;
 		void Flush(){
 			if (!CurrentlyFlushing) {
@@ -66,6 +71,14 @@ namespace mapKnightLibrary
 					RemoveList.Clear ();
 				}
 				CurrentlyFlushing = false;
+=======
+		void Flush(){
+			foreach (IClickable Object in AddList) {
+				ObjectList.Add (Object);
+			}
+			foreach (IClickable Object in RemoveList) {
+				ObjectList.Remove (Object);
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 			}
 		}
 

@@ -55,6 +55,7 @@
     </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>..\packages\CocosSharp.PCL.Shared.1.5.0.1\lib\MonoAndroid10\MonoGame.Framework.dll</HintPath>
+<<<<<<< HEAD
     </Reference>
     <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="System.Data" />
@@ -70,7 +71,12 @@
     </Reference>
     <Reference Include="Xamarin.Android.Support.v7.AppCompat">
       <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+=======
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
     </Reference>
+    <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -82,10 +88,16 @@
     <Compile Include="Code\Visual\Statistic.cs" />
     <Compile Include="Code\Visual\OptionPopUp.cs" />
     <Compile Include="Code\SQLDataManager.cs" />
+<<<<<<< HEAD
     <Compile Include="Code\CocosSharp and Worker\GameAppDelegate.cs" />
     <Compile Include="Code\AndroidLog.cs" />
     <Compile Include="Code\CocosSharp and Worker\GameActivity.cs" />
     <Compile Include="Code\CocosSharp and Worker\MainActivity.cs" />
+=======
+    <Compile Include="Code\CocosSharp and Worker\Game.cs" />
+    <Compile Include="Code\CocosSharp and Worker\GameAppDelegate.cs" />
+    <Compile Include="Code\CocosSharp and Worker\MainWorker.cs" />
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -164,8 +176,11 @@
     <AndroidAsset Include="Assets\Content\character\set_standart.plist" />
     <AndroidAsset Include="Assets\Content\character\set_standart.png" />
     <AndroidAsset Include="Assets\Content\fonts\04B_30__.TTF" />
+<<<<<<< HEAD
   </ItemGroup>
   <ItemGroup>
     <AndroidEnvironment Include="EmptyTextFile.txt" />
+=======
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
   </ItemGroup>
 </Project>

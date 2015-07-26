@@ -15,7 +15,11 @@ namespace mapKnightLibrary
 	{
 		//statische eigenschaften
 		static int WallSlideSpeed = 2;
+<<<<<<< HEAD
 		static float Scale = 0.47f;
+=======
+		static float Scale = 0.5f;
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 		//statische grafische variablen
 		static CCSpriteSheet CharacterSprites = new CCSpriteSheet("character/character.plist");
 
@@ -42,6 +46,10 @@ namespace mapKnightLibrary
 		float CharSizeHeight;
 		float CharSizeWidth;
 
+<<<<<<< HEAD
+=======
+		CCSpriteBatchNode CharacterBatch;
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 		CCSprite internHelmetSprite, internChestplateSprite, internGloveSprite, internShoesSprite;
 		CCLayer internCharacterLayer;
 		CCPoint CharacterPosition;
@@ -138,6 +146,11 @@ namespace mapKnightLibrary
 
 		public RoboBob (GameInventory gameInventory)
 		{
+<<<<<<< HEAD
+=======
+			CharacterBatch = new CCSpriteBatchNode ();
+
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 			//Übertragen der Rüstung
 			Helmet = (IArmor)gameInventory.EquipedItems [EquipSlot.Helmet];
 			Chestplate = (IArmor)gameInventory.EquipedItems [EquipSlot.Chestplate];
@@ -148,13 +161,21 @@ namespace mapKnightLibrary
 			//static CharacterAttributes
 			staticAttributes.Add (Inventory.Attribute.Health, 35);
 			staticAttributes.Add (Inventory.Attribute.Intelligence, 10);
+<<<<<<< HEAD
 			staticAttributes.Add (Inventory.Attribute.Jump, 800);
+=======
+			staticAttributes.Add (Inventory.Attribute.Jump, 10);
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 			staticAttributes.Add (Inventory.Attribute.LifeRegeneration, 1);
 			staticAttributes.Add (Inventory.Attribute.MagicArmor, 6);
 			staticAttributes.Add (Inventory.Attribute.Mana, 15);
 			staticAttributes.Add (Inventory.Attribute.ManaRegeneration, 1);
 			staticAttributes.Add (Inventory.Attribute.PhysicalArmor, 30);
+<<<<<<< HEAD
 			staticAttributes.Add (Inventory.Attribute.Speed, 400);
+=======
+			staticAttributes.Add (Inventory.Attribute.Speed, 4);
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 			staticAttributes.Add (Inventory.Attribute.Strenght, 17);
 			UpdateAttributes (new Dictionary<Inventory.Attribute, short>[] {
 				Helmet.AttributeChange,
@@ -174,10 +195,18 @@ namespace mapKnightLibrary
 			CharSizeHeight = CharacterSize.Height / 2;
 			CharSizeWidth = CharacterSize.Width / 2;
 
+<<<<<<< HEAD
 			CharacterLayer.AddChild( ChestplateSprite);
 			CharacterLayer.AddChild (GloveSprite);
 			CharacterLayer.AddChild (ShoesSprite);
 			CharacterLayer.AddChild (HelmetSprite);
+=======
+			CharacterBatch.AddChild (ChestplateSprite);
+			CharacterBatch.AddChild (GloveSprite);
+			CharacterBatch.AddChild (ShoesSprite);
+			CharacterBatch.AddChild (HelmetSprite);
+			internCharacterLayer.AddChild (CharacterBatch);
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 
 			Helmet.PreScale (Scale);
 			Chestplate.PreScale (Scale);
@@ -238,6 +267,10 @@ namespace mapKnightLibrary
 
 				CharacterPosition = new CCPoint (characterBody.Position.x * PhysicsHandler.pixelPerMeter, characterBody.Position.y * PhysicsHandler.pixelPerMeter);
 
+<<<<<<< HEAD
+=======
+				//CharacterSize = new CCSize (Gloves.StandingFrame.ContentSize.Width, Helmet.ArmorAnimationPosition[CurrentMovingType].Y * HelmetSprite.ScaleY);
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 				internCharacterLayer.Position = new CCPoint (CharacterPosition.X, CharacterPosition.Y - HelmetSprite.ScaledContentSize.Height / 4);
 				if (ChestplateSprite.ScaleX > 0) {
 					HelmetSprite.Position = new CCPoint (-CharSizeWidth + Helmet.ArmorAnimationPosition [CurrentMovingType].X,
@@ -267,10 +300,17 @@ namespace mapKnightLibrary
 					
 					switch (MoveDirection) {
 					case Direction.Left:
+<<<<<<< HEAD
 						Velocity.x = physicsHandler.collusionSensor.playerGroundVelocity.x - (float)this.Attributes [Inventory.Attribute.Speed] / PhysicsHandler.pixelPerMeter;
 						break;
 					case Direction.Right:
 						Velocity.x = physicsHandler.collusionSensor.playerGroundVelocity.x + (float)this.Attributes [Inventory.Attribute.Speed] / PhysicsHandler.pixelPerMeter;
+=======
+						Velocity.x = physicsHandler.collusionSensor.playerGroundVelocity.x - (float)this.Attributes [Inventory.Attribute.Speed];
+						break;
+					case Direction.Right:
+						Velocity.x = physicsHandler.collusionSensor.playerGroundVelocity.x + (float)this.Attributes [Inventory.Attribute.Speed];
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 						break;
 					case Direction.None:
 						Velocity.x = physicsHandler.collusionSensor.playerGroundVelocity.x;
@@ -283,7 +323,11 @@ namespace mapKnightLibrary
 					if (AvoidPlatformGlitch == false) {
 						Velocity.y = physicsHandler.collusionSensor.playerGroundVelocity.y;
 						if (Jumping == true && physicsHandler.collusionSensor.playerCanJump == true) {
+<<<<<<< HEAD
 							Velocity.y += this.Attributes [Inventory.Attribute.Jump] / PhysicsHandler.pixelPerMeter;
+=======
+							Velocity.y += this.Attributes [Inventory.Attribute.Jump];
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 							AvoidPlatformGlitch = true;
 							CurrentMovingType = PlayerMovingType.Jumping;
 						}
@@ -303,7 +347,11 @@ namespace mapKnightLibrary
 				case WorldFixtureData.air:
 					
 					if (physicsHandler.collusionSensor.WallContact == MoveDirection && MoveDirection != Direction.None && JumpManager.OnJump == false) {
+<<<<<<< HEAD
 						Velocity.y = -WallSlideSpeed / PhysicsHandler.pixelPerMeter;
+=======
+						Velocity.y = -WallSlideSpeed;
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 						CurrentMovingType = PlayerMovingType.Sliding;
 					} else if (JumpManager.OnJump == false) {
 						CurrentMovingType = PlayerMovingType.Falling;
@@ -318,7 +366,11 @@ namespace mapKnightLibrary
 						} else if (JumpManager.OnJump == false) {
 							if (MoveDirection != JumpManager.CurrentJumpingDirection)
 								JumpManager.AbortAccelerationOn (Axis.x);
+<<<<<<< HEAD
 							Velocity.x = -(float)this.Attributes [Inventory.Attribute.Speed] / PhysicsHandler.pixelPerMeter;
+=======
+							Velocity.x = -(float)this.Attributes [Inventory.Attribute.Speed];
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 						}
 						break;
 					case Direction.Right:
@@ -329,7 +381,11 @@ namespace mapKnightLibrary
 						} else if (JumpManager.OnJump == false) {
 							if (MoveDirection != JumpManager.CurrentJumpingDirection)
 								JumpManager.AbortAccelerationOn (Axis.x);
+<<<<<<< HEAD
 							Velocity.x = (float)this.Attributes [Inventory.Attribute.Speed] / PhysicsHandler.pixelPerMeter;
+=======
+							Velocity.x = (float)this.Attributes [Inventory.Attribute.Speed];
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 						}
 						break;
 					case Direction.None:
@@ -346,7 +402,11 @@ namespace mapKnightLibrary
 						if (physicsHandler.collusionSensor.WallContact == Direction.None && Jumping == true && DoubleJump == true) {
 							//Doppelsprung
 							DoubleJump = false;
+<<<<<<< HEAD
 							Velocity.y = (float)this.Attributes [Inventory.Attribute.Jump] * 0.8f / PhysicsHandler.pixelPerMeter;
+=======
+							Velocity.y = (float)this.Attributes [Inventory.Attribute.Jump] * 0.8f;
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 							CurrentMovingType = PlayerMovingType.Jumping;
 						} else if (physicsHandler.collusionSensor.WallContact != Direction.None && physicsHandler.collusionSensor.WallContact == MoveDirection && Jumping == true) {
 							JumpManager.StartJump (this.MoveDirection, JumpType.WallJump);
@@ -362,10 +422,17 @@ namespace mapKnightLibrary
 					
 					switch (MoveDirection) {
 					case Direction.Left:
+<<<<<<< HEAD
 						Velocity.x = -(float)this.Attributes [Inventory.Attribute.Speed] / PhysicsHandler.pixelPerMeter;
 						break;
 					case Direction.Right:
 						Velocity.x = (float)this.Attributes [Inventory.Attribute.Speed] / PhysicsHandler.pixelPerMeter;
+=======
+						Velocity.x = -(float)this.Attributes [Inventory.Attribute.Speed];
+						break;
+					case Direction.Right:
+						Velocity.x = (float)this.Attributes [Inventory.Attribute.Speed];
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 						break;
 					case Direction.None:
 						Velocity.x = 0;
@@ -393,10 +460,17 @@ namespace mapKnightLibrary
 				default:
 					switch (MoveDirection) {
 					case Direction.Left:
+<<<<<<< HEAD
 						Velocity.x = -this.Attributes [Inventory.Attribute.Speed] / PhysicsHandler.pixelPerMeter;
 						break;
 					case Direction.Right:
 						Velocity.x = this.Attributes [Inventory.Attribute.Speed] / PhysicsHandler.pixelPerMeter;
+=======
+						Velocity.x = -this.Attributes [Inventory.Attribute.Speed];
+						break;
+					case Direction.Right:
+						Velocity.x = this.Attributes [Inventory.Attribute.Speed];
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 						break;
 					case Direction.None:
 						Velocity.x = 0;
@@ -407,7 +481,11 @@ namespace mapKnightLibrary
 					}
 
 					if (Jumping == true && physicsHandler.collusionSensor.playerCanJump == true) {
+<<<<<<< HEAD
 						Velocity.y = (float)this.Attributes [Inventory.Attribute.Jump] / PhysicsHandler.pixelPerMeter;
+=======
+						Velocity.y = (float)this.Attributes [Inventory.Attribute.Jump];
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 						CurrentMovingType = PlayerMovingType.Jumping;
 					}
 
@@ -540,8 +618,11 @@ namespace mapKnightLibrary
 			ChestplateSprite.StopAllActions ();
 			GloveSprite.StopAllActions ();
 			ShoesSprite.StopAllActions ();
+<<<<<<< HEAD
 			CharSizeWidth = Gloves.ArmorAnimations [CurrentMovingType].Animation.Frames [0].SpriteFrame.ContentSize.Width / 2 * Scale;
 
+=======
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 			if (CurrentMovingType == PlayerMovingType.Running && MoveDirection == Direction.None) {
 				HelmetSprite.IsTextureRectRotated = Helmet.StandingFrame.IsRotated;
 				ChestplateSprite.IsTextureRectRotated = Chestplate.StandingFrame.IsRotated;
@@ -552,6 +633,14 @@ namespace mapKnightLibrary
 				ChestplateSprite.TextureRectInPixels = Chestplate.StandingFrame.TextureRectInPixels;
 				GloveSprite.TextureRectInPixels = Gloves.StandingFrame.TextureRectInPixels;
 				ShoesSprite.TextureRectInPixels = Shoes.StandingFrame.TextureRectInPixels;
+<<<<<<< HEAD
+=======
+
+				//HelmetSprite.IsAntialiased = false;
+				//ChestplateSprite.IsAntialiased = false;
+				//GloveSprite.IsAntialiased = false;
+				//ShoesSprite.IsAntialiased = false;
+>>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 			} else {
 				HelmetSprite.RepeatForever (new CCRepeatForever (Helmet.ArmorAnimations [CurrentMovingType]));
 				ChestplateSprite.RepeatForever (new CCRepeatForever (Chestplate.ArmorAnimations [CurrentMovingType]));
