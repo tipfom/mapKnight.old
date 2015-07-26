@@ -116,3 +116,11 @@ The Answer is an Inventory with many items such like potions, armors (which also
 !!! 09.07.2015 !!!
 - Added custom Armors with different look and attributes to the game
 - Changed the gamefont (http://www.schriftarten-fonts.de/fonts/9761/04b30.html)
+
+!!! 26.07.2015 !!!
+- added custom build properties
+- poorly added logging
+- fixed some performance issues
+- fixed some bugs causing the app to lag
+- added custom vertices to the box2d<->map parser
+- updated some packages
