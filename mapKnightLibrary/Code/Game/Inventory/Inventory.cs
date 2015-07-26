@@ -38,7 +38,7 @@ namespace mapKnightLibrary
 				Sack.Position = new CCPoint (Sack.ScaledContentSize.Width / 2, ScreenSize.Height - Sack.ScaledContentSize.Height / 2);
 				SackClickable = Clickable.BySprite (Sack, new CCSize (100, 5000));
 				SackClickable.ClickedEvent += HandleMenuClicks;
-				//ClickManager.AddObject (SackClickable);
+				ClickManager.AddObject (SackClickable);
 
 
 				//Initialisierung der ItemBilder

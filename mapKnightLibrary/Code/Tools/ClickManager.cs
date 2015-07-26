@@ -49,12 +49,23 @@ namespace mapKnightLibrary
 			}
 		}
 
+		bool CurrentlyFlushing;
 		void Flush(){
-			foreach (IClickable Object in AddList) {
-				ObjectList.Add (Object);
-			}
-			foreach (IClickable Object in RemoveList) {
-				ObjectList.Remove (Object);
+			if (!CurrentlyFlushing) {
+				CurrentlyFlushing = true;
+				if (AddList.Count > 0) {
+					for (int i = 0; i < AddList.Count; i++) {
+						ObjectList.Add (AddList [i]);
+					}
+					AddList.Clear ();
+				}
+				if (RemoveList.Count > 0) {
+					for (int i = 0; i < RemoveList.Count; i++) {
+						ObjectList.Remove (RemoveList [i]);
+					}
+					RemoveList.Clear ();
+				}
+				CurrentlyFlushing = false;
 			}
 		}
 

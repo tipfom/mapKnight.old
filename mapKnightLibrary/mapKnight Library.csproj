@@ -35,7 +35,6 @@
     <Compile Include="Code\CocosSharp\TextureManager.cs" />
     <Compile Include="Code\CocosSharp\GameScene.cs" />
     <Compile Include="Code\CocosSharp\MergedLayer.cs" />
-    <Compile Include="Code\Physics\Main.cs" />
     <Compile Include="Code\Game\Character.cs" />
     <Compile Include="Code\Game\RoboBob.cs" />
     <Compile Include="Code\Game\Container.cs" />
@@ -69,6 +68,7 @@
     <Compile Include="Code\Data\XMLDataManager.cs" />
     <Compile Include="Code\Data\StaticData.cs" />
     <Compile Include="Code\Data\Log.cs" />
+    <Compile Include="Code\Physics\PhysicsHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

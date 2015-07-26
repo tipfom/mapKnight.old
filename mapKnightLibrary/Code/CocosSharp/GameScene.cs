@@ -132,7 +132,7 @@ namespace mapKnightLibrary
 			}
 
 			Inventory = new GameInventory (clickManager, new List<IPotion> (){ new Potion1 (), new Potion3 (), new Potion2 () }, new List<IEquipable> (), screenSize);
-			//this.AddChild (Inventory);
+			this.AddChild (Inventory);
 
 			Schedule (GameLoop);
 		}
