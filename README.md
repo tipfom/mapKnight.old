@@ -114,7 +114,7 @@ Changelog (german) :
 - changed the way touches are recognized
 
 !!! 05.07.2015 !!!
-Running into the HotAndHotter Alpha Version! :D
+*Running into the HotAndHotter Alpha Version! :D
 What will it bring to the game? 
 The Answer is an Inventory with many items such like potions, armors (which also effect the players look), weapons and a crafting-system and probably some network stuff(bluetooth for example).
 - implemented an Inventory Container
