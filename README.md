@@ -45,11 +45,11 @@ Changelog (german) :
 !!! 21.06.2015 !!!
 - added a new way to control the character ( by buttons )
 - added an optionwindow
-  * customizable control types
+  - customizable control types
 - implemented a function allowing the mapcreator to define platform- and jumppadposition in the map itself
-- 
+
 - removed a bug causing the doublejump to disable while standing on a platform
-- 
+
 - improved the SQL-data algorythm
 
 !!! 22.06.2015 !!!
