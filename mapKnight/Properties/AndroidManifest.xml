@@ -1,9 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.tipfom.mapknight" android:versionName="0.0.6.3" android:versionCode="70">
-=======
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.tipfom.mapknight" android:versionName="0.0.4" android:versionCode="7">
->>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="21" />
 	<application android:label="mapKnight" android:icon="@drawable/heart"></application>
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

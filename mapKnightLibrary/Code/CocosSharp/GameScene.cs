@@ -12,10 +12,6 @@ namespace mapKnightLibrary
 		MergedLayer GameLayer;
 		CCSprite[] ManaSprite, LifeSprite;
 		CCSprite JumpButton, MoveRightButton, MoveLeftButton;
-<<<<<<< HEAD
-=======
-		CCLabel MapNameLabel, MapVersionLabel, MapCreatorLabel;
->>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 		CCLayer InterfaceLayer;
 		CCSize screenSize;
 
@@ -26,11 +22,7 @@ namespace mapKnightLibrary
 
 		GameInventory Inventory;
 
-<<<<<<< HEAD
 		public GameScene (CCWindow mainWindow, ControlType RunningControlType, BasicLogRegister RunningLog) : base(mainWindow)
-=======
-		public GameScene (CCWindow mainWindow, ControlType RunningControlType) : base(mainWindow)
->>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 		{
 			screenSize = mainWindow.WindowSizeInPixels;
 			gameContainer = new mapKnightLibrary.Container ();
@@ -49,7 +41,7 @@ namespace mapKnightLibrary
 				new Items.Set_Standart_Helmet (),
 				new Items.Set_Standart_Shoes ()
 			}, screenSize);
-			gameContainer.mainCharacter= new RoboBob(test);
+			gameContainer.mainCharacter = new RoboBob (test);
 			gameContainer.physicsHandler = new PhysicsHandler ();
 
 			CurrentControlType = RunningControlType;
@@ -60,11 +52,6 @@ namespace mapKnightLibrary
 
 			this.AddChild (GameLayer);
 			gameContainer.mainCharacter.bindToPhysicsHandler (gameContainer.physicsHandler);
-<<<<<<< HEAD
-
-=======
-		
->>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 
 			switch (RunningControlType) {
 			case ControlType.Slide:
@@ -106,30 +93,7 @@ namespace mapKnightLibrary
 				break;
 			}
 
-<<<<<<< HEAD
-=======
-			//Map Label
-			MapNameLabel = new CCLabel ("Map Name : " + GameLayer.mapName, "fonts/04B_30__.TTF", 20, CCLabelFormat.SystemFont) {
-				Color = new CCColor3B (10, 20, 238),
-				IsAntialiased = false
-			};
-			MapNameLabel.Position = new CCPoint (screenSize.Width / 2, screenSize.Height - 10 - MapNameLabel.ContentSize.Height);
-			MapCreatorLabel = new CCLabel ("Map Creator : " + GameLayer.mapCreator, "fonts/04B_30__.TTF", 20, CCLabelFormat.SystemFont) {
-				Color = new CCColor3B (10, 20, 238),
-				IsAntialiased = false
-			};
-			MapCreatorLabel.Position = new CCPoint (screenSize.Width / 2, MapNameLabel.Position.Y - 10 - MapCreatorLabel.ContentSize.Height);
-			MapVersionLabel = new CCLabel ("Map Version : " + GameLayer.mapVersion, "fonts/04B_30__.TTF", 20, CCLabelFormat.SystemFont) {
-				Color = new CCColor3B (10, 20, 238),
-				IsAntialiased = false
-			};
-			MapVersionLabel.Position = new CCPoint (screenSize.Width / 2, MapCreatorLabel.Position.Y - 10 - MapVersionLabel.ContentSize.Height);
 
-			InterfaceLayer.AddChild (MapNameLabel);
-			InterfaceLayer.AddChild (MapCreatorLabel);
-			InterfaceLayer.AddChild (MapVersionLabel);
-
->>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 			//Interface
 			ManaSprite = new CCSprite[2];
 			LifeSprite = new CCSprite[2];
@@ -201,11 +165,6 @@ namespace mapKnightLibrary
 
 		void GameLoop(float frameTime)
 		{
-			GameLayer.CenterCamera ();
-<<<<<<< HEAD
-=======
-
->>>>>>> 49908d873f6d98cc8e79416728edeef90665b42b
 			gameContainer.physicsHandler.step (frameTime);
 			gameContainer.mainCharacter.Update (frameTime);
 
