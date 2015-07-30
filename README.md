@@ -4,7 +4,7 @@ Project mapKnight created by two german students is a sidescroller with rpg-elem
 It is going to use Map API's to detect the users current position and change the map theme by his current terrain.
 
 
-Changelog (german) : 
+Changelog: 
 
 !!! 13.06.2015 !!!
 
