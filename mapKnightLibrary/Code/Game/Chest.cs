@@ -36,8 +36,10 @@ namespace mapKnightLibrary
 		{
 			switch (info) {
 			case TouchInfo.Ended:
-				if (OnChestOpened != null)
+				if (OnChestOpened != null) {
 					OnChestOpened (this);
+					CrossLog.Log (this, "User Clicked Chest @x=" + this.Position.X + ",y=" + this.Position.Y, MessageType.Debug);
+				}
 				break;
 			}
 		}

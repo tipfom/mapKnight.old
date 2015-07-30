@@ -22,7 +22,7 @@ namespace mapKnightLibrary
 
 		GameInventory Inventory;
 
-		public GameScene (CCWindow mainWindow, ControlType RunningControlType, BasicLogRegister RunningLog) : base(mainWindow)
+		public GameScene (CCWindow mainWindow, ControlType RunningControlType) : base(mainWindow)
 		{
 			screenSize = mainWindow.WindowSizeInPixels;
 			gameContainer = new mapKnightLibrary.Container ();
@@ -30,6 +30,7 @@ namespace mapKnightLibrary
 			//Touchlistener Initialisierung
 			clickManager = new ClickManager (screenSize, gameContainer);
 			this.AddEventListener (clickManager, this);
+			CrossLog.Log (this, "Set ClickListener", MessageType.Debug);
 
 			GameInventory test = new GameInventory (clickManager, new List<IPotion> () {
 				new Potion1 (),
@@ -45,6 +46,7 @@ namespace mapKnightLibrary
 			gameContainer.physicsHandler = new PhysicsHandler ();
 
 			CurrentControlType = RunningControlType;
+			CrossLog.Log (this, "ControlType = " + RunningControlType.ToString (), MessageType.Debug);
 
 			GameLayer = new MergedLayer (mainWindow, gameContainer);
 

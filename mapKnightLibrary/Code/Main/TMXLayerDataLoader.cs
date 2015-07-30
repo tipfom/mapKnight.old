@@ -9,6 +9,9 @@ namespace mapKnightLibrary
 {
 	public class TMXLayerDataLoader
 	{
+		public TMXLayerDataLoader(){
+		}
+
 		public static List<Platform> LoadPlatformFromLayer(CCTileMap TileMap, CCTileMapObjectGroup PlatformHolder, Container gameContainer){
 			List<Platform> LoadedPlatforms = new List<Platform> ();
 
@@ -34,6 +37,13 @@ namespace mapKnightLibrary
 							}
 						}
 						LoadedPlatforms.Add (new Platform (LoadedWaipoints, LoadedSpeed, gameContainer));
+
+						#if LOGMAPCREATION
+						CrossLog.Log (new TMXLayerDataLoader(), "Loaded a platform with a speed of " + LoadedSpeed, MessageType.Debug);
+						for (int i = 0; i < LoadedWaipoints.Count; i++) {
+							CrossLog.Log (new TMXLayerDataLoader(), "\tx=" + LoadedWaipoints [i].X + ",y=" + LoadedWaipoints [i].Y, MessageType.Debug);
+						}
+						#endif
 					}
 				}
 			}
@@ -57,6 +67,10 @@ namespace mapKnightLibrary
 						CCPoint LoadedPosition;
 						LoadedPosition = new CCPoint ((float)Convert.ToInt16 (LayerObject ["x"]) * TileMap.ScaleX - JumpPad.JumpPadSize.Width / 2, (float)Convert.ToInt32 (LayerObject ["y"]) * TileMap.ScaleY - JumpPad.JumpPadSize.Height);
 						LoadedJumpPads.Add (new JumpPad (LoadedBoostVector, LoadedPosition, gameContainer.physicsHandler.gameWorld));
+
+						#if LOGMAPCREATION
+						CrossLog.Log (new TMXLayerDataLoader(), "Loaded a platform with a boost of " + LoadedBoostVector.ToString () + " @x=" + LoadedPosition.X + ",y=" + LoadedPosition.Y, MessageType.Debug);
+						#endif
 					}
 				}
 			}

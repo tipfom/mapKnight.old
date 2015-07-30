@@ -17,6 +17,8 @@ namespace mapKnightLibrary
 			platformContainer = new List<Platform> ();	
 			jumpPadContainer = new List<JumpPad> ();
 			chestContainer = new List<Chest> ();
+
+			CrossLog.Log (this, "Created a new Instance of Container", MessageType.Debug);
 		}
 	}
 }

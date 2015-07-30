@@ -149,7 +149,7 @@ namespace mapKnightLibrary
 			//static CharacterAttributes
 			staticAttributes.Add (Inventory.Attribute.Health, 35);
 			staticAttributes.Add (Inventory.Attribute.Intelligence, 10);
-			staticAttributes.Add (Inventory.Attribute.Jump, 800);
+			staticAttributes.Add (Inventory.Attribute.Jump, 600);
 			staticAttributes.Add (Inventory.Attribute.LifeRegeneration, 1);
 			staticAttributes.Add (Inventory.Attribute.MagicArmor, 6);
 			staticAttributes.Add (Inventory.Attribute.Mana, 15);
@@ -227,6 +227,11 @@ namespace mapKnightLibrary
 						this.internAttributes [Attribute] += AttributeDictionary [Attribute];
 					}
 				}
+			}
+
+			CrossLog.Log (this, "Updated Attributes", MessageType.Debug);
+			foreach (KeyValuePair<Inventory.Attribute,short> AttributePair in internAttributes) {
+				CrossLog.Log (this, "\t" + AttributePair.Key.ToString () + " = " + AttributePair.Value.ToString (), MessageType.Info);
 			}
 		}
 
@@ -488,7 +493,10 @@ namespace mapKnightLibrary
 				rightSensor.friction = 0f;
 				rightSensor.restitution = 0f; //Rückprall
 				characterBody.CreateFixture (rightSensor);
+
+				CrossLog.Log (this, "Created Characterbody", MessageType.Debug);
 			}
+			CrossLog.Log (this, "Returned Characterbody", MessageType.Debug);
 			return characterBody;
 		}
 

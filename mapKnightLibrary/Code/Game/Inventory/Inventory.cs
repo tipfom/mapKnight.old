@@ -40,12 +40,13 @@ namespace mapKnightLibrary
 				SackClickable.ClickedEvent += HandleMenuClicks;
 				ClickManager.AddObject (SackClickable);
 
-
 				//Initialisierung der ItemBilder
 				EquipedPotionSprites = new CCSprite[3];
 				EquipedPotionClickables = new Clickable[3];
 				if (SelectedPotions.Count > 0) {
 					EquipedItems.Add (EquipSlot.PotionOne, SelectedPotions [0]);
+					CrossLog.Log (this, "PotionSlotOne is used by " + SelectedPotions [0].ToString (), MessageType.Debug);
+
 					EquipedPotionSprites [0] = new CCSprite () { };
 					EquipedPotionSprites [0].Texture = EquipedItems [EquipSlot.PotionOne].PreviewImage;
 					EquipedPotionSprites [0].IsAntialiased = false;
@@ -56,6 +57,8 @@ namespace mapKnightLibrary
 				if(SelectedPotions.Count > 1)
 				{
 					EquipedItems.Add (EquipSlot.PotionTwo, SelectedPotions [1]);
+					CrossLog.Log (this, "PotionSlotTwo is used by " + SelectedPotions [1].ToString (), MessageType.Debug);
+
 					EquipedPotionSprites [1] = new CCSprite () { };
 					EquipedPotionSprites [1].Texture = EquipedItems [EquipSlot.PotionTwo].PreviewImage;
 					EquipedPotionSprites [1].IsAntialiased = false;
@@ -65,6 +68,8 @@ namespace mapKnightLibrary
 				}
 				if (SelectedPotions.Count > 2) {
 					EquipedItems.Add (EquipSlot.PotionThree, SelectedPotions [2]);
+					CrossLog.Log (this, "PotionSlotThree is used by " + SelectedPotions [2].ToString (), MessageType.Debug);
+
 					EquipedPotionSprites [2] = new CCSprite () { };
 					EquipedPotionSprites [2].Texture = EquipedItems [EquipSlot.PotionThree].PreviewImage;
 					EquipedPotionSprites [2].IsAntialiased = false;
@@ -75,6 +80,7 @@ namespace mapKnightLibrary
 
 				foreach (IEquipable ArmorPart in SelectedEquipment.FindAll((Equipment) => Equipment is IArmor)) {
 					EquipedItems.Add (ArmorPart.EquipSlot, ArmorPart);
+					CrossLog.Log (this, ArmorPart.EquipSlot + " is used by " + ArmorPart.ToString (), MessageType.Debug);
 				}
 
 
@@ -102,6 +108,8 @@ namespace mapKnightLibrary
 						this.RemoveChild (DropDownMenu);
 						ClickManager.RemoveManyObjects (EquipedPotionClickables);
 						MenuOpened = !MenuOpened;
+
+						CrossLog.Log (this, "User opened InventoryUI", MessageType.Debug);
 					} else {
 						this.AddChild (DropDownMenu, -1);
 						this.AddChild (EquipedPotionSprites [0], -1);
@@ -109,6 +117,8 @@ namespace mapKnightLibrary
 						this.AddChild (EquipedPotionSprites [2], -1);
 						ClickManager.AddManyObjects (EquipedPotionClickables);
 						MenuOpened = !MenuOpened;
+
+						CrossLog.Log (this, "User closed InventoryUI", MessageType.Debug);
 					}
 					break;
 				}

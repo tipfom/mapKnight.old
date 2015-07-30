@@ -50,6 +50,7 @@ namespace mapKnightLibrary
 			Background.ScaleY = screenSize.Height / Background.ContentSize.Height;
 
 			Map = new CCTileMap (new CCTileMapInfo ("tilemaps/bitte.tmx")); 
+			CrossLog.Log (this, "Loaded Map", MessageType.Debug);
 			//bei einer Invocation Exception einfach ne neue Map machen
 			//vielleicht auch mal schauen, ob die XML_Datei korrekt ist(Attribute, fehlende < etc.)
 			//wenn die Maplayer nicht vollständig geladen werden, muss man die Compression umstellen
@@ -62,6 +63,10 @@ namespace mapKnightLibrary
 			if (Map.MapPropertyNamed ("Name") != null)
 				mapName = Map.MapPropertyNamed ("Name");
 
+			CrossLog.Log (this, "\tName = " + mapName, MessageType.Info);
+			CrossLog.Log (this, "\tVersion = " + mapVersion, MessageType.Info);
+			CrossLog.Log (this, "\tCreator = " + mapCreator, MessageType.Info);
+
 			Map.Scale = 3f; //Scale auch beim Spawnpoint ändern
 			Map.Antialiased = false;
 			//Map.LayerNamed ("mainlayer")
@@ -69,6 +74,8 @@ namespace mapKnightLibrary
 			Dictionary<string,string> spawnPoint = pointLayer.ObjectNamed ("SpawnPoint");
 
 			gameContainer.mainCharacter.Position = new CCPoint ((float)Convert.ToInt32 (spawnPoint ["x"]) * Map.ScaleX, (float)Convert.ToInt32 (spawnPoint ["y"]) * Map.ScaleY);
+			CrossLog.Log (this, "\tSpawnpoint = " + gameContainer.mainCharacter.Position.ToString(), MessageType.Info);
+
 			gameContainer.physicsHandler.Initialize (Map.MapDimensions.Size.Width * Map.TileTexelSize.Width * Map.ScaleX, gameContainer.mainCharacter, Map.LayerNamed ("mainlayer"), Map, gameContainer);
 
 			//Platform hinzufügen

@@ -113,6 +113,10 @@ namespace mapKnightLibrary
 					break;
 				}
 			}
+
+			#if LOGCOLLUSIONS
+			CrossLog.Log (this, "Contact beetwen " + contact.FixtureA.ToString () + " and " + contact.FixtureB.ToString () + " began", MessageType.Debug);
+			#endif
 		}
 
 		public bool playerCanJump{get 
@@ -174,6 +178,9 @@ namespace mapKnightLibrary
 					}
 			}
 
+			#if LOGCOLLUSIONS
+			CrossLog.Log (this, "Contact beetwen " + contact.FixtureA.ToString () + " and " + contact.FixtureB.ToString () + " ended", MessageType.Debug);
+			#endif
 		}
 
 		public override void PreSolve (Box2D.Dynamics.Contacts.b2Contact contact, b2Manifold oldManifold)

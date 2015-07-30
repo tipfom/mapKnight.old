@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG;DIRECTSTART</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -71,6 +71,21 @@
     <Reference Include="Xamarin.Android.Support.v7.AppCompat">
       <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
     </Reference>
+    <Reference Include="FormsViewGroup">
+      <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform.Android">
+      <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform">
+      <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\MonoAndroid10\Xamarin.Forms.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -82,12 +97,10 @@
     <Compile Include="Code\Visual\Statistic.cs" />
     <Compile Include="Code\Visual\OptionPopUp.cs" />
     <Compile Include="Code\SQLDataManager.cs" />
-    <Compile Include="Code\CocosSharp and Worker\GameAppDelegate.cs" />
-    <Compile Include="Code\AndroidLog.cs" />
-    <Compile Include="Code\CocosSharp and Worker\GameActivity.cs" />
-    <Compile Include="Code\CocosSharp and Worker\MainActivity.cs" />
-    <Compile Include="Code\CocosSharp and Worker\Game.cs" />
-    <Compile Include="Code\CocosSharp and Worker\MainWorker.cs" />
+    <Compile Include="Code\CocosSharp and Activities\GameAppDelegate.cs" />
+    <Compile Include="Code\CocosSharp and Activities\GameActivity.cs" />
+    <Compile Include="Code\CocosSharp and Activities\MainActivity.cs" />
+    <Compile Include="Code\ALog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -116,6 +129,7 @@
     <AndroidResource Include="Resources\drawable\heart.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <Import Project="..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <ItemGroup>
     <Folder Include="Assets\Content\" />
     <Folder Include="Code\" />
@@ -131,7 +145,7 @@
     <Folder Include="Resources\anim\" />
     <Folder Include="Assets\Content\particle\" />
     <Folder Include="Assets\Content\character\" />
-    <Folder Include="Code\CocosSharp and Worker\" />
+    <Folder Include="Code\CocosSharp and Activities\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\mapKnightLibrary\mapKnight Library.csproj">

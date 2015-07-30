@@ -41,6 +41,9 @@ namespace mapKnightLibrary
 		public void EndJump()
 		{
 			if (OnJump == true) {
+				#if LOGJUMP
+				CrossLog.Log (this, "Ended Jump(" + operatingJumpType.ToString () + ") in direction " + CurrentJumpingDirection.ToString (), MessageType.Debug);
+				#endif
 				time = 0f;
 				tick = 0f;
 				OnJump = false;
@@ -96,6 +99,10 @@ namespace mapKnightLibrary
 				break;
 			}
 			operatingJumpType = jumpType;
+
+			#if LOGJUMP
+			CrossLog.Log (this, "Began Jump(" + jumpType.ToString () + ") in direction " + jumpDirection.ToString (), MessageType.Debug);
+			#endif
 		}
 
 		public void Tick(float frameTime)

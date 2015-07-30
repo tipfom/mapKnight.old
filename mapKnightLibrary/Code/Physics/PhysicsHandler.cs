@@ -73,6 +73,7 @@ namespace mapKnightLibrary
 
 		private void createBox2DWorldByLayer(CCTileMapLayer physicsLayer, CCTileMap physicsMap)
 		{
+			CrossLog.Log (this, "Start creating the 2DWorld", MessageType.Debug);
 			bool[,] Tile = extractHitboxTiles (physicsLayer, physicsMap);
 			bool[,] Checked = new bool[(int)physicsLayer.LayerSize.Size.Width, (int)physicsLayer.LayerSize.Size.Height];
 
@@ -111,6 +112,7 @@ namespace mapKnightLibrary
 					}
 				}
 			}
+			CrossLog.Log (this, "Ended creating the 2DWorld", MessageType.Debug);
 		}
 
 		private bool[,] extractHitboxTiles(CCTileMapLayer physicsLayer, CCTileMap physicsMap){
@@ -217,6 +219,10 @@ namespace mapKnightLibrary
 			boxFixture.userData = WorldFixtureData.ground;
 
 			boxBody.CreateFixture (boxFixture);
+
+			#if LOGMAPCREATION
+			CrossLog.Log (this, "\t\tCreated StandartBoxTile at x=" + x.ToString () +",y=" + y.ToString (), MessageType.Debug);
+			#endif
 		}
 
 		private void createCustomBodyAt(int x,int y, float pixelWidth, float pixelHeight, string shape){
@@ -245,6 +251,11 @@ namespace mapKnightLibrary
 			BlockFixture.userData = WorldFixtureData.ground;
 
 			BlockBody.CreateFixture (BlockFixture);
+
+			#if LOGMAPCREATION
+			CrossLog.Log (this, "\t\tCreated CustomTile at x=" + x.ToString () +",y=" + y.ToString (), MessageType.Debug);
+			CrossLog.Log (this, "\t\t\"TileVertices="+shape, MessageType.Debug);
+			#endif
 		}
 
 		#endregion

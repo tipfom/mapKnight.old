@@ -9,6 +9,7 @@ namespace mapKnightLibrary
 {
 	public class AndroidSQLDataManager : DataBaseManager
 	{
+		static string Tag = "AndroidSQLDataManager";
 		//http://developer.xamarin.com/guides/cross-platform/application_fundamentals/data/part_4_using_adonet/
 
 		SqliteConnection DataBase;
@@ -18,6 +19,7 @@ namespace mapKnightLibrary
 		public AndroidSQLDataManager (string DataFilePath)
 		{
 			if (!File.Exists (DataFilePath)) {
+				CrossLog.Log ("Android", Tag, "Created new Databasefile (" + DataFilePath + ")", MessageType.Debug);
 				//Wenn die Datenbank nicht existiert wird sie erstellt
 				SqliteConnection.CreateFile (DataFilePath);
 				DataBase = new SqliteConnection ("Data Source=" + DataFilePath);
@@ -36,6 +38,7 @@ namespace mapKnightLibrary
 				DataBase.Close ();
 			} else {
 				DataBase = new SqliteConnection ("Data Source=" + DataFilePath);
+				CrossLog.Log ("Android", Tag, "Set DataBase to " + DataBase.ToString(), MessageType.Debug);
 			}
 			DataPath = DataFilePath;
 		}
@@ -117,12 +120,14 @@ namespace mapKnightLibrary
 
 		public override bool BeginRead ()
 		{
+			CrossLog.Log ("Android", Tag, "Begin Reading from " + DataBase.DataSource, MessageType.Debug);
 			DataBase.Open ();
 			return true;
 		}
 
 		public override bool EndRead ()
 		{
+			CrossLog.Log ("Android", Tag, "Ended Reading from " + DataBase.DataSource, MessageType.Debug);
 			DataBase.Close ();
 			return true;
 		}

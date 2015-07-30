@@ -1,7 +1,11 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
+
 using Android.App;
 
+using Xamarin.Forms;
+
+using mapKnight;
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 
@@ -10,7 +14,7 @@ using Android.App;
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("")]
 [assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright ("Tim")]
+[assembly: AssemblyCopyright ("tipfom")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
 
