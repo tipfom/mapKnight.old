@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>mapKnightLibrary</RootNamespace>
     <AssemblyName>mapKnightLibrary</AssemblyName>
-    <TargetFrameworkProfile>Profile49</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <ReleaseVersion>0.3</ReleaseVersion>
   </PropertyGroup>
@@ -20,7 +20,7 @@
     <DefineConstants>DEBUG;LOGJUMP;LOGMAPCREATION</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -48,7 +48,6 @@
     <Compile Include="Code\Physics\JumpManager.cs" />
     <Compile Include="Code\Physics\JumpManagerHelp.cs" />
     <Compile Include="Code\Data\SQLDataManager.cs" />
-    <Compile Include="Code\Data\XMLDataManager.cs" />
     <Compile Include="Code\Main\GlobalInterace.cs" />
     <Compile Include="Code\Game\Chest.cs" />
     <Compile Include="Code\Tools\CameraMover.cs" />
@@ -66,6 +65,11 @@
     <Compile Include="Code\Game\Inventory\Items\Set_Standart_Shoes.cs" />
     <Compile Include="Code\Data\Log.cs" />
     <Compile Include="Code\Physics\PhysicsHandler.cs" />
+    <Compile Include="Code\Data\Login.cs" />
+    <Compile Include="Code\Data\SharedData - Singleton.cs" />
+    <Compile Include="Code\CocosSharp\StartScene.cs" />
+    <Compile Include="Code\AppExitNotifier.cs" />
+    <Compile Include="Code\Data\XMLElemental.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -83,15 +87,10 @@
     <Folder Include="Code\Game\Inventory\Items\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="box2d">
-      <HintPath>..\packages\CocosSharp.PCL.Shared.1.5.0.1\lib\portable-net45+win+wpa81+wp80\box2d.dll</HintPath>
-    </Reference>
-    <Reference Include="CocosSharp">
-      <HintPath>..\packages\CocosSharp.PCL.Shared.1.5.0.1\lib\portable-net45+win+wpa81+wp80\CocosSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoGame.Framework">
-      <HintPath>..\packages\CocosSharp.PCL.Shared.1.5.0.1\lib\portable-net45+win+wpa81+wp80\MonoGame.Framework.dll</HintPath>
-    </Reference>
+    <None Include="SlideMethods.txt" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
       <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
@@ -101,9 +100,20 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="SlideMethods.txt" />
+    <Reference Include="box2d">
+      <HintPath>..\packages\CocosSharp.PCL.Shared.1.5.0.1\lib\portable-net45+win+wpa81+wp80\box2d.dll</HintPath>
+    </Reference>
+    <Reference Include="CocosSharp">
+      <HintPath>..\packages\CocosSharp.PCL.Shared.1.5.0.1\lib\portable-net45+win+wpa81+wp80\CocosSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\packages\CocosSharp.PCL.Shared.1.5.0.1\lib\portable-net45+win+wpa81+wp80\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="XML">
+      <HintPath>..\..\..\Documents\Projects\XML\XML\bin\Debug\XML.dll</HintPath>
+    </Reference>
+    <Reference Include="SerializationLib">
+      <HintPath>..\..\..\Documents\Projects\SerializationLib\SerializationLib\bin\Debug\SerializationLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

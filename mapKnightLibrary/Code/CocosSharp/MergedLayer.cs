@@ -32,7 +32,7 @@ namespace mapKnightLibrary
 
 		public MergedLayer (CCWindow mainWindow, Container mainContainer)
 		{
-			screenSize = mainWindow.WindowSizeInPixels;
+			screenSize = CCScene.DefaultDesignResolutionSize;
 			gameContainer = mainContainer;
 
 			mapVersion = "unspecified";
@@ -120,7 +120,6 @@ namespace mapKnightLibrary
 			Map.Position = new CCPoint (cameraMover.CameraCenter.X - screenSize.Width / 2 * Map.ScaleX, cameraMover.CameraCenter.Y - screenSize.Height / 2 * Map.ScaleY);
 
 			Background.Position = new CCPoint (cameraMover.CameraCenter.X, cameraMover.CameraCenter.Y);
-
 		}
 			
 		public CCPoint MapPosition{get{ return Map.Position;}}

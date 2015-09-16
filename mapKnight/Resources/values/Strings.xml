@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_version">0.0.6.9</string>
-	<string name="app_build">69</string>
+	<string name="app_version">0.0.6.12</string>
+	<string name="app_build">189</string>
 	<string name="app_name">mapKnight - HotAndHotter Alpha</string>
+	<string name="app_id">957897419009</string>
 </resources>

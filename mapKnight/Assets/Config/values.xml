@@ -1,8 +1,28 @@
-﻿<Data>
+﻿<Data usepackage="no">
 	<set name="Deutsch" package="de-de">
 		<chapter name="default">
 			<entry name="string:chest_open">Kiste geöffnet</entry>
 			<entry name="int:chest_value">200</entry>		
+			<entry name="adasdasd">123</entry>
 		</chapter>
+
+		<chapter name="asd">
+			<entry name="sda:chest_open">Kiste geöffnet</entry>
+			<entry name="dasd:chest_value">200</entry>		
+			<entry name="sd">123</entry>
+		</chapter>
+
+		<chapter name="asd">
+			<entry name="sda:chest_open">Kiste geöffnet</entry>
+			<entry name="dasd:chest_value">200</entry>		
+			<entry name="sd">123</entry>
+		</chapter>
+
 	</set>
+
+		<chapter name="asd">
+			<entry name="sda:chest_open">Kiste geöffnet</entry>
+			<entry name="dasd:chest_value">200</entry>		
+			<entry name="sd">123</entry>
+		</chapter>
 </Data>

@@ -11,6 +11,10 @@ namespace mapKnightLibrary
 			
 		}
 
+		public virtual void Delete(string name){
+			
+		}
+
 		public virtual string GetOrCreate(string name, string defaultvalue = "default"){
 			//zum Aufrufen von Werten aus einer string Datenbank 
 			return defaultvalue;

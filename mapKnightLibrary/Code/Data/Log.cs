@@ -67,7 +67,7 @@ namespace mapKnightLibrary
 					break;
 				}
 			} else {
-				throw new ArgumentException (sender.ToString() + "tried to log a message with its object related type without being registered");
+				throw new ArgumentException (sender.ToString() + " tried to log a message with its object related type without being registered");
 			}
 		}
 
@@ -83,7 +83,9 @@ namespace mapKnightLibrary
 			{ typeof(TMXLayerDataLoader),"TXMLayerDataLoader" },
 			{ typeof(CollusionSensor),"CollusionSensor" },
 			{ typeof(JumpManager),"JumpManager" },
-			{ typeof(PhysicsHandler),"PhysicsHandler" }
+			{ typeof(PhysicsHandler),"PhysicsHandler" },
+			{ typeof(AppExitNotifier),"ApplicationExitNotifier" },
+			{ typeof(XMLElemental),"XMLElemental" }
 		};
 	}
 

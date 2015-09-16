@@ -53,4 +53,13 @@ namespace mapKnightLibrary
 		Ended,
 		Moved
 	}
+
+	public enum ShareableInformation
+	{
+		standart_font,
+		standart_fontsize,
+		application_version,
+		application_build,
+		application_name
+	}
 }

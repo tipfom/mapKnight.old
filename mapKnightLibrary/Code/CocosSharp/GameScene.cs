@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using CocosSharp;
 
+using Microsoft.Xna.Framework.Input;
+
 using mapKnightLibrary.Inventory;
 
 namespace mapKnightLibrary
@@ -20,15 +22,16 @@ namespace mapKnightLibrary
 
 		ClickManager clickManager;
 
-		GameInventory Inventory;
+//		GameInventory Inventory;
 
 		public GameScene (CCWindow mainWindow, ControlType RunningControlType) : base(mainWindow)
 		{
-			screenSize = mainWindow.WindowSizeInPixels;
+			
+			screenSize = CCScene.DefaultDesignResolutionSize;
 			gameContainer = new mapKnightLibrary.Container ();
 
 			//Touchlistener Initialisierung
-			clickManager = new ClickManager (screenSize, gameContainer);
+			clickManager = new ClickManager (new CCSize(mainWindow.WindowSizeInPixels.Height,mainWindow.WindowSizeInPixels.Width), gameContainer);
 			this.AddEventListener (clickManager, this);
 			CrossLog.Log (this, "Set ClickListener", MessageType.Debug);
 
@@ -81,9 +84,15 @@ namespace mapKnightLibrary
 				InterfaceLayer.AddChild (MoveLeftButton);
 				InterfaceLayer.AddChild (MoveRightButton);
 
-				Clickable JumpButtonClickable = new Clickable (JumpButton.ScaledContentSize, JumpButton.Position, new CCSize (1000, 1000)){ };
-				Clickable MoveLeftButtonClickable = new Clickable (MoveLeftButton.ScaledContentSize, MoveLeftButton.Position, new CCSize (1000, 1000)){ };
-				Clickable MoveRightButtonClickable = new Clickable (MoveRightButton.ScaledContentSize, MoveRightButton.Position, new CCSize (1000, 1000)){ };
+				Clickable JumpButtonClickable = new Clickable (new CCSize (mainWindow.WindowSizeInPixels.Height / 4, mainWindow.WindowSizeInPixels.Height / 4),
+					new CCPoint (mainWindow.WindowSizeInPixels.Height - mainWindow.WindowSizeInPixels.Height / 8, mainWindow.WindowSizeInPixels.Height / 8),
+					                                new CCSize (1000, 1000)){ };
+				Clickable MoveLeftButtonClickable = new Clickable (new CCSize (mainWindow.WindowSizeInPixels.Height / 6, mainWindow.WindowSizeInPixels.Height / 6),
+					new CCPoint (mainWindow.WindowSizeInPixels.Height / 12, mainWindow.WindowSizeInPixels.Height / 12),
+					new CCSize (1000, 1000)){ };
+				Clickable MoveRightButtonClickable = new Clickable (new CCSize (mainWindow.WindowSizeInPixels.Height / 6, mainWindow.WindowSizeInPixels.Height / 6),
+					new CCPoint (mainWindow.WindowSizeInPixels.Height / 12 * 3, mainWindow.WindowSizeInPixels.Height / 12),
+					new CCSize (1000, 1000)){ };
 
 				JumpButtonClickable.ClickedEvent += JumpB_HandleButtonClicked;
 				MoveLeftButtonClickable.ClickedEvent += LeftB_HandleButtonClicked;
@@ -133,8 +142,8 @@ namespace mapKnightLibrary
 				clickManager.AddObject (knownChest);
 			}
 
-			Inventory = new GameInventory (clickManager, new List<IPotion> (){ new Potion1 (), new Potion3 (), new Potion2 () }, new List<IEquipable> (), screenSize);
-			this.AddChild (Inventory);
+//			Inventory = new GameInventory (clickManager, new List<IPotion> (){ new Potion1 (), new Potion3 (), new Potion2 () }, new List<IEquipable> (), screenSize);
+//			this.AddChild (Inventory);
 
 			Schedule (GameLoop);
 		}
@@ -186,6 +195,10 @@ namespace mapKnightLibrary
 			gameContainer.physicsHandler.debugDrawer.ClearBuffer ();
 			gameContainer.physicsHandler.gameWorld.DrawDebugData ();
 			#endif
+
+			if(GamePad.GetState(Microsoft.Xna.Framework.PlayerIndex.One).Buttons.Back == ButtonState.Pressed){
+				AppExitNotifier.AppBackKeyPressed (this);
+			}
 		}
 
 		#region HandleButtonClick

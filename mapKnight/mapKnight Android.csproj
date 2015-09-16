@@ -26,9 +26,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidLinkMode>Full</AndroidLinkMode>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
     <DebugSymbols>true</DebugSymbols>
+    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -41,7 +42,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
     <Reference Include="box2d">
@@ -58,18 +58,8 @@
     </Reference>
     <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\packages\Xamarin.Android.Support.v4.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v7.RecyclerView">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.RecyclerView.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.RecyclerView.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v7.CardView">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.CardView.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.CardView.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v7.AppCompat">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
     </Reference>
     <Reference Include="FormsViewGroup">
       <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
@@ -86,21 +76,86 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Base">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Base.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Ads">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Ads.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Ads.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Analytics">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Analytics.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.AppIndexing">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.AppIndexing.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.AppIndexing.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.AppInvite">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.AppInvite.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.AppInvite.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.AppState">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.AppState.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.AppState.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Cast">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Cast.25.0.0.0\lib\MonoAndroid42\Xamarin.GooglePlayServices.Cast.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Drive">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Drive.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Drive.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Maps">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Maps.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Maps.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Location">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Location.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Location.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Fitness">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Fitness.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Fitness.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Games">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Games.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Games.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Gcm">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Gcm.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Gcm.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Identity">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Identity.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Identity.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Nearby">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Nearby.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Nearby.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Panorama">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Panorama.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Panorama.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Plus">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Plus.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Plus.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.SafetyNet">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.SafetyNet.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.SafetyNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Wallet">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Wallet.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Wallet.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Wearable">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Wearable.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Wearable.dll</HintPath>
+    </Reference>
+    <Reference Include="GooglePlayServicesLib">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.25.0.0.0\lib\MonoAndroid41\GooglePlayServicesLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.AppCompat">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.MediaRouter">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.MediaRouter.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.MediaRouter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Code\Visual\InventoryPopUp.cs" />
-    <Compile Include="Code\Visual\InventorySlideIn.cs" />
-    <Compile Include="Code\Visual\MainWindow.cs" />
-    <Compile Include="Code\Visual\StatsPopUp.cs" />
-    <Compile Include="Code\Visual\Statistic.cs" />
-    <Compile Include="Code\Visual\OptionPopUp.cs" />
     <Compile Include="Code\SQLDataManager.cs" />
     <Compile Include="Code\CocosSharp and Activities\GameAppDelegate.cs" />
-    <Compile Include="Code\CocosSharp and Activities\GameActivity.cs" />
-    <Compile Include="Code\CocosSharp and Activities\MainActivity.cs" />
     <Compile Include="Code\ALog.cs" />
+    <Compile Include="Code\ALogin.cs" />
+    <Compile Include="Code\CocosSharp and Activities\GameActivity.cs" />
+    <Compile Include="Code\ObjectTypeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -110,21 +165,13 @@
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
     <AndroidResource Include="Resources\values\values.xml" />
-    <AndroidResource Include="Resources\layout\ContainerWindow.axml" />
-    <AndroidResource Include="Resources\layout\InventoryPopUp.axml" />
-    <AndroidResource Include="Resources\layout\InventorySlideIn.axml" />
-    <AndroidResource Include="Resources\layout\MainWindow.axml" />
-    <AndroidResource Include="Resources\layout\StatsListElement.axml" />
-    <AndroidResource Include="Resources\layout\StatsPopUp.axml" />
     <AndroidResource Include="Resources\drawable\button_stats.xml" />
     <AndroidResource Include="Resources\drawable\progressbar_level.xml" />
     <AndroidResource Include="Resources\values\styles.xml" />
     <AndroidResource Include="Resources\anim\inventory_slide_in.xml" />
     <AndroidResource Include="Resources\anim\inventory_slide_out.xml" />
     <AndroidResource Include="Resources\drawable\error.png" />
-    <AndroidResource Include="Resources\layout\Loading.axml" />
     <AndroidResource Include="Resources\drawable\options.png" />
-    <AndroidResource Include="Resources\layout\OptionWindow.axml" />
     <AndroidResource Include="Resources\drawable\logo.png" />
     <AndroidResource Include="Resources\drawable\heart.png" />
   </ItemGroup>
@@ -141,7 +188,6 @@
     <Folder Include="Assets\Content\landscape\" />
     <Folder Include="Assets\Content\menu\" />
     <Folder Include="Assets\Content\interface\" />
-    <Folder Include="Code\Visual\" />
     <Folder Include="Resources\anim\" />
     <Folder Include="Assets\Content\particle\" />
     <Folder Include="Assets\Content\character\" />
@@ -177,10 +223,18 @@
     <AndroidAsset Include="Assets\Content\tilemaps\chest.png" />
     <AndroidAsset Include="Assets\Content\character\set_standart.plist" />
     <AndroidAsset Include="Assets\Content\character\set_standart.png" />
-    <AndroidAsset Include="Assets\Content\fonts\04B_30__.TTF" />
     <AndroidAsset Include="Assets\Content\tilemaps\bitte.tmx" />
+    <AndroidAsset Include="Assets\Content\fonts\BAUHS93.TTF" />
+    <AndroidAsset Include="Assets\Content\fonts\04B_30_.TTF" />
+    <AndroidAsset Include="Assets\Content\fonts\vgafix.fon" />
   </ItemGroup>
   <ItemGroup>
     <AndroidEnvironment Include="environment.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="googleplayservices">
+      <Version>22.0.0.0</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
 </Project>
