@@ -138,3 +138,9 @@ The Answer is an Inventory with many items such like potions, armors (which also
 
 - fixed some performance issues
 - fixed some bugs causing the app to lag
+
+!!! 16.09.2015 !!!
+- added basic GooglePlay support
+- added advanced XML support
+
+- fixed a bug causing the app to not exit when the back key got pressed
