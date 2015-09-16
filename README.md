@@ -143,4 +143,4 @@ The Answer is an Inventory with many items such like potions, armors (which also
 - added basic GooglePlay support
 - added advanced XML support
 
-- fixed a bug causing the app to not exit when the back key got pressed
+- fixed a bug causing the app not to exit when the back key got pressed
