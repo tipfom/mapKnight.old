@@ -1,4 +1,4 @@
-# mapKnight
+# mapKnight (outdated)
 
 Project mapKnight created by two german students is a sidescroller with rpg-elements.
 It is going to use Map API's to detect the users current position and change the map theme by his current terrain.
